@@ -1,0 +1,15 @@
+build.properties
+.classpath
+.project
+.directory
+bin/
+TOOLS/config
+TOOLS/harvestDefinitions/*
+*.class
+*.bak
+mulgara/dist
+mulgara/obj
+*/tags
+*/target
+TOOLS/LuceneIndexOpener/tags
+TOOLS/LuceneIndexOpener/CometeLuceneIndexOpener.jar
