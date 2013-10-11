@@ -1,0 +1,65 @@
+<project name="master">
+
+    <property name="dist.dir" location="dist" />
+    <property file="config/src/main/resources/build.properties" />
+
+
+    <!-- ================= Configuration =================== -->    
+
+    <target name="sample-config">        
+        <!-- sample-config.properties --> 
+        <copy file="config/sample-build.properties" tofile="config/src/main/resources/build.properties" />     
+    </target>
+
+
+    <!-- ================= Installation / Deployment =================== -->
+
+    <target name="deploy-proeaf" depends="deploy-mulgara,deploy-contexts">
+       <echo message="deploy-proeaf"/>
+    </target>
+
+    
+    <target name="deploy-mulgara">
+        <copy file="mulgara/src/main/resources/mulgara-2.1.12.jar" todir="${proeaf.home}/mulgara/bin"/>
+        <copy file="mulgara/target/classes/mulgara.bat" todir="${proeaf.home}/mulgara/bin"/>
+    </target>
+
+    <target name="deploy-contexts">
+        <copy file="portal/target/classes/Portal.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+        <copy file="metadata/target/classes/Metadata.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+        <copy file="query-engine/target/classes/QueryEngine.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+        <copy file="vocabulary/target/classes/Vocabulary.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+        <copy file="security/target/classes/Security.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+        <copy file="snorql/target/classes/snorql.xml" toDir="${catalina.base}/conf/Catalina/localhost" />
+    </target>
+
+    <!-- ================= Misc. =================== -->
+
+    <target name="jar">
+        <iterate target="jar" />
+    </target>
+
+    <target name="clean">
+        <iterate target="clean" />
+    </target>
+
+    <target name="compile">
+        <iterate target="compile" />
+    </target>
+
+    <target name="test">
+        <iterate target="test" />
+    </target>
+
+    <macrodef name="iterate">
+        <attribute name="target" default="" />
+        <sequential>
+            <mkdir dir="${dist.dir}" />
+            <subant target="@{target}">
+                <property name="dist.dir" location="${dist.dir}" />
+                <fileset dir="." includes="*/build.xml" />
+            </subant>
+        </sequential>
+    </macrodef>
+
+</project>

@@ -1,0 +1,8 @@
+PREFIX comete: <http://comete.licef.ca/reference#>
+
+SELECT DISTINCT ?alias
+WHERE '{'
+    <{0}> comete:vocAlias ?alias
+'}'
+
+

@@ -2,14 +2,13 @@ build.properties
 .classpath
 .project
 .directory
+.idea
+*.iml
 bin/
-TOOLS/config
-TOOLS/harvestDefinitions/*
 *.class
 *.bak
 mulgara/dist
 mulgara/obj
 */tags
 */target
-TOOLS/LuceneIndexOpener/tags
-TOOLS/LuceneIndexOpener/CometeLuceneIndexOpener.jar
+

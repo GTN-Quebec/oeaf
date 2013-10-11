@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/dcterms/" xml:base="http://normetic.org/uri/profil_oeaf/v1.0/va2.4">
+  <skos:ConceptScheme rdf:about="http://normetic.org/uri/profil_oeaf/v1.0/va2.4">
+    <dc:creator>Gilles Gauthier</dc:creator>
+    <dc:language>fr</dc:language>
+    <dcterms:created>2011-08-29</dcterms:created>
+    <dcterms:modified>2011-09-01</dcterms:modified>
+    <skos:prefLabel xml:lang="fr-CA">Types d’opportunités</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">Opportunity types</skos:prefLabel>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:ID="T010">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">cours</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">lecture</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T020">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">programme</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">program</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T030">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">événement</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">event</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T040">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">conférence</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">conference</skos:prefLabel>
+    <skos:broader rdf:resource="#T030"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T050">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">congrès</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">congress</skos:prefLabel>
+    <skos:broader rdf:resource="#T030"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T060">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">rencontre</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">meeting</skos:prefLabel>
+    <skos:broader rdf:resource="#T030"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T070">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">cours + atelier</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">lecture + workshop</skos:prefLabel>
+    <skos:broader rdf:resource="#T010"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T080">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">atelier</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">workshop</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T090">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">séminaire</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">seminar</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T100">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">excursion</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">excursion</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T110">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">non-conférence</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">unconference</skos:prefLabel>
+    <skos:broader rdf:resource="#T030"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T120">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">BarCamp</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">BarCamp</skos:prefLabel>
+    <skos:broader rdf:resource="#T110"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T130">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">session informelle</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">Bird of a Feather</skos:prefLabel>
+    <skos:broader rdf:resource="#T110"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T999">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.4#T999</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+    <skos:prefLabel xml:lang="fr-CA">autre</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">other</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.4"/>
+  </skos:Concept>
+</rdf:RDF>

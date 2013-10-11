@@ -1,0 +1,6 @@
+SELECT *
+WHERE '{'
+    GRAPH <rmi://localhost/proeaf#> '{'
+        <rmi://localhost/proeaf#{0}> ?p ?o
+    '}'
+'}'

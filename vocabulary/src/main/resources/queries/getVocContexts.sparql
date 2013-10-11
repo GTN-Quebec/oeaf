@@ -1,0 +1,11 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX comete: <http://comete.licef.ca/reference#>
+
+SELECT DISTINCT ?s ?uri ?graph
+WHERE {
+    ?s rdf:type <comete:VocContext> .
+    ?s comete:vocUri ?uri .
+    ?s comete:vocGraph ?graph
+}
+
+

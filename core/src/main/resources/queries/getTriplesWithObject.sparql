@@ -1,0 +1,5 @@
+SELECT ?s ?p
+WHERE '{'
+    ?s ?p {0}
+'}'
+{1}

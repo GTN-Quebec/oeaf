@@ -1,0 +1,14 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX comete: <http://comete.licef.ca/reference#>
+
+SELECT ?vocUri ?vocId ?src ?location ?graph ?navigable ?doId
+WHERE '{'
+    <{0}> rdf:type <comete:VocContext> .
+    <{0}> comete:vocUri ?vocUri .
+    <{0}> comete:vocId ?vocId .
+    <{0}> comete:vocSource ?src .
+    <{0}> comete:vocSourceLocation ?location .
+    <{0}> comete:vocGraph ?graph .
+    <{0}> comete:vocNavigable ?navigable .
+    <{0}> comete:fedoraDigitalObject ?doId
+'}'

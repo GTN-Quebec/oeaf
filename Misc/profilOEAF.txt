@@ -1,0 +1,27 @@
+*********************************************************
+*** Propos relatifs au profil d'application  pour OÉAF ***
+*********************************************************
+
+A) QUESTIONS
+- dans MLR-9 est-ce necessaire d'avoir le prédicat site Web pour Organisation ? 
+  Il est supposement hérité de la classe Personne, non ?
+
+
+
+
+
+B) COMMENTAIRES
+
+
+
+
+
+C) SUGGESTIONS
+
+
+
+
+
+D) COQUILLES
+
+- dans le graphe écosystème général, une OEG ne doit pas avoir de propriété type du fournisseur

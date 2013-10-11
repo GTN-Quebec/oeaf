@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- The Basics -->
+    <groupId>ca.licef.proeaf</groupId>
+    <artifactId>proeaf</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <modules>
+        <module>config</module>
+        <module>mulgara</module>
+        <module>core</module>
+        <module>security</module>
+        <module>vocabulary</module>
+        <module>metadata</module>
+        <module>query-engine</module>
+        <module>portal</module>
+        <module>snorql</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <my.build.directory>target</my.build.directory>
+    </properties>
+
+    <!-- Build Settings -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.7</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.2</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.2</version>
+                    <executions>
+                        <execution>
+                            <id>config-unpack</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>ca.licef.proeaf</groupId>
+                                        <artifactId>proeaf-config</artifactId>
+                                        <version>${parent.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0-alpha-2</version>
+                    <executions>
+                        <execution>
+                            <id>config-read</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>${project.build.directory}/dependency/build.properties</file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+        <directory>${my.build.directory}</directory>
+    </build>
+    <reporting>
+        <plugins>
+        </plugins>
+    </reporting>
+
+    <!-- More Project Information -->
+    <name>PROEAF</name>
+    <description>Repository of MLOs</description>
+    <url>https://github.com/GTN-Quebec/oeaf</url>
+    <inceptionYear>2013</inceptionYear>
+    <licenses>
+        <license>
+            <name>GPL</name>
+            <url>http://www.gnu.org/licenses/gpl.html</url>
+            <comments>Version 2 or 3?  This has not been decided yet</comments>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>Licef</name>
+        <url>http://www.licef.ca</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Alexis Miara</name>
+            <email>alexis.miara@licef.ca</email>
+        </developer>
+        <developer>
+            <name>Frederic Bergeron</name>
+            <email>frederic.bergeron@licef.ca</email>
+        </developer>
+    </developers>
+
+    <!-- Environment Settings -->
+    <repositories>
+        <repository>
+            <id>releases.maven.licef.ca</id>
+            <url>http://hades.licef.ca:8080/artifactory/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshots.maven.licef.ca</id>
+            <url>http://hades.licef.ca:8080/artifactory/libs-snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>thirdparty.maven.licef.ca</id>
+            <url>http://hades.licef.ca:8080/artifactory/ext-release-local</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>maven2-repository.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>duraspace-thirdparty</id>
+            <name>Duraspace Thirdparty Maven Repository</name>
+            <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>licef</id>
+            <name>licef-releases</name>
+            <url>http://hades.licef.ca:8080/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>licef</id>
+            <name>licef-snapshots</name>
+            <url>http://hades.licef.ca:8080/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

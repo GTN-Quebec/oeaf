@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/dcterms/" xml:base="http://normetic.org/uri/profil_oeaf/v1.0/va2.5">
+  <skos:ConceptScheme rdf:about="http://normetic.org/uri/profil_oeaf/v1.0/va2.5">
+    <dc:creator>Gilles Gauthier</dc:creator>
+    <dc:language>fr</dc:language>
+    <dcterms:created>2011-08-29</dcterms:created>
+    <dcterms:modified>2011-09-01</dcterms:modified>
+    <skos:prefLabel xml:lang="fr-CA">Modes de livraison</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">Delivery modes</skos:prefLabel>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:ID="T010">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">présentiel</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">in-class</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T020">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">en ligne</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">on-line</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T030">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">hybride</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">blended</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T040">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">webdiffusion</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">webcasting</skos:prefLabel>
+    <skos:broader rdf:resource="#T020"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T050">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">baladodiffusion</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">podcasting</skos:prefLabel>
+    <skos:broader rdf:resource="#T020"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T060">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">collaboratif en ligne</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">computer-supported collaborative</skos:prefLabel>
+    <skos:broader rdf:resource="#T020"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T070">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">assisté par ordinateur</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">computer-based</skos:prefLabel>
+    <skos:broader rdf:resource="#T020"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T999">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T999</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+    <skos:prefLabel xml:lang="fr-CA">autre</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">other</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
+  </skos:Concept>
+</rdf:RDF>

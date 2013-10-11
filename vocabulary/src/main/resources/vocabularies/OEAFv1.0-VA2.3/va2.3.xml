@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/dcterms/" xml:base="http://normetic.org/uri/profil_oeaf/v1.0/va2.1">
+  <skos:ConceptScheme rdf:about="http://normetic.org/uri/profil_oeaf/v1.0/va2.3">
+    <dc:creator>Gilles Gauthier</dc:creator>
+    <dc:language>fr</dc:language>
+    <dcterms:created>2011-08-29</dcterms:created>
+    <dcterms:modified>2011-09-01</dcterms:modified>
+    <skos:prefLabel xml:lang="fr-CA">Types d’évaluation</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">Assessment types</skos:prefLabel>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:ID="T010">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T010</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">aucune</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">none</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T020">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T011</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation critériée</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">criterion-referenced evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T030">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T012</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation de classement</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">classification test</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T040">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T040</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation de la capacité professionnelle</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">vocational evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T050">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T041</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation de la performance</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">performance appraisal</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T060">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T042</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation des acquis</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">attainments evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T070">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T043</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation des apprentissages</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">learning evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T080">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T043</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation formative</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">formative evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T090">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T043</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation globale</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">global evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T100">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T043</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation normative</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">normative evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T110">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T043</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">évaluation ponctuelle</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">periodic evaluation</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+  <skos:Concept rdf:ID="T999">
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.3#T999</dc:identifier>
+    <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+    <skos:prefLabel xml:lang="fr-CA">autre</skos:prefLabel>
+    <skos:prefLabel xml:lang="en-CA">other</skos:prefLabel>
+    <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.3"/>
+  </skos:Concept>
+</rdf:RDF>

@@ -1,0 +1,6 @@
+SELECT ?p ?o
+WHERE '{'
+    <{0}> ?p ?o .
+    FILTER regex(str(?p), "{1}.*$")
+'}'
+{2}
