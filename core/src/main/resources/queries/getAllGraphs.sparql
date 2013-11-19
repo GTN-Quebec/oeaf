@@ -1,6 +1,0 @@
-SELECT ?s
-WHERE {
-   GRAPH <rmi://localhost/proeaf#> {
-       ?s ?p ?o
-   }
-}

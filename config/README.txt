@@ -1,2 +1,0 @@
-- Copy sample-build.properties to src/main/resources/build.properties (ant sample-config at the top level of brer will do this for you)
-- Change src/main/resources/build.properties according to your environment

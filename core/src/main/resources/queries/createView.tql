@@ -1,5 +1,0 @@
-create <rmi://localhost/proeaf#{0}> <http://mulgara.org/mulgara#ViewModel>;
-insert <http://mulgara.org/mulgara/view> <http://mulgara.org/mulgara/view#enabled> ''true''
-{1}
-<http://mulgara.org/mulgara/view> <rdf:type> <http://mulgara.org/mulgara/view#Union>
-into <rmi://localhost/proeaf?def#{0}>;

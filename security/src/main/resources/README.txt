@@ -1,2 +1,0 @@
-- Copy sample-authorized.ini to authorized.ini 
-- Fill trusted IPs
