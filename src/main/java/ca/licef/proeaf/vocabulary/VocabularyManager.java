@@ -3,11 +3,16 @@ package ca.licef.proeaf.vocabulary;
 import ca.licef.proeaf.core.Core;
 import ca.licef.proeaf.core.util.Constants;
 import ca.licef.proeaf.vocabulary.util.Util;
+import com.hp.hpl.jena.rdf.model.Property;
 import licef.IOUtil;
 import licef.StringUtil;
 import licef.XMLUtil;
-import licef.tsapi.Triple;
 import licef.tsapi.TripleStore;
+import licef.tsapi.model.Triple;
+import licef.tsapi.model.Tuple;
+import licef.tsapi.vocabulary.DCTERMS;
+import licef.tsapi.vocabulary.RDFS;
+import licef.tsapi.vocabulary.SKOS;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,24 +36,26 @@ import java.util.Hashtable;
  */
 public class VocabularyManager {
 
-    public static final String VOC_GRAPH_FULLTEXT = "voc-fullText";
-    public static final String VOC_FULLTEXT_VIEW = "voc-fullTextView";
-    public static final String VOC_GRAPH_EQUIVALENCE = "voc-equivalence";
+//    public static final String VOC_GRAPH_FULLTEXT = "voc-fullText";
+//    public static final String VOC_FULLTEXT_VIEW = "voc-fullTextView";
+//    public static final String VOC_GRAPH_EQUIVALENCE = "voc-equivalence";
 
     File vocabulariesSourceDir; //init vocabularies
     File vocabulariesDir = new File(Core.getInstance().getProeafHome(), "/conf/vocabularies");
     TripleStore tripleStore = Core.getInstance().getTripleStore();
 
-    public void initVocabularies(ServletContext context) throws Exception {
+    public void initVocabularyModule() throws Exception {
         System.out.println("Vocabulary Module initialization...");
+
+        //init SKOS ontology
+        tripleStore.loadRdf(getClass().getResourceAsStream("/skos.rdf"), "skos-ontology");
 
         //vocs definition folder
         if (vocabulariesSourceDir == null)
-            vocabulariesSourceDir = new File(context.getRealPath("WEB-INF/classes/vocabularies"));
+            vocabulariesSourceDir = new File(getClass().getResource("/vocabularies").getFile());
 
         //copy initial vocabularies into PROEAF conf folder
-        if (!vocabulariesDir.exists())
-            IOUtil.createDirectory(vocabulariesDir.getAbsolutePath());
+        IOUtil.createDirectory(vocabulariesDir.getAbsolutePath());
         String[] initVocs = vocabulariesSourceDir.list();
         if (initVocs != null) {
             for (String voc : initVocs) {
@@ -57,18 +64,6 @@ public class VocabularyManager {
                     IOUtil.copyFiles(new File(vocabulariesSourceDir, voc), destVoc);
             }
         }
-
-        //graph for vocabularies equivalence relationships
-//        tripleStore.createGraph(VOC_GRAPH_EQUIVALENCE);
-
-        //graphs and views for concept labels indexing
-//        tripleStore.createGraph(VOC_GRAPH_FULLTEXT, TripleStoreService.FULLTEXT_MODEL);
-//        for( int i = 0; i < TripleStoreService.INDEX_LANGUAGES.length; i++ ) {
-//            String lang = TripleStoreService.INDEX_LANGUAGES[ i ];
-//            tripleStore.createGraph(VOC_GRAPH_FULLTEXT + "_" + lang, TripleStoreService.FULLTEXT_MODEL, lang);
-//        }
-//        for( int i = 0; i < TripleStoreService.INDEX_LANGUAGES.length; i++ )
-//            tripleStore.createFullTextView(VOC_FULLTEXT_VIEW, VOC_GRAPH_FULLTEXT, TripleStoreService.INDEX_LANGUAGES[ i ] );
 
         //loop on predefined vocabularies
         ArrayList<String> newUris = new ArrayList<String>();

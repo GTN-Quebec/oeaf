@@ -16,7 +16,7 @@ public class VocabularyServlet extends HttpServlet {
         try {
             (new ThreadInvoker(new Invoker(Vocabulary.getInstance().getVocabularyManager(),
                 "ca.licef.proeaf.vocabulary.VocabularyManager",
-                    "initVocabularies", new Object[]{this.getServletContext()}))).start();
+                    "initVocabularyModule", new Object[]{}))).start();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,6 +13,7 @@ import org.json.JSONWriter;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -20,12 +21,18 @@ import java.util.Iterator;
 import java.util.ListIterator;
 
 @PerSession
-@Path( "/" )
+@Path( "/queryEngine" )
 public class QueryEngineResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     transient QueryCache cache = new QueryCache();
+
+    @GET
+    @Produces( MediaType.TEXT_PLAIN )
+    public Response test() throws Exception {
+        return Response.ok("/queryEngine REST service available.").build();
+    }
 
     @GET
     @Path( "searchJson" )

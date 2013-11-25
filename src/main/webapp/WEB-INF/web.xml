@@ -27,7 +27,8 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>ca.licef.proeaf.security.resource</param-value>
+            <param-value>ca.licef.proeaf.metadata.resource,
+                         ca.licef.proeaf.queryengine.resource</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.config.feature.XmlRootElementProcessing</param-name>

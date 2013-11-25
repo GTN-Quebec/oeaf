@@ -59,11 +59,22 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-server</artifactId>
             <version>1.15</version>
-        </dependency>      
+        </dependency>  
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>    
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-multipart</artifactId>
             <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
         </dependency>
         <dependency>
             <groupId>licef</groupId>
@@ -74,11 +85,6 @@
             <groupId>licef</groupId>
             <artifactId>licef-tsapi</artifactId>
             <version>0.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20090211</version>
         </dependency>
     </dependencies>
 
@@ -146,16 +152,4 @@
             <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <repository>
-            <id>licef</id>
-            <name>licef-releases</name>
-            <url>http://hades.licef.ca:8080/artifactory/libs-release-local</url>
-        </repository>
-        <snapshotRepository>
-            <id>licef</id>
-            <name>licef-snapshots</name>
-            <url>http://hades.licef.ca:8080/artifactory/libs-snapshot-local</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

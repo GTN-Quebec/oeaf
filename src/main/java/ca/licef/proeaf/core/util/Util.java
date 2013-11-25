@@ -5,7 +5,6 @@ import licef.CommonNamespaceContext;
 import licef.IOUtil;
 import licef.StringUtil;
 import licef.XMLUtil;
-import licef.tsapi.Triple;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.CDATASection;

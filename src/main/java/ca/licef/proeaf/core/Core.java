@@ -1,5 +1,6 @@
 package ca.licef.proeaf.core;
 
+import ca.licef.proeaf.vocabulary.Vocabulary;
 import licef.tsapi.TripleStore;
 
 import java.util.ResourceBundle;
@@ -19,8 +20,9 @@ public class Core {
     private String adminEmail;
     private String version;
     private String uriPrefix;
-
     private String smtpHost;
+
+    public static final String[] INDEX_LANGUAGES = { "en", "fr", "es" };
 
     public static Core getInstance() {
         if (core == null)
@@ -38,7 +40,6 @@ public class Core {
             smtpHost = resBundle.getString("smtp.host");
 
             initTripleStore();
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,8 +76,8 @@ public class Core {
      */
     private void initTripleStore() {
         if (tripleStore == null) {
-            tripleStore = new TripleStore(proeafHome + "/databases/DB1");
-            tripleStore.start();
+            tripleStore = new TripleStore(proeafHome + "/database", proeafHome, getUriPrefix());
+            tripleStore.startServer();
         }
     }
 

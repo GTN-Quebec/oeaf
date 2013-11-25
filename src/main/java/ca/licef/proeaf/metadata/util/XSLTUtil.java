@@ -1,7 +1,7 @@
 package ca.licef.proeaf.metadata.util;
 
 import ca.licef.proeaf.core.util.Constants;
-import licef.tsapi.Triple;
+import licef.tsapi.model.Triple;
 
 public class XSLTUtil {
 
