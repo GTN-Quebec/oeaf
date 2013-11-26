@@ -53,8 +53,8 @@ public class Util {
         //last cond
         clauses += orClauses;
 
-        int count = tripleStore.getResultsCount("getLearningObjectsAdvancedQueryForCount.sparql", clauses);
-
+//        int count = tripleStore.getResultsCount("getLearningObjectsAdvancedQueryForCount.sparql", clauses);
+        int count = 0;
         return new Object[]{clauses, count};
     }
 }

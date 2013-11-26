@@ -65,7 +65,7 @@ public class Vocabulary {
         String uri = null;
         String vocUri = getVocabularyUri(source);
         if (vocUri != null) {
-            String graph = Util.getGraphName(vocUri);
+//            String graph = Util.getGraphName(vocUri);
             uri = vocUri + "/" + concept;  // '/' uri
             /*if (!tripleStore.isResourceExists(uri, graph)) {//check of concept existence in associated graph
                 uri = vocUri + "#" + concept; // or '#' uri
@@ -85,15 +85,15 @@ public class Vocabulary {
     }
 
     public String getConceptScheme(String uri) throws Exception{
-        String vocUri;
+        String vocUri = null;
         if (uri.contains("#")) //hash uri case, skos concept
             vocUri = uri.substring(0, uri.lastIndexOf('#'));
         else {
-            String graph = Util.getGraphNameOfVocUri(uri);
-            if (graph != null) //uri is a skos conceptScheme)
-                vocUri = uri;
-            else //2nd pass with end truncation
-                vocUri = uri.substring(0, uri.lastIndexOf('/'));
+//            String graph = Util.getGraphNameOfVocUri(uri);
+//            if (graph != null) //uri is a skos conceptScheme)
+//                vocUri = uri;
+//            else //2nd pass with end truncation
+//                vocUri = uri.substring(0, uri.lastIndexOf('/'));
         }
         return vocUri;
     }
@@ -124,7 +124,7 @@ public class Vocabulary {
         if (!forceConceptScheme) //check and/or retrieve scheme uri first
             uri = getConceptScheme(uri);
 
-        String graph = Util.getGraphName(uri);
+//        String graph = Util.getGraphName(uri);
 //        Triple[] triples = tripleStore.getTriplesWithPredicateObject(Constants.SKOS_TOP_CONCEPT_OF, uri, false, graph);
 //        String[] res = new String[triples.length];
 //        for (int i = 0; i < triples.length; i++)
@@ -139,7 +139,7 @@ public class Vocabulary {
     }*/
 
     public String[] getChildren(String uri) throws Exception {
-        String graph = Util.getGraphName(uri);
+//        String graph = Util.getGraphName(uri);
 //        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, Constants.SKOS_NARROWER, graph);
 //        String[] res = new String[triples.length];
 //        for (int i = 0; i < triples.length; i++)
@@ -150,7 +150,7 @@ public class Vocabulary {
     }
 
     public String[] getSubConcepts(String uri) throws Exception {
-        String graph = Util.getGraphName(uri);
+//        String graph = Util.getGraphName(uri);
 //        Hashtable<String, String>[] results = tripleStore.getResultsFromGraph("getSubConcepts.sparql", graph, uri);
 //        String[] res = new String[results.length];
 //        for (int i = 0; i < results.length; i++)
@@ -160,7 +160,7 @@ public class Vocabulary {
     }
 
     public String[] getHierarchy(String uri) throws Exception {
-        String graph = Util.getGraphName(uri);
+//        String graph = Util.getGraphName(uri);
 //        Hashtable<String, String>[] results = tripleStore.getResultsFromGraph("getConceptHierarchy.sparql", graph, uri);
 //        String[] res = new String[results.length];
 //        for (int i = 0; i < results.length; i++)

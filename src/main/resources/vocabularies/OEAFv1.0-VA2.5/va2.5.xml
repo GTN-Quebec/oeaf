@@ -16,42 +16,42 @@
     <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T020">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T020</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">en ligne</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">on-line</skos:prefLabel>
     <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T030">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T030</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">hybride</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">blended</skos:prefLabel>
     <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T040">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T040</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">webdiffusion</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">webcasting</skos:prefLabel>
     <skos:broader rdf:resource="#T020"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T050">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T050</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">baladodiffusion</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">podcasting</skos:prefLabel>
     <skos:broader rdf:resource="#T020"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T060">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T060</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">collaboratif en ligne</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">computer-supported collaborative</skos:prefLabel>
     <skos:broader rdf:resource="#T020"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T070">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T010</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.5#T070</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.5"/>
     <skos:prefLabel xml:lang="fr-CA">assisté par ordinateur</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">computer-based</skos:prefLabel>

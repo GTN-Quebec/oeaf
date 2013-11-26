@@ -93,7 +93,7 @@
     <skos:topConceptOf rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.1"/>
   </skos:Concept>
   <skos:Concept rdf:ID="T037">
-    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.1#T070</dc:identifier>
+    <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.1#T037</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.1"/>
     <skos:prefLabel xml:lang="fr-CA">centre de formation</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">training center</skos:prefLabel>

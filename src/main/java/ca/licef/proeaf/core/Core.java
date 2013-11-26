@@ -1,5 +1,6 @@
 package ca.licef.proeaf.core;
 
+import ca.licef.proeaf.vocabularies.COMETE;
 import ca.licef.proeaf.vocabulary.Vocabulary;
 import licef.tsapi.TripleStore;
 
@@ -21,8 +22,6 @@ public class Core {
     private String version;
     private String uriPrefix;
     private String smtpHost;
-
-    public static final String[] INDEX_LANGUAGES = { "en", "fr", "es" };
 
     public static Core getInstance() {
         if (core == null)
@@ -77,6 +76,7 @@ public class Core {
     private void initTripleStore() {
         if (tripleStore == null) {
             tripleStore = new TripleStore(proeafHome + "/database", proeafHome, getUriPrefix());
+            tripleStore.registerVocabulary("http://comete.licef.ca/reference#", COMETE.class);
             tripleStore.startServer();
         }
     }

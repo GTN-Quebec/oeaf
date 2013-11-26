@@ -3,7 +3,7 @@ PREFIX comete: <http://comete.licef.ca/reference#>
 
 SELECT DISTINCT ?s ?uri ?graph
 WHERE {
-    ?s rdf:type <comete:VocContext> .
+    ?s rdf:type comete:VocContext .
     ?s comete:vocUri ?uri .
     ?s comete:vocGraph ?graph
 }

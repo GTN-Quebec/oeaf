@@ -38,11 +38,11 @@ public class QueryEngine {
     private ResultSet advancedSearch( String clauses, int count, String lang, int start, int limit ) throws Exception {
         TripleStore tripleStore = Core.getInstance().getTripleStore();
 
-        ResultSet rs;
+        ResultSet rs = null;
         if( count > 0 ) {
-            Hashtable<String, String>[] results =
-                    tripleStore.getResults("getLearningObjectsAdvancedQuery.sparql", clauses, start, limit);
-            rs = buildResultSet(results, count, lang);
+//            Hashtable<String, String>[] results =
+//                    tripleStore.getResults("getLearningObjectsAdvancedQuery.sparql", clauses, start, limit);
+//            rs = buildResultSet(results, count, lang);
         }
         else
             rs = new ResultSet();

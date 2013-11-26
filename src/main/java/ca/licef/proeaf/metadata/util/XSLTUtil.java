@@ -40,7 +40,7 @@ public class XSLTUtil {
         str.append(triple.getSubject()).append("###");
         str.append(triple.getPredicate()).append("###");
         str.append(triple.getObject()).append("###");
-        str.append(triple.isLiteral());
+        str.append(triple.isObjectLiteral());
         if (triple.getLanguage() != null)
             str.append("###").append(triple.getLanguage());
         return (str.toString());

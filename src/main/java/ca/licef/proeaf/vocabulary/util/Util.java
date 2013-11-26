@@ -24,7 +24,7 @@ public class Util {
     public static final int SKOS_FORMAT = 1;
     public static final int VDEX_FORMAT = 2;
 
-    public static int getVocabularyFormatFromLocation(String location) throws Exception {
+    /*public static int getVocabularyFormatFromLocation(String location) throws Exception {
         String content = (IOUtil.isURL(location))?IOUtil.readStringFromURL(new URL(location)):
                 IOUtil.readStringFromFile(new File(location));
         return getVocabularyFormat(content);
@@ -79,6 +79,6 @@ public class Util {
 //            graph = ca.licef.proeaf.core.util.Util.manageQuotes(res[0].get("graph"));
 
         return graph;
-    }
+    }*/
 
 }

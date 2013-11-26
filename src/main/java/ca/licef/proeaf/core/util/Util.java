@@ -1,6 +1,7 @@
 package ca.licef.proeaf.core.util;
 
 import ca.licef.proeaf.core.Core;
+import ca.licef.proeaf.vocabularies.COMETE;
 import licef.CommonNamespaceContext;
 import licef.IOUtil;
 import licef.StringUtil;
@@ -78,7 +79,7 @@ public class Util {
         if (id.startsWith("http://"))
             return id;
         String typeVal = getTypeLabel(type);
-        return Core.getInstance().getUriPrefix() + "/" + typeVal + "/" + getIdNumberValue(id);
+        return Core.getInstance().getUriPrefix() + typeVal + "/" + getIdNumberValue(id);
     }
 
     /**
@@ -103,44 +104,15 @@ public class Util {
 
     public static String getTypeLabel(String type) {
         String typeVal = null;
-/*
-        if (Constants.TYPE_METADATA_RECORD.equals(type))
-            typeVal = "metadatarecord";
-        else if (Constants.TYPE_LEARNING_OBJECT.equals(type))
-            typeVal = "learningobject";
-        else if (Constants.TYPE_PERSON.equals(type))
-            typeVal = "person";
-        else if (Constants.TYPE_ORGANIZATION.equals(type))
-            typeVal = "organization";
-        else if (Constants.TYPE_REPOSITORY.equals(type))
-            typeVal = "repository";
-        else if (Constants.TYPE_VOCABULARY_CONTEXT.equals(type))
+        if (COMETE.VocContext.getURI().equals(type))
             typeVal = "voccontext";
-*/
         return typeVal;
     }
 
     public static String getRestUrl(String type) {
-        Core core = Core.getInstance();
         String url = null;
-/*
-        if (Constants.TYPE_METADATA_RECORD.equals(type))
-            url = core.getMetadataUrl() + "/rest/metadataRecords";
-        else if (Constants.TYPE_LEARNING_OBJECT.equals(type))
-            url = core.getMetadataUrl() + "/rest/learningObjects";
-        else if (Constants.TYPE_IDENTITY.equals(type))
-            url = core.getIdentityUrl() + "/rest/identities";
-        else if (Constants.TYPE_PERSON.equals(type))
-            url = core.getIdentityUrl() + "/rest/persons";
-        else if (Constants.TYPE_ORGANIZATION.equals(type))
-            url = core.getIdentityUrl() + "/rest/organizations";
-        else if (Constants.TYPE_REPOSITORY.equals(type))
-            url = core.getMetadataUrl() + "/rest/repositories";
-        else if (Constants.TYPE_VOCABULARY_CONTEXT.equals(type))
-            url = core.getVocabularyUrl() + "/rest/vocContexts";
-        else if (Constants.TYPE_VOCABULARY.equals(type))
-            url = core.getVocabularyUrl() + "/rest/voc";
-*/
+        if (COMETE.VocContext.getURI().equals(type))
+            url = "/rest/vocContexts";
         return url;
     }
 

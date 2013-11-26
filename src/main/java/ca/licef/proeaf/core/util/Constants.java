@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class Constants {
 
+    public static final String[] INDEX_LANGUAGES = { "en", "fr", "es" };
+
     public static final String[] UI_LANGUAGES = { "en", "fr" };
 
     //Path
@@ -71,13 +73,13 @@ public class Constants {
 
     //Namespace Sets
     static final String[] _LITERAL_PREDICATES = new String[] {
-        LABEL, OEAF_IDENTIFIER, MLR_TITLE, OEAF_DESCRIPTION,
-        METAMODEL_VOCABULARY_ID, METAMODEL_VOCABULARY_SOURCE, METAMODEL_VOCABULARY_SOURCE_LOCATION, METAMODEL_VOCABULARY_GRAPH,
-        METAMODEL_VOCABULARY_NAVIGABLE, METAMODEL_VOCABULARY_ALIAS, SKOS_LABEL
+//        LABEL, OEAF_IDENTIFIER, MLR_TITLE, OEAF_DESCRIPTION,
+//        METAMODEL_VOCABULARY_ID, METAMODEL_VOCABULARY_SOURCE, METAMODEL_VOCABULARY_SOURCE_LOCATION, METAMODEL_VOCABULARY_GRAPH,
+//        METAMODEL_VOCABULARY_NAVIGABLE, METAMODEL_VOCABULARY_ALIAS, SKOS_LABEL
     };
 
     static final String[] _FULL_TEXT_PREDICATES = new String[] {
-        LABEL, MLR_TITLE, OEAF_DESCRIPTION
+//        LABEL, MLR_TITLE, OEAF_DESCRIPTION
     };
 
     static final String[] _DATE_PREDICATES = new String[] {
