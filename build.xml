@@ -1,7 +1,8 @@
 <project name="master">
 
     <property name="dist.dir" location="dist" />
-    <property file="config/src/main/resources/build.properties" />
+    <property file="src/main/resources/core.properties" />
+    <!--property file="config/src/main/resources/build.properties" /-->
 
 
     <!-- ================= Configuration =================== -->    
