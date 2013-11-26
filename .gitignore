@@ -9,6 +9,6 @@ bin/
 *.bak
 mulgara/dist
 mulgara/obj
-*/tags
-*/target
+target
 core.properties
+tags
