@@ -1,20 +1,10 @@
-﻿/*********************/
-/*** Services URLs ***/
-/*********************/
-
-var securityUrl = '${Security.webapp.url}';
-var queryEngineUrl = '${QueryEngine.webapp.url}';
-var metadataUrl = '${Metadata.webapp.url}';
-var vocabularyUrl = '${Vocabulary.webapp.url}';
-
-
-/***********************/
+﻿/***********************/
 /*** Authorized flag ***/
 /***********************/
 var authorized = false;
 function setAuthorized(callback) {
     Ext.Ajax.request( {
-        url: securityUrl + '/rest/isAuthorized',
+        url: '/rest/security/isAuthorized',
         method: 'GET',
         success: function(response, opts) {
             authorized = response.responseText == 'true';
@@ -34,7 +24,7 @@ Ext.override(Ext.Window, {
 
 
 function utilsInit( lg ) {
-    vocabProxy.url = vocabularyUrl + '/rest/voc/all?lang=' + lg;
+    vocabProxy.url = vocabularyUrl + '/rest/vocs?lang=' + lg;
     vocCtxtProxy.url = vocabularyUrl + '/rest/vocContexts?lang=' + lg;
 }
 

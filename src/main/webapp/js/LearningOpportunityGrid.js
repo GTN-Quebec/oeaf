@@ -2,7 +2,7 @@
     extend: 'Ext.grid.Panel',
     initComponent: function (config) { 
 
-        this.queryUrl = queryEngineUrl + '/rest/searchJson?lang=' + this.lang;
+        this.queryUrl = '/rest/queryEngine/searchJson?lang=' + this.lang;
 
         Ext.define('LearninOpportunityModel', {
             extend: 'Ext.data.Model',
