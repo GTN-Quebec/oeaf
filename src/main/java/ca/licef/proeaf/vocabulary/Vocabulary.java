@@ -1,14 +1,12 @@
 package ca.licef.proeaf.vocabulary;
 
 import ca.licef.proeaf.core.Core;
-import ca.licef.proeaf.core.util.Constants;
-import ca.licef.proeaf.vocabulary.util.Util;
+import ca.licef.proeaf.vocabularies.COMETE;
 import licef.tsapi.TripleStore;
-
-import javax.xml.transform.stream.StreamSource;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
+import licef.tsapi.model.Triple;
+import licef.tsapi.model.Tuple;
+import licef.tsapi.vocabulary.RDFS;
+import licef.tsapi.vocabulary.SKOS;
 
 public class Vocabulary {
 
@@ -30,143 +28,105 @@ public class Vocabulary {
         return vocabularyManager;
     }
 
-    public String convertVdexToSkos( URL url, String vocUri ) throws Exception {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put( "vocabularyUri", vocUri );
-        StreamSource source = new StreamSource( url.openStream() );
-        return( CoreUtil.applyXslToDocument( "convertVDEXToSKOS", source, params ) );
+    public String[] getVocabularies() throws Exception {
+        Triple[] triples = tripleStore.getTriplesWithPredicate(COMETE.vocUri);
+        String[] res = new String[triples.length];
+        for (int i = 0; i < triples.length; i++)
+            res[i] = triples[i].getObject();
+        return res;
     }
 
-    public String getGraphName(String source, String cat) throws Exception{
-        String graph = "voc_" + (source + "_" + cat).toLowerCase();
-
-//        if (!tripleStore.isGraphExists(graph))
-//            graph = null;
-        return graph;
+    public String[] getTopConcepts(String uri) throws Exception {
+        String graph = getGraphName(uri);
+        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, SKOS.hasTopConcept, graph);
+        String[] res = new String[triples.length];
+        for (int i = 0; i < triples.length; i++)
+            res[i] = triples[i].getObject();
+        return res;
     }
-
-    public String getRestUrl(String uri) throws Exception{
-        return CoreUtil.getRestUrl( Constants.TYPE_VOCABULARY ) + "/" + URLEncoder.encode(uri);
-    }
-
-    public String getConcept(String source, String cat, String concept) throws Exception{
-        concept = concept.replaceAll(" ", "_");
-        String graph = getGraphName(source, cat);
-        String uri = null;
-        if (graph != null) {
-            uri = Core.getInstance().getUriPrefix() + "/voc/" + source.toLowerCase() + "/" + cat + "/" + concept;
-//            if (!tripleStore.isResourceExists(uri, graph))
-//                uri = null;
-        }
-        return uri;
-    }
-
-    public String getConcept(String source, String concept) throws Exception {
-        String uri = null;
-        String vocUri = getVocabularyUri(source);
-        if (vocUri != null) {
-//            String graph = Util.getGraphName(vocUri);
-            uri = vocUri + "/" + concept;  // '/' uri
-            /*if (!tripleStore.isResourceExists(uri, graph)) {//check of concept existence in associated graph
-                uri = vocUri + "#" + concept; // or '#' uri
-                if (!tripleStore.isResourceExists(uri, graph))
-                    uri = null;
-            }*/
-        }
-        return uri;
-    }
-
-    public String getVocabularyUri(String source) throws Exception {
-        String uri = null;
-//        Hashtable<String,String>[] res = tripleStore.getResults("getVocUri.sparql", source);
-//        if (res.length > 0)
-//            uri = res[0].get("vocUri");
-        return uri;
-    }
-
-    public String getConceptScheme(String uri) throws Exception{
-        String vocUri = null;
-        if (uri.contains("#")) //hash uri case, skos concept
-            vocUri = uri.substring(0, uri.lastIndexOf('#'));
-        else {
-//            String graph = Util.getGraphNameOfVocUri(uri);
-//            if (graph != null) //uri is a skos conceptScheme)
-//                vocUri = uri;
-//            else //2nd pass with end truncation
-//                vocUri = uri.substring(0, uri.lastIndexOf('/'));
-        }
-        return vocUri;
-    }
-
-    public String getVocabularyTitle(String uri, String lang, boolean forceConceptScheme) throws Exception {
-        if (!forceConceptScheme) //check and/or retrieve scheme uri first
-            uri = getConceptScheme(uri);
-
-//        String[] label = tripleStore.getBestLocalizedLiteralObject(uri, Constants.LABEL, lang,
-//                TripleStoreService.VOC_GLOBAL_VIEW);
-//        if (label == null || label[ 0 ] == null || "".equals(label[ 0 ]))
-//            label = new String[] { uri, null } ;
-//        return label[0];
-
-        return null;
-    }
-
-    public String[] getNavigableVocabularies() throws Exception{
-//        Hashtable<String, String>[] results = tripleStore.getResults("getNavigableVocabularies.sparql");
-//        String[] res = new String[results.length];
-//        for (int i = 0; i < results.length; i++)
-//            res[i] = results[i].get("vocUri");
-//        return res;
-        return null;
-    }
-
-    public String[] getTopConcepts(String uri, boolean forceConceptScheme) throws Exception {
-        if (!forceConceptScheme) //check and/or retrieve scheme uri first
-            uri = getConceptScheme(uri);
-
-//        String graph = Util.getGraphName(uri);
-//        Triple[] triples = tripleStore.getTriplesWithPredicateObject(Constants.SKOS_TOP_CONCEPT_OF, uri, false, graph);
-//        String[] res = new String[triples.length];
-//        for (int i = 0; i < triples.length; i++)
-//            res[i] = triples[i].getSubject();
-//        return res;
-        return null;
-    }
-
-    /*public String[] getTopConcepts(String source, String cat) throws Exception {
-        String uri = getConceptScheme(source, cat);
-        return getTopConcepts(uri);
-    }*/
 
     public String[] getChildren(String uri) throws Exception {
-//        String graph = Util.getGraphName(uri);
-//        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, Constants.SKOS_NARROWER, graph);
-//        String[] res = new String[triples.length];
-//        for (int i = 0; i < triples.length; i++)
-//            res[i] = triples[i].getObject();
-//        return res;
-
-        return null;
+        String graph = getGraphName(uri);
+        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, SKOS.narrower, graph);
+        String[] res = new String[triples.length];
+        for (int i = 0; i < triples.length; i++)
+            res[i] = triples[i].getObject();
+        return res;
     }
 
     public String[] getSubConcepts(String uri) throws Exception {
-//        String graph = Util.getGraphName(uri);
-//        Hashtable<String, String>[] results = tripleStore.getResultsFromGraph("getSubConcepts.sparql", graph, uri);
-//        String[] res = new String[results.length];
-//        for (int i = 0; i < results.length; i++)
-//            res[i] = results[i].get("c");
-//        return res;
-        return null;
+        String graph = getGraphName(uri);
+        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, SKOS.narrowerTransitive, graph);
+        String[] res = new String[triples.length];
+        for (int i = 0; i < triples.length; i++)
+            res[i] = triples[i].getObject();
+        return res;
     }
 
     public String[] getHierarchy(String uri) throws Exception {
-//        String graph = Util.getGraphName(uri);
-//        Hashtable<String, String>[] results = tripleStore.getResultsFromGraph("getConceptHierarchy.sparql", graph, uri);
-//        String[] res = new String[results.length];
-//        for (int i = 0; i < results.length; i++)
-//            res[i] = results[i].get("parent");
-//        return res;
-        return null;
+        String graph = getGraphName(uri);
+        Triple[] triples = tripleStore.getTriplesWithPredicateObject(SKOS.narrowerTransitive, uri, false, null, graph);
+        String[] res = new String[triples.length];
+        for (int i = 0; i < triples.length; i++)
+            res[i] = triples[i].getSubject();
+        return res;
+    }
+
+    public String getLabel(String uri, String lang) throws Exception {
+        String graph = getGraphName(uri);
+        String[] label = tripleStore.getBetterLocalizedLiteralObject(uri, RDFS.label, lang, graph);
+        if (label == null || label[ 0 ] == null || "".equals(label[ 0 ]))
+            label = new String[] { uri, null } ;
+        return label[0];
+    }
+
+    public String getConceptScheme(String uri) throws Exception{
+        String vocUri;
+        if (uri.contains("#")) //hash uri case, skos concept
+            vocUri = uri.substring(0, uri.lastIndexOf('#'));
+        else
+            vocUri = uri.substring(0, uri.lastIndexOf('/'));
+
+        //check existence of skos concept scheme
+        String graph = getGraphNameOfVocUri(vocUri);
+        if (graph == null || !Core.getInstance().getTripleStore().isResourceExists(vocUri, graph))
+            vocUri = null;
+
+        return vocUri;
+    }
+
+    public String getGraphName(String uri) throws Exception{
+        String graph;
+        if (uri.contains("#")) { //hash uri case, skos concept
+            String vocUri = uri.substring(0, uri.lastIndexOf('#'));
+            graph = getGraphNameOfVocUri(vocUri);
+        }
+        else {
+            graph = getGraphNameOfVocUri(uri);
+            if (graph != null) //uri is a skos conceptScheme
+                return graph;
+            else { //2nd pass with real scheme
+                String vocUri = uri.substring(0, uri.lastIndexOf('/'));
+                graph = getGraphNameOfVocUri(vocUri);
+            }
+        }
+
+        //check existence of skos concept
+        if (graph != null && !Core.getInstance().getTripleStore().isResourceExists(uri, graph))
+            graph = null;
+        return graph;
+    }
+
+    public String getGraphNameOfVocUri(String vocUri) throws Exception{
+        //identifier may have space and uris are stored with url encoding
+//        vocUri = vocUri.replace(" ", "%20");
+        String graph = null;
+        String query = ca.licef.proeaf.core.util.Util.getQuery("getVocGraph.sparql", vocUri);
+        Tuple[] tuples = Core.getInstance().getTripleStore().sparqlSelect(query);
+        if (tuples.length > 0)
+            graph = tuples[0].getValue("graph").getContent();
+
+        return graph;
     }
 
 }

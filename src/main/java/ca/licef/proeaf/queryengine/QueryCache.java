@@ -1,10 +1,5 @@
 package ca.licef.proeaf.queryengine;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.json.JSONArray;
-
-import java.util.Hashtable;
-
 /**
  * Created with IntelliJ IDEA.
  * User: amiara

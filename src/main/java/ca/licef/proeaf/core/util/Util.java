@@ -2,12 +2,9 @@ package ca.licef.proeaf.core.util;
 
 import ca.licef.proeaf.core.Core;
 import ca.licef.proeaf.vocabularies.COMETE;
-import licef.CommonNamespaceContext;
 import licef.IOUtil;
 import licef.StringUtil;
 import licef.XMLUtil;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,8 +21,6 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 import java.awt.*;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
@@ -184,63 +179,6 @@ public class Util {
             list.add(lo.get(varName));
         }
         return list;
-    }
-
-    /* OLD Triples manipulation*/
-
-    /*public static Triple[] getTriplesPO( String subject, String json) throws Exception {
-        return getTriples(subject, null, null, json);
-    }
-
-    public static Triple[] getTriplesSP(String object, String json) throws Exception{
-        return getTriples(null, null, object, json);
-    }
-
-    public static Triple[] getTriplesS(String predicate, String object, String json) throws Exception    {
-        return getTriples(null, predicate, object, json);
-    }
-
-    public static Triple[] getTriplesO(String subject, String predicate, String json) throws Exception{
-        return getTriples(subject, predicate, null, json);
-    }
-
-    public static Triple[] getTriples(String subject, String predicate, String object, String json) throws Exception{
-        ArrayList<Triple> triples = new ArrayList<Triple>();
-        JSONObject jsonObj = new JSONObject(json);
-        JSONArray jsonArray = jsonObj.getJSONArray("results");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = (JSONObject)jsonArray.get(i);
-            Triple triple = new Triple( subject == null?obj.getString("s"):subject,
-                                        predicate == null?obj.getString("p"):predicate,
-                                        object == null?obj.getString("o"):object);
-            triples.add( triple );
-        }
-        return( triples.toArray(new Triple[triples.size()]) );
-    }       */
-
-    /* Results manipulation */
-
-    public static Hashtable<String, String>[] getResults(String json) throws Exception{
-        ArrayList<Hashtable<String, String>> list = new ArrayList<Hashtable<String, String>>();
-        JSONObject jsonObj = new JSONObject(json);
-        JSONArray jsonArray = jsonObj.getJSONArray("results");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            Hashtable<String, String> t = new Hashtable<String, String>();
-            JSONObject obj = (JSONObject)jsonArray.get(i);
-            for (Iterator it = obj.keys(); it.hasNext();) {
-                String key = (String)it.next();
-                String val = (String)obj.get(key);
-                if (val.startsWith("info:fedora/"))
-                    val = val.substring("info:fedora/".length());
-                t.put(key, val);
-            }
-            list.add(t);
-        }
-        Hashtable<String, String>[] results = new Hashtable[list.size()];
-        for (int i = 0; i < list.size(); i++)
-            results[i] = list.get(i);
-        
-        return results;
     }
 
     /*

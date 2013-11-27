@@ -6,7 +6,7 @@ PREFIX server: <#>
 
 SELECT DISTINCT ?s
 WHERE '{'
-    ?s rdf:type <oeaf:rc0003> .
+    ?s rdf:type oeaf:rc0003 .
     ?s dct:subject ?concept .
     GRAPH <server:voc-globalView> '{'
         ?concept skos:inScheme <{0}>

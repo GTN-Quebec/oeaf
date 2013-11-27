@@ -11,54 +11,23 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URLDecoder;
-import java.util.Hashtable;
 
 
 @Singleton
-@Path( "/voc" )
+@Path( "/vocs" )
 public class VocabularyResource {
 
 
     @GET
-    @Path( "{source}/{cat}/{concept}" )
-    @Produces( MediaType.TEXT_PLAIN )
-    public Response getVocabularyConcept( @PathParam( "source" ) String source, @PathParam( "cat" ) String cat, @PathParam( "concept" ) String concept ) throws Exception {
-        source = URLDecoder.decode(source, "UTF-8");
-        cat = URLDecoder.decode(cat, "UTF-8");
-        concept = URLDecoder.decode(concept, "UTF-8");
-        String uri = Vocabulary.getInstance().getConcept(source, cat, concept);
-        if (uri == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
-        else
-            return Response.ok(uri).build();
-    }
-
-    @GET
-    @Path( "{source}/{concept}" )
-    @Produces( MediaType.TEXT_PLAIN )
-    public Response findVocabularyConcept( @PathParam( "source" ) String source, @PathParam( "concept" ) String concept ) throws Exception {
-        source = URLDecoder.decode(source, "UTF-8");
-        concept = URLDecoder.decode(concept, "UTF-8");
-        String uri = Vocabulary.getInstance().getConcept( source, concept );
-        if (uri == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
-        else
-            return (Response.ok(uri).build());
-    }
-
-    @GET
-    @Path( "all" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularies( @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
-        String[] vocabularies = Vocabulary.getInstance().getNavigableVocabularies();
+    public Response getVocabularies( @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
+        String[] vocabularies = Vocabulary.getInstance().getVocabularies();
         StringWriter out = new StringWriter();
         try {
             JSONWriter json = new JSONWriter( out ).object();
@@ -67,8 +36,7 @@ public class VocabularyResource {
             for (String vocUri : vocabularies) {
                 JSONObject voc = new JSONObject();
                 voc.put( "uri", vocUri );
-                voc.put( "restUrl", Vocabulary.getInstance().getRestUrl(vocUri));
-                voc.put( "label", Vocabulary.getInstance().getVocabularyTitle(vocUri, lang, true) );
+                voc.put( "label", Vocabulary.getInstance().getLabel(vocUri, lang) );
                 vocabs.put(voc);
             }
             json.key( "vocabularies" ).value( vocabs );
@@ -85,17 +53,17 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
     }
 
     @GET
     @Path( "{uri}/topConcepts" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularyTopConcepts(  @PathParam( "uri" ) String uri,
+    public Response getVocabularyTopConcepts(  @PathParam( "uri" ) String uri,
                                @DefaultValue( "false" ) @QueryParam( "showIds" ) String showIds,
                                @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
 
-        String[] concepts = Vocabulary.getInstance().getTopConcepts(uri, true);
+        String[] concepts = Vocabulary.getInstance().getTopConcepts(uri);
         StringWriter out = new StringWriter();
         try {
             JSONWriter json = new JSONWriter( out ).object();
@@ -105,7 +73,7 @@ public class VocabularyResource {
                 _concepts.put(buildJSONConcept(concept, showIds, lang));
 
             json.key( "concepts" ).value( _concepts );
-            json.key( "label" ).value( Vocabulary.getInstance().getVocabularyTitle(uri, lang, false) );
+            json.key( "label" ).value( Vocabulary.getInstance().getLabel(uri, lang) );
 
             json.endObject();
         }
@@ -120,17 +88,16 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
     }
 
     @GET
     @Path( "{uri}/children" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularyConceptChildren( @PathParam( "uri" ) String uri,
+    public Response getVocabularyConceptChildren( @PathParam( "uri" ) String uri,
                                                         @DefaultValue( "false" ) @QueryParam( "showIds" ) String showIds,
                                                         @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
         String[] children = Vocabulary.getInstance().getChildren(uri);
-        TripleStore tripleStore = Core.getInstance().getTripleStore();
         StringWriter out = new StringWriter();
         try {
             JSONWriter json = new JSONWriter( out ).object();
@@ -139,15 +106,15 @@ public class VocabularyResource {
             for (String child : children)
                 _concepts.put(buildJSONConcept(child, showIds, lang));
 
-//            String label = tripleStore.getResourceLabel(uri, lang, true)[0];
-//            if (Boolean.parseBoolean(showIds)) {
-//                String[] spl = StringUtil.split(uri, '/');
-//                String id = spl[spl.length - 1];
-//                label = id + "&nbsp;&nbsp;" + label;
-//            }
-//            json.key( "concepts" ).value( _concepts );
-//            json.key( "uri" ).value( uri );
-//            json.key( "label" ).value( label );
+            String label = Vocabulary.getInstance().getLabel(uri, lang);
+            if (Boolean.parseBoolean(showIds)) {
+                String[] spl = StringUtil.split(uri, '/');
+                String id = spl[spl.length - 1];
+                label = id + "&nbsp;&nbsp;" + label;
+            }
+            json.key( "concepts" ).value( _concepts );
+            json.key( "uri" ).value( uri );
+            json.key( "label" ).value( label );
             json.endObject();
         }
         catch( JSONException e ) {
@@ -161,21 +128,13 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
     }
 
-    /*@GET
-    @Path( "graphName" )
-    @Produces( MediaType.TEXT_PLAIN )
-    public Response getVocabularyConceptGraphName( @QueryParam( "uri" ) String uri ) throws Exception {
-        String res = Util.getGraphName(uri);
-        return Response.ok(res).build();
-    }*/
-
     @GET
-    @Path( "{uri}/subconcepts" )
+    @Path( "{uri}/subConcepts" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularySubConcepts( @PathParam( "uri" ) String uri ) throws Exception {
+    public Response getVocabularySubConcepts( @PathParam( "uri" ) String uri ) throws Exception {
         String[] subs = Vocabulary.getInstance().getSubConcepts(uri);
         StringWriter out = new StringWriter();
         try {
@@ -199,13 +158,13 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
     }
 
     @GET
     @Path( "{uri}/hierarchy" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularyConceptHierarchy( @PathParam( "uri" ) String uri,
+    public Response getVocabularyConceptHierarchy( @PathParam( "uri" ) String uri,
                                                  @DefaultValue( "false" ) @QueryParam( "showIds" ) String showIds,
                                                  @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
         String[] concepts = Vocabulary.getInstance().getHierarchy(uri);
@@ -234,13 +193,13 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
     }
 
-    @GET
+    /*@GET
     @Path( "{uri}/extendedHierarchy" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String getVocabularyConceptsHierarchy( @PathParam( "uri" ) String uri,
+    public Response getVocabularyConceptsHierarchy( @PathParam( "uri" ) String uri,
                                                   @DefaultValue( "false" ) @QueryParam( "showIds" ) String showIds,
                                                   @DefaultValue( "en" ) @QueryParam( "lang" ) String lang ) throws Exception {
         StringWriter out = new StringWriter();
@@ -249,14 +208,14 @@ public class VocabularyResource {
 
             JSONArray _all = new JSONArray();
 
-            String[] topConcepts = Vocabulary.getInstance().getTopConcepts(uri, false);
+            String[] topConcepts = Vocabulary.getInstance().getTopConcepts(uri);
             JSONObject top = new JSONObject();
             JSONArray _concepts = new JSONArray();
             for (String concept : topConcepts)
                 _concepts.put(buildJSONConcept(concept, showIds, lang));
 
             top.put( "concepts", _concepts );
-            top.put( "label", Vocabulary.getInstance().getVocabularyTitle(uri, lang, false) );
+            top.put( "label", Vocabulary.getInstance().getLabel(uri, lang) );
             _all.put(top);
 
             String[] hierarchy = Vocabulary.getInstance().getHierarchy(uri);
@@ -296,34 +255,32 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
-    }
+        return Response.ok(out.toString()).build();
+    }*/
 
     private JSONObject buildJSONConcept(String uri, String showIds, String lang) throws Exception{
-        TripleStore tripleStore = Core.getInstance().getTripleStore();
         JSONObject _concept = new JSONObject();
-//        String label = tripleStore.getResourceLabel(uri, lang, true)[0];
-//        if (Boolean.parseBoolean(showIds)) {
-//            char delimiter = '/';
-//            if (uri.contains("#"))
-//                delimiter = '#';
-//            String[] spl = StringUtil.split(uri, delimiter);
-//            String id = spl[spl.length - 1];
-//            label = id + "&nbsp;&nbsp;" + label;
-//        }
-//        _concept.put( "uri", uri );
-//        _concept.put( "restUrl", Vocabulary.getInstance().getRestUrl(uri));
-//        _concept.put( "label", label );
+        String label = Vocabulary.getInstance().getLabel(uri, lang);
+        if (Boolean.parseBoolean(showIds)) {
+            char delimiter = '/';
+            if (uri.contains("#"))
+                delimiter = '#';
+            String[] spl = StringUtil.split(uri, delimiter);
+            String id = spl[spl.length - 1];
+            label = id + "&nbsp;&nbsp;" + label;
+        }
+        _concept.put( "uri", uri );
+        _concept.put( "label", label );
         String[] children2 = Vocabulary.getInstance().getChildren(uri);
         if (children2.length == 0)
             _concept.put( "leaf", "true" );
         return _concept;
     }
 
-    @GET
+    /*@GET
     @Path( "search" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String searchJson( @QueryParam( "q" ) String terms,
+    public Response searchJson( @QueryParam( "q" ) String terms,
                               @DefaultValue( "false" ) @QueryParam( "showIds" ) String showIds,
                               @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
         if ("".equals(terms))
@@ -368,8 +325,8 @@ public class VocabularyResource {
             e.printStackTrace();
         }
 
-        return( out.toString() );
-    }
+        return Response.ok(out.toString()).build();
+    }*/
 
     @Context
     private ServletContext context;

@@ -1,19 +1,11 @@
 package ca.licef.proeaf.queryengine;
 
 import ca.licef.proeaf.core.Core;
-import ca.licef.proeaf.core.util.Constants;
 import ca.licef.proeaf.core.util.ResultSet;
-import ca.licef.proeaf.core.util.Util;
-import licef.IOUtil;
 import licef.tsapi.TripleStore;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import javax.ws.rs.core.MediaType;
-import java.text.MessageFormat;
 import java.util.Hashtable;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class QueryEngine {
 

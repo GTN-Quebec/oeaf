@@ -1,17 +1,10 @@
 package ca.licef.proeaf.queryengine.util;
 
 import ca.licef.proeaf.core.Core;
-import ca.licef.proeaf.core.util.Constants;
 import ca.licef.proeaf.queryengine.QueryCache;
-import licef.DateUtil;
 import licef.tsapi.TripleStore;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import javax.ws.rs.core.MediaType;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
-import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.

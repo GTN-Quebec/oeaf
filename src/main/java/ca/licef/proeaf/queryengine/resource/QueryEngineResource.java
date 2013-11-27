@@ -34,7 +34,7 @@ public class QueryEngineResource implements Serializable {
         return Response.ok("/queryEngine REST service available.").build();
     }
 
-    @GET
+    /*@GET
     @Path( "searchJson" )
     @Produces( MediaType.APPLICATION_JSON )
     public String searchJson( @DefaultValue( "" ) @QueryParam( "q" ) String query, 
@@ -113,5 +113,5 @@ public class QueryEngineResource implements Serializable {
         }
 
         return( out.toString() );
-    }
+    }*/
 }

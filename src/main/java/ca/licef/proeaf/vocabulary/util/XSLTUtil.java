@@ -25,7 +25,7 @@ public class XSLTUtil {
         if (rejectedIdentifiers.contains(identifier))
             return null;
         if (!vocUris.containsKey(identifier)) {
-            String vocUri = Vocabulary.getInstance().getVocabularyUri(identifier);
+            String vocUri = Vocabulary.getInstance().getConceptScheme(identifier);
             if (vocUri != null)
                 vocUris.put(identifier, vocUri);
             else {

@@ -3,7 +3,7 @@ PREFIX comete: <http://comete.licef.ca/reference#>
 
 SELECT ?vocUri ?vocId ?src ?location ?graph ?navigable ?doId
 WHERE '{'
-    <{0}> rdf:type <comete:VocContext> .
+    <{0}> rdf:type comete:VocContext .
     <{0}> comete:vocUri ?vocUri .
     <{0}> comete:vocId ?vocId .
     <{0}> comete:vocSource ?src .

@@ -1,7 +1,6 @@
 package ca.licef.proeaf.core;
 
 import ca.licef.proeaf.vocabularies.COMETE;
-import ca.licef.proeaf.vocabulary.Vocabulary;
 import licef.tsapi.TripleStore;
 
 import java.util.ResourceBundle;

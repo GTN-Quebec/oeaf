@@ -1,7 +1,5 @@
 package ca.licef.proeaf.core.util;
 
-import ca.licef.proeaf.core.Core;
-
 /**
  * Created with IntelliJ IDEA.
  * User: amiara

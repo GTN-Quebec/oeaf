@@ -3,5 +3,5 @@ PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
 SELECT ?s
 WHERE {
-    ?s rdf:type <oeaf:rc0003>
+    ?s rdf:type oeaf:rc0003
 }

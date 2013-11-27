@@ -1,33 +1,23 @@
 package ca.licef.proeaf.vocabulary;
 
 import ca.licef.proeaf.core.Core;
-import ca.licef.proeaf.core.util.Constants;
 import ca.licef.proeaf.vocabularies.COMETE;
-import ca.licef.proeaf.vocabulary.util.Util;
-import com.hp.hpl.jena.rdf.model.Property;
 import licef.IOUtil;
-import licef.StringUtil;
 import licef.XMLUtil;
 import licef.tsapi.TripleStore;
 import licef.tsapi.model.Triple;
-import licef.tsapi.model.Tuple;
-import licef.tsapi.vocabulary.DCTERMS;
 import licef.tsapi.vocabulary.RDF;
-import licef.tsapi.vocabulary.RDFS;
-import licef.tsapi.vocabulary.SKOS;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.servlet.ServletContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
-import java.net.URL;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -116,7 +106,6 @@ public class VocabularyManager {
         String graph = "voc_" + (source + "_" + cat).toLowerCase();
 
         Triple[] res = tripleStore.getTriplesWithPredicateObject(COMETE.vocGraph, graph, true, null);
-
         if (res.length > 0)
             uri = res[0].getSubject();
 
