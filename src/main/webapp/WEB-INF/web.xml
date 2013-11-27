@@ -30,7 +30,8 @@
             <param-value>ca.licef.proeaf.metadata.resource,
                          ca.licef.proeaf.queryengine.resource,
                          ca.licef.proeaf.security.resource,
-                         ca.licef.proeaf.vocabulary.resource</param-value>
+                         ca.licef.proeaf.vocabulary.resource,
+                         ca.licef.proeaf.harvester.resource</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.config.feature.XmlRootElementProcessing</param-name>
