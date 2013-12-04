@@ -1,4 +1,4 @@
-package ca.licef.proeaf.core.util;
+package ca.licef.proeaf.queryengine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +46,11 @@ public class ResultSet {
         this.totalRecords = totalRecords;
     }
 
-    public void setAdditionalData( String key, String value ) {
+    public void setAdditionalData( String key, Object value ) {
         additionalData.put( key, value );
     }
 
-    public String getAdditionalData( String key ) {
+    public Object getAdditionalData( String key ) {
         if( !additionalData.containsKey( key ) )
             return( null );
         return( additionalData.get( key ) );
@@ -84,6 +84,6 @@ public class ResultSet {
     private int totalRecords;
     private ArrayList<Object> entries = new ArrayList<Object>();
 
-    private HashMap<String,String> additionalData = new HashMap<String,String>();
+    private HashMap<String,Object> additionalData = new HashMap<String,Object>();
 
 }

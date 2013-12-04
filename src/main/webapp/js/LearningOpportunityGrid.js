@@ -2,11 +2,11 @@
     extend: 'Ext.grid.Panel',
     initComponent: function (config) { 
 
-        this.queryUrl = '/rest/queryEngine/searchJson?lang=' + this.lang;
+        this.queryUrl = 'rest/queryEngine/search?';
 
         Ext.define('LearninOpportunityModel', {
             extend: 'Ext.data.Model',
-            fields: [ 'id', 'title', 'location', 'date' ]
+            fields: [ 'id', 'title', 'location' ]
         });
 
         this.proxy = Ext.create('Ext.data.proxy.Ajax', {
@@ -17,24 +17,13 @@
             }
         });
 
-        var myData = [
-                { 'id': 'lo-1', "title":"ADM3300", "location":"UQAM", "date":"2013-11-20" },
-                { 'id': 'lo-2', "title":"INF6200", "location":"TELUQ", "date":"2013-10-17" },
-                { 'id': 'lo-3', "title":"INF5100", "location":"TELUQ", "date":"2013-12-05" },
-                { 'id': 'lo-4', "title":"ADM3300", "location":"UQAM", "date":"2013-11-20" },
-                { 'id': 'lo-5', "title":"INF6200", "location":"TELUQ", "date":"2013-10-17" },
-                { 'id': 'lo-6', "title":"INF5100", "location":"TELUQ", "date":"2013-12-05" },
-                { 'id': 'lo-7', "title":"ADM3300", "location":"UQAM", "date":"2013-11-20" },
-                { 'id': 'lo-8', "title":"INF6200", "location":"TELUQ", "date":"2013-10-17" },
-                { 'id': 'lo-9', "title":"INF5100", "location":"TELUQ", "date":"2013-12-05" }
-            ];
-
         this.loStore = Ext.create('Ext.data.JsonStore', {
             model: 'LearninOpportunityModel',
             pageSize: 20,
-            proxy: this.proxy,
-            data: myData
+            proxy: this.proxy
         });
+
+        this.loStore.on( 'load', this.updateResults, this );
 
         this.pageBar = Ext.create('Ext.toolbar.Paging', {
             store: this.loStore,
@@ -45,26 +34,26 @@
             lastText: tr('Last Page'),
             refreshText: tr('Refresh'),
             afterPageText: tr('of {0}'),
-            displayMsg: tr( 'Offers {0} - {1} of {2}' ),
-            emptyMsg: tr( "No resource available" )
+            displayMsg: tr( 'Opportunities {0} - {1} of {2}' ),
+            emptyMsg: ""
         } ),
 
         cfg = {
             store: this.loStore,
             columns: [ 
                 { text: 'Id', width: 100,  dataIndex: 'id', hidden: true },
-                { text: 'Title', flex: 1, dataIndex: 'title', sortable: true},
-                { text: 'Location', width: 80,  dataIndex: 'location', sortable: true},
-                { text: 'Date', width: 80,  dataIndex: 'date', sortable: true}
+                { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true},
+                { text: tr('Location'), width: 80,  dataIndex: 'location', sortable: true}
             ],          
             viewConfig: {
-                loadingText: tr('Loading') + '...',
+                loadingText: tr('Search in progress') + '...',
                 stripeRows: false
             },
-            bbar: this.pageBar
+            bbar: this.pageBar,
+            tbar: this.tPageBar
         };
         Ext.apply(this, cfg);
-        this.callParent(arguments);          
+        this.callParent(arguments);   
     },
     getCurrentPage: function() {
         return this.loStore.currentPage; 
@@ -84,7 +73,32 @@
     },
     clear: function() {
         this.loStore.loadRawData([]);
-    }
+    },
+    doQuery: function(query) { 
+        this.currentQuery = query;
+        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(query)) + '&isFacetInfos=true';
+        this.loStore.load();
+    },
+    updateResults: function() {
+        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery));
+        this.updateResultInfos();
+        var facetInfos = this.proxy.reader.jsonData.facetInfos;
+        if (facetInfos != undefined)
+            manager.updateFacets(facetInfos);
+    },
+    updateResultInfos: function() { 
+        var nbResults = this.loStore.getTotalCount();
+        var label = tr( 'No opportinity found' );
+        var atLeastOneResult = true;
+        if (nbResults == 1)
+            label = '1 ' + tr( 'opportunity found' );
+        else if (nbResults > 1)
+            label = nbResults + ' ' + tr( 'opportunities found' );
+        else
+            atLeastOneResult = false;
+         
+        this.columns[1].setText(tr(label) + '.');
+    }    
 } );
 
 

@@ -7,6 +7,8 @@
 
     'Close': 'Fermer',
 
+    'Search in progress': 'Recherche en cours',
+
     'Id': 'Identifiant',
     'Title': 'Titre',
     'Location': 'Localisation',
@@ -18,12 +20,12 @@
     'Last Page': 'Dernière page',
     'Refresh': 'Rafraîchir',    
     'of {0}': 'sur {0}',
-    'Offers {0} - {1} of {2}': 'Offres {0} - {1} de {2}',
-    'No offer available': 'Aucune offre disponible',
+    'Opportunities {0} - {1} of {2}': 'Opportunités {0} - {1} de {2}',
 
-    'Offer': 'Offre',
-    'Offer found': 'Offre trouvée',
-    'Offers found': 'Offres trouvées',
+    'Opportunity': 'Opportunité',
+    'Opportunities': 'Opportunités',
+    'opportunity found': 'opportunité trouvée',
+    'opportunities found': 'opportunités trouvées',
 
 };
 

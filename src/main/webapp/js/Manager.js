@@ -1,9 +1,9 @@
-﻿Ext.define( 'Proeaf.Content', {
+﻿Ext.define( 'Proeaf.Manager', {
     extend: 'Ext.panel.Panel',
     layout: 'border',
     initComponent: function( config ) {
         
-        this.criterias = Ext.create('Proeaf.Facets', {
+        this.facets = Ext.create('Proeaf.Facets', {
             title: 'Critères',
             region: 'west',            
             width: 270,
@@ -31,7 +31,7 @@
         });
 
         cfg = {
-            items: [ this.criterias, this.contentPanel ]
+            items: [ this.facets, this.contentPanel ]
         };
         
         Ext.apply(this, cfg);
@@ -42,14 +42,20 @@
     },
     closeLoDetails: function() {
         this.contentPanel.getLayout().setActiveItem(this.loGrid);
+    },
+    doQuery: function(query) {
+        this.loGrid.doQuery(query);
+    },
+    updateFacets: function(facetInfos) {
+        this.facets.updateFacets(facetInfos);
     }
 });
 
 Ext.onReady( function() {
 
-    var content = Ext.create('Proeaf.Content', {
-        border: false,
-        region: 'center'
+    manager = Ext.create('Proeaf.Manager', {
+        region: 'center',
+        border: false
     });
 
     new Ext.Viewport( {
@@ -59,7 +65,7 @@ Ext.onReady( function() {
             border: false,
             items: [ { html: '<font size="5"><b>Prototype de mise en œuvre du profil OÉAF</b></font> (version 0.1)', 
                        margin: '5 0 0 10', region: 'north' }, 
-                     content ]
+                     manager ]
         }
     } );
 

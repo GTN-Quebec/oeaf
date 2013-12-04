@@ -1,10 +1,8 @@
 package ca.licef.proeaf.queryengine.resource;
 
-import ca.licef.proeaf.core.util.ResultSet;
-import ca.licef.proeaf.queryengine.QueryCache;
-import ca.licef.proeaf.queryengine.QueryEngine;
 import ca.licef.proeaf.queryengine.ResultEntry;
-import com.sun.jersey.spi.container.servlet.PerSession;
+import ca.licef.proeaf.queryengine.ResultSet;
+import ca.licef.proeaf.queryengine.QueryEngine;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,13 +18,10 @@ import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-@PerSession
 @Path( "/queryEngine" )
 public class QueryEngineResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    transient QueryCache cache = new QueryCache();
 
     @GET
     @Produces( MediaType.TEXT_PLAIN )
@@ -34,10 +29,10 @@ public class QueryEngineResource implements Serializable {
         return Response.ok("/queryEngine REST service available.").build();
     }
 
-    /*@GET
-    @Path( "searchJson" )
+    @GET
+    @Path( "search" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String searchJson( @DefaultValue( "" ) @QueryParam( "q" ) String query, 
+    public String search( @DefaultValue( "" ) @QueryParam( "q" ) String query, @QueryParam( "isFacetInfos" ) String isFacetInfos,
         @DefaultValue( "0" ) @QueryParam( "start" ) String strStart, @DefaultValue( "20" ) @QueryParam( "limit" ) String strLimit,
         @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) {
 
@@ -61,11 +56,9 @@ public class QueryEngineResource implements Serializable {
             }
         }
 
-        ResultSet rs = null;
+        ResultSet rs;
         try {
-            if (cache == null)
-                cache = new QueryCache();
-            rs = QueryEngine.getInstance().search( query, lang, "json", start, limit, cache );
+            rs = QueryEngine.getInstance().search(query, "true".equals(isFacetInfos), lang, "json", start, limit);
         }
         catch( Exception e ) {
             throw( new WebApplicationException( e, HttpServletResponse.SC_INTERNAL_SERVER_ERROR ) );
@@ -77,15 +70,14 @@ public class QueryEngineResource implements Serializable {
             JSONWriter json = new JSONWriter( out );
         
             JSONArray learningOpportunities = new JSONArray();
-            
+
             for( ListIterator it = rs.getEntries(); it.hasNext(); ) {
                 ResultEntry entry = (ResultEntry)it.next();
 
                 JSONObject learningOpportunity = new JSONObject();
                 learningOpportunity.put("id", entry.getId())
-                    .put( "title", entry.getTitle() )
-                    .put( "desc", entry.getDescription() )
-                    .put( "type", entry.getType() );
+                    .put("title", entry.getTitle())
+                    .put("location", entry.getLocation());
                 learningOpportunities.put(learningOpportunity);
             }
 
@@ -95,7 +87,7 @@ public class QueryEngineResource implements Serializable {
 
             for( Iterator<String> it = rs.getAdditionalDataKeys(); it.hasNext(); ) {
                 String key = it.next();
-                String value = rs.getAdditionalData( key );
+                Object value = rs.getAdditionalData( key );
                 json.key( key ).value( value );
             }
 
@@ -113,5 +105,6 @@ public class QueryEngineResource implements Serializable {
         }
 
         return( out.toString() );
-    }*/
+
+    }
 }

@@ -35,7 +35,7 @@
     <script type="text/javascript" src="js/Facets.js"></script>
     <script type="text/javascript" src="js/LearningOpportunityGrid.js"></script>
     <script type="text/javascript" src="js/LearningOpportunity.js"></script>
-    <script type="text/javascript" src="js/Portal.js"></script>
+    <script type="text/javascript" src="js/Manager.js"></script>
 </head>
 <body>
 </body>

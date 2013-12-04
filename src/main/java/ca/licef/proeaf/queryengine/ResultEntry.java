@@ -5,10 +5,10 @@ public class ResultEntry {
     public ResultEntry() {
     }
 
-    public ResultEntry( String id, String title, String type ) {
+    public ResultEntry( String id, String title, String location ) {
         this.id = id;
         this.title = title;
-        this.type = type;
+        this.location = location;
     }
 
     public String getId() {
@@ -35,18 +35,18 @@ public class ResultEntry {
         this.description = description;
     }
 
-    public String getType() {
-        return( type );
+    public String getLocation() {
+        return location;
     }
 
-    public void setType( String type ) {
-        this.type = type;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     private String id;
     private String title;
     private String description;
-    private String type;
+    private String location;
 
 }
 

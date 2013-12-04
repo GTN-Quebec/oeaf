@@ -1,6 +1,6 @@
 package ca.licef.proeaf.harvester.resource;
 
-//import ca.licef.proeaf.core.util.ResultSet;
+//import ca.licef.proeaf.queryengine.ResultSet;
 import com.sun.jersey.multipart.FormDataParam;
 import com.sun.jersey.spi.resource.Singleton;
 //import org.json.JSONArray;

@@ -1,13 +1,18 @@
 package ca.licef.proeaf.queryengine;
 
 import ca.licef.proeaf.core.Core;
-import ca.licef.proeaf.core.util.ResultSet;
 import licef.tsapi.TripleStore;
+import licef.tsapi.model.Tuple;
+import org.apache.jena.atlas.json.JSON;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Hashtable;
 
 public class QueryEngine {
+
+    static ca.licef.proeaf.core.util.Util CoreUtil;
+    TripleStore tripleStore = Core.getInstance().getTripleStore();
 
     public static QueryEngine getInstance() {
         if( instance == null ) 
@@ -15,43 +20,123 @@ public class QueryEngine {
         return( instance );
     }
 
-    public ResultSet search( String query, String lang, String outputFormat, int start, int limit, QueryCache cache ) throws Exception {
+    public ResultSet search(String query, boolean isFacetInfosRequested, String lang, String outputFormat, int start, int limit) throws Exception {
         JSONArray queryArray = new JSONArray(query);
-        Object[] elements = ca.licef.proeaf.queryengine.util.Util.buildQueryElements(queryArray, cache);
-        String clauses = (String)elements[0];
-        int count = ((Integer)elements[1]).intValue();
-        ResultSet rs = advancedSearch(clauses, count, lang, start, limit );
-        String[] titleAndDesc = new String[]{};//ca.licef.proeaf.queryengine.util.Util.buildTitleAndDescription( queryArray, lang, outputFormat );
-        rs.setTitle( titleAndDesc[ 0 ] );
-        rs.setDescription( titleAndDesc[ 1 ] );
+        Hashtable<String, String> clauses = buildClauses(queryArray, isFacetInfosRequested);
+        ResultSet rs = advancedSearch(clauses.get("main"), lang, start, limit);
+        if (isFacetInfosRequested) {
+            JSONArray facetInfos = facetedSearch(clauses);
+            rs.setAdditionalData("facetInfos", facetInfos);
+        }
         return( rs );
     }
 
-    private ResultSet advancedSearch( String clauses, int count, String lang, int start, int limit ) throws Exception {
-        TripleStore tripleStore = Core.getInstance().getTripleStore();
-
-        ResultSet rs = null;
-        if( count > 0 ) {
-//            Hashtable<String, String>[] results =
-//                    tripleStore.getResults("getLearningObjectsAdvancedQuery.sparql", clauses, start, limit);
-//            rs = buildResultSet(results, count, lang);
+    /**
+     * Search for opportunities
+     * @param clauses
+     * @param lang
+     * @param start
+     * @param limit
+     * @return
+     * @throws Exception
+     */
+    private ResultSet advancedSearch(String clauses, String lang, int start, int limit) throws Exception {
+        String query = CoreUtil.getQuery("advancedSearchCount.sparql", clauses);
+        Tuple[] tuples = tripleStore.sparqlSelect(query);
+        int count = Integer.parseInt(tuples[0].getValue("count").getContent());
+        ResultSet rs = new ResultSet();
+        if (count > 0) {
+            query = CoreUtil.getQuery("advancedSearch.sparql", clauses, start, limit);
+            tuples = tripleStore.sparqlSelect(query);
+            for (Tuple tuple : tuples) {
+                ResultEntry entry = new ResultEntry();
+                entry.setId(tuple.getValue("s").getContent());
+                entry.setTitle(tuple.getValue("title").getContent());
+                entry.setLocation(tuple.getValue("univ").getContent());
+                rs.addEntry(entry);
+            }
+            rs.setTotalRecords(count);
         }
-        else
-            rs = new ResultSet();
 
         rs.setStart( start );
-        rs.setLimit( limit );         
-
+        rs.setLimit( limit );
         return rs;
     }
 
-    private ResultSet buildResultSet( Hashtable<String, String>[] results, int count, String lang) throws Exception {
-        ResultSet rs = new ResultSet();
-        rs.setTotalRecords( count );
-        return( rs );
+    /**
+     * Compute of facet informations related to advanced search
+     * @param clauses
+     * @return
+     * @throws Exception
+     */
+    private JSONArray facetedSearch(Hashtable<String, String> clauses) throws Exception {
+        JSONArray facetInfos = new JSONArray();
+        for (int i = 0; i < Core.getInstance().getFacetCount(); i++) {
+            JSONObject facet = new JSONObject();
+            String currentFacetId = "facet" + i;
+            facet.put("id", currentFacetId);
+            JSONArray values = new JSONArray();
+            String clauseFacet = CoreUtil.getQuery(
+                    "clause" + currentFacetId + ".sparql", currentFacetId);
+            String otherClauses = clauses.get(currentFacetId);
+            if (otherClauses == null)
+                otherClauses = clauses.get("main");
+            String query = CoreUtil.getQuery("facetedSearch.sparql", clauseFacet, otherClauses);
+            Tuple[] tuples = tripleStore.sparqlSelect(query);
+            for (Tuple tuple : tuples) {
+                JSONObject facetCriteria = new JSONObject();
+                facetCriteria.put("id", tuple.getValue("criteria").getContent());
+                facetCriteria.put("count", tuple.getValue("nbByCriteria").getContent());
+                values.put(facetCriteria);
+            }
+            facet.put("values", values);
+            facetInfos.put(facet);
+        }
+        return facetInfos;
     }
 
+    Hashtable<String, String> buildClauses(JSONArray queryArray, boolean isFacetInfosRequested) throws Exception {
+        Hashtable<String, String> clauses = new Hashtable<String, String>();
+        clauses.put("main", "");
+        for (int i = 0; i < queryArray.length(); i++) {
+            JSONObject facet = queryArray.getJSONObject(i);
+            JSONArray values = facet.getJSONArray("values");
+            String orClauses = "";
+            String firstClause = null;
+            String currentFacetId = facet.getString("id");
+            for (int j = 0; j < values.length(); j++) {
+                JSONObject facetCriteria = values.getJSONObject(j);
+                String clause = CoreUtil.getQuery(
+                        "clauseQuery" + currentFacetId + ".sparql", facetCriteria.getString("id"));
+                if (firstClause == null)
+                    firstClause = clause;
+                else {
+                    if (!orClauses.contains("UNION")) //braces for first clause (previous one) -AM
+                        orClauses = "\n{ " + firstClause + " }";
+                    orClauses += "\nUNION";
+                }
+                String orClause = (orClauses.endsWith("UNION"))?
+                        "\n{ " + clause + " }":
+                        "\n" + clause;
+                orClauses += orClause;
+            }
+            if (!orClauses.contains("UNION"))
+                orClauses += " .";
 
+            //Cumulate union blocks
+            String mainClauses = clauses.get("main");
+            if (isFacetInfosRequested) {
+                for (String facetKey : clauses.keySet()) {
+                    if (!"main".equals(facetKey))
+                        clauses.put(facetKey, clauses.get(facetKey) + orClauses);
+                }
+                clauses.put(currentFacetId, mainClauses);
+            }
+            clauses.put("main", mainClauses + orClauses);
+        }
+
+        return clauses;
+    }
     
     private static QueryEngine instance;
 

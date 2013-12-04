@@ -38,7 +38,7 @@ public class VocabularyManager {
         System.out.println("Vocabulary Module initialization...");
 
         //init SKOS ontology
-        tripleStore.loadContent(getClass().getResourceAsStream("/skos.rdf"), "skos-ontology");
+        tripleStore.loadContent(getClass().getResourceAsStream("/skos.rdf"), TripleStore.RDFXML, "skos-ontology");
 
         //vocs definition folder
         if (vocabulariesSourceDir == null)
@@ -139,7 +139,7 @@ public class VocabularyManager {
         String conceptSchemeVocUri = attributes.get("about").toString();
         tripleStore.insertTriple(new Triple(uri, COMETE.vocUri, conceptSchemeVocUri));
         //load content
-        tripleStore.loadContent(new FileInputStream(voc), graph);
+        tripleStore.loadContent(new FileInputStream(voc), TripleStore.RDFXML, graph);
 
         //Generation of inferred triples
         tripleStore.doInference(graph, "skos-ontology");

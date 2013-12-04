@@ -21,6 +21,7 @@ public class Core {
     private String version;
     private String uriPrefix;
     private String smtpHost;
+    private int facetCount;
 
     public static Core getInstance() {
         if (core == null)
@@ -36,6 +37,7 @@ public class Core {
             adminEmail = resBundle.getString("proeaf.admin.email");
             version = resBundle.getString("proeaf.version");
             smtpHost = resBundle.getString("smtp.host");
+            facetCount = Integer.parseInt(resBundle.getString("facets.count"));
 
             initTripleStore();
 
@@ -68,6 +70,9 @@ public class Core {
         return smtpHost;
     }
 
+    public int getFacetCount() {
+        return facetCount;
+    }
 
     /*
      * Triple Store services
@@ -85,15 +90,4 @@ public class Core {
             initTripleStore();
         return tripleStore;
     }
-
-
-    /*
-     * Client for REST communication between modules
-     */
-    /*public Client getRestClient() {
-        if (restClient == null)
-            restClient = Client.create();
-        return restClient;
-    }*/
-
 }
