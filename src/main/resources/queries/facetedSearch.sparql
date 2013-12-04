@@ -1,0 +1,11 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX oeaf: <http://licef.ca/oeaf/>
+
+SELECT  ?criteria (count(?s) as ?nbByCriteria)
+WHERE '{'
+    ?s rdf:type oeaf:cours .
+    {0} . 
+    {1}
+'}'
+GROUP BY ?criteria
