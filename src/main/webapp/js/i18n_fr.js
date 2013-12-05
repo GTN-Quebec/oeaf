@@ -26,6 +26,7 @@
     'Opportunities': 'Opportunités',
     'opportunity found': 'opportunité trouvée',
     'opportunities found': 'opportunités trouvées',
+    'See all opportunities':'Voir toutes les opportunités'
 
 };
 
