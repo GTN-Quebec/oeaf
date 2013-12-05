@@ -18,15 +18,21 @@
                   height: 110,
                   autoScroll: true,
                   items: [
-                      { id: 'http://teluq', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'TELUQ', 
+                      { id: 'http://univ0', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université 0', 
                                                                        handler: this.facetedSearch, scope: this }, 
                                                                      { xtype:'label', text: '', margin: '4 0 0 5' } ] },
-                      { id: 'http://uqam', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'UQAM', 
-                                                                      handler: this.facetedSearch, scope: this }, 
-                                                                    { xtype:'label', text: '', margin: '4 0 0 5' } ] },
-                      { id: 'http://usherb', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université de Sherbrooke', 
-                                                                        handler: this.facetedSearch, scope: this }, 
-                                                                      { xtype:'label', text: '', margin: '4 0 0 5' } ] },
+                      { id: 'http://univ1', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université 1', 
+                                                                       handler: this.facetedSearch, scope: this }, 
+                                                                     { xtype:'label', text: '', margin: '4 0 0 5' } ] },
+                      { id: 'http://univ2', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université 2', 
+                                                                       handler: this.facetedSearch, scope: this }, 
+                                                                     { xtype:'label', text: '', margin: '4 0 0 5' } ] },
+                      { id: 'http://univ3', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université 3', 
+                                                                       handler: this.facetedSearch, scope: this }, 
+                                                                     { xtype:'label', text: '', margin: '4 0 0 5' } ] },
+                      { id: 'http://univ4', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Université 4', 
+                                                                       handler: this.facetedSearch, scope: this }, 
+                                                                     { xtype:'label', text: '', margin: '4 0 0 5' } ] },
                   ]
                },
                { xtype: 'fieldset',
@@ -103,8 +109,10 @@
             for (j = 0; j < values.length; j++) {
                 var data = values[j];
                 var comp = facet.getComponent(data.id);
-                comp.getComponent(0).setDisabled(false);
-                comp.getComponent(1).setText("(" + data.count + ")");
+                if (comp != undefined) {
+                    comp.getComponent(0).setDisabled(false);
+                    comp.getComponent(1).setText("(" + data.count + ")");
+                }
             }            
         }
     }

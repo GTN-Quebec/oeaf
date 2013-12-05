@@ -76,8 +76,7 @@ public class QueryEngine {
             String currentFacetId = "facet" + i;
             facet.put("id", currentFacetId);
             JSONArray values = new JSONArray();
-            String clauseFacet = CoreUtil.getQuery(
-                    "clause" + currentFacetId + ".sparql", currentFacetId);
+            String clauseFacet = CoreUtil.getQuery("clause" + currentFacetId + ".sparql", "?criteria");
             String otherClauses = clauses.get(currentFacetId);
             if (otherClauses == null)
                 otherClauses = clauses.get("main");
@@ -106,8 +105,14 @@ public class QueryEngine {
             String currentFacetId = facet.getString("id");
             for (int j = 0; j < values.length(); j++) {
                 JSONObject facetCriteria = values.getJSONObject(j);
+                String criteria = facetCriteria.getString("id");
+                if (criteria.startsWith("http://"))
+                    criteria = "<" + criteria + ">";
+                else
+                    criteria = "\"" + criteria + "\"";
+
                 String clause = CoreUtil.getQuery(
-                        "clauseQuery" + currentFacetId + ".sparql", facetCriteria.getString("id"));
+                        "clause" + currentFacetId + ".sparql", criteria);
                 if (firstClause == null)
                     firstClause = clause;
                 else {
@@ -134,7 +139,6 @@ public class QueryEngine {
             }
             clauses.put("main", mainClauses + orClauses);
         }
-
         return clauses;
     }
     

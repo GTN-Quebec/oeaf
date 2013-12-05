@@ -77,7 +77,7 @@
     doQuery: function(query) { 
         this.currentQuery = query;
         this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(query)) + '&isFacetInfos=true';
-        this.loStore.load();
+        this.loStore.loadPage(1);
     },
     updateResults: function() {
         this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery));
