@@ -84,7 +84,7 @@
         this.updateResultInfos();
         var facetInfos = this.proxy.reader.jsonData.facetInfos;
         if (facetInfos != undefined)
-            manager.updateFacets(facetInfos);
+            searchManager.updateFacets(facetInfos);
     },
     updateResultInfos: function() { 
         var nbResults = this.loStore.getTotalCount();

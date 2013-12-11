@@ -87,6 +87,7 @@ Ext.define( 'Proeaf.Harvester', {
         var cfg = {
             id: 'harvester',
             layout: 'vbox',
+            margin: '10 0 10 10',
             items: [ this.statusPanel, this.newHarvestPanel ]
         };
         
@@ -122,7 +123,7 @@ Ext.define( 'Proeaf.Harvester', {
     }
 } );
 
-Ext.onReady( function() {
+/*Ext.onReady( function() {
 
     var harvester = Ext.create('Proeaf.Harvester', {
         border: false,
@@ -139,4 +140,4 @@ Ext.onReady( function() {
         } 
     } );
 
-} );
+} );*/

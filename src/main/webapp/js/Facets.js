@@ -93,7 +93,7 @@
         if (this.isUpdateProcess)
             return;
         var criterias = this.getCriterias();
-        manager.doQuery(criterias)
+        searchManager.doQuery(criterias)
     },
     getCriterias: function() {
         var criterias = new Array();

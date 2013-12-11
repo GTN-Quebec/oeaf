@@ -3,7 +3,9 @@
     'French': 'Français',
     'English': 'Anglais',
     'Search': 'Recherche',
+    'Harvester': 'Moissonneur',
     'About': 'A propos',
+
 
     'Close': 'Fermer',
 

@@ -81,7 +81,7 @@ public class Core {
         if (tripleStore == null) {
             tripleStore = new TripleStore(proeafHome + "/database", proeafHome, getUriPrefix());
             tripleStore.registerVocabulary("http://comete.licef.ca/reference#", COMETE.class);
-            tripleStore.startServer();
+            tripleStore.startServer(false);
         }
     }
 

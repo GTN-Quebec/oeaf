@@ -1,4 +1,4 @@
-﻿Ext.define( 'Proeaf.Manager', {
+﻿Ext.define( 'Proeaf.SearchManager', {
     extend: 'Ext.panel.Panel',
     layout: 'border',
     initComponent: function( config ) {
@@ -55,22 +55,3 @@
     }
 });
 
-Ext.onReady( function() {
-
-    manager = Ext.create('Proeaf.Manager', {
-        region: 'center',
-        border: false
-    });
-
-    new Ext.Viewport( {
-        layout: 'fit',   
-        items: {
-            layout: 'border',
-            border: false,
-            items: [ { html: '<font size="5"><b>Prototype de mise en œuvre du profil OÉAF</b></font> (version 0.1)', 
-                       margin: '5 0 0 10', region: 'north' }, 
-                     manager ]
-        }
-    } );
-
-} );

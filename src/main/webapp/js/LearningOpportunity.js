@@ -39,7 +39,7 @@
         this.callParent(arguments);          
     },
     close: function() {
-        manager.closeLoDetails();
+        searchManager.closeLoDetails();
     }
 } );
 
