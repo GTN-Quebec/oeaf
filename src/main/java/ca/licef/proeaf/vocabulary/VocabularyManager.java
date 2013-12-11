@@ -4,6 +4,7 @@ import ca.licef.proeaf.core.Core;
 import ca.licef.proeaf.vocabularies.COMETE;
 import licef.IOUtil;
 import licef.XMLUtil;
+import licef.tsapi.Constants;
 import licef.tsapi.TripleStore;
 import licef.tsapi.model.Triple;
 import licef.tsapi.vocabulary.RDF;
@@ -38,7 +39,7 @@ public class VocabularyManager {
         System.out.println("Vocabulary Module initialization...");
 
         //init SKOS ontology
-        tripleStore.loadContent(getClass().getResourceAsStream("/skos.rdf"), TripleStore.RDFXML, "skos-ontology");
+        tripleStore.loadContent(getClass().getResourceAsStream("/skos.rdf"), Constants.RDFXML, "skos-ontology");
 
         //vocs definition folder
         if (vocabulariesSourceDir == null)
@@ -139,7 +140,7 @@ public class VocabularyManager {
         String conceptSchemeVocUri = attributes.get("about").toString();
         tripleStore.insertTriple(new Triple(uri, COMETE.vocUri, conceptSchemeVocUri));
         //load content
-        tripleStore.loadContent(new FileInputStream(voc), TripleStore.RDFXML, graph);
+        tripleStore.loadContent(new FileInputStream(voc), Constants.RDFXML, graph);
 
         //Generation of inferred triples
         tripleStore.doInference(graph, "skos-ontology");

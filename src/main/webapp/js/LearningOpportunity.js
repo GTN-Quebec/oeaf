@@ -12,7 +12,8 @@
             title: 'Détail de l\'offre',
             items: [ 
                { html: '<h1>Chimie 101</h1>Prestataire:<br/> <img src="http://images.jobboom.com/logo/recrutement/fr/G118441.jpg"><br/>' +
-                       'Durée: 120h<br/><br/>'
+                       'Durée: 120h<br/><br/>' +
+                       'Info de dernière minute: <h2> sera donné uniquement en français !!! </h2><br/><br/>' 
    
                },
                { xtype: 'fieldset',
@@ -38,7 +39,7 @@
         this.callParent(arguments);          
     },
     close: function() {
-        this.opener.closeLoDetails();
+        manager.closeLoDetails();
     }
 } );
 

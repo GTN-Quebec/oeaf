@@ -7,7 +7,7 @@
             title: 'Critères',
             region: 'west',            
             width: 270,
-            margin: 10
+            margin: '10 0 10 10'
         });
 
         this.loGrid = Ext.create('Proeaf.LearningOpportunityGrid', {
@@ -17,15 +17,14 @@
         this.loGrid.on( 'itemdblclick', this.openLoDetails, this );
 
         this.loDetail = Ext.create('Proeaf.LearningOpportunity', {
-            border: false,
-            opener: this
+            border: false
         });
 
         this.contentPanel = Ext.create('Ext.panel.Panel', {
             id: 'contentPanel',
             layout: 'card',
             region: 'center',
-            margin: '10 10 10 0',
+            margin: '10 10 10 10',
             border: false,
             items: [ this.loGrid, this.loDetail ]
         });
@@ -39,9 +38,14 @@
     },
     openLoDetails: function() {
         this.contentPanel.getLayout().setActiveItem(this.loDetail);
+        this.setFacetsVisible(false);  
     },
     closeLoDetails: function() {
         this.contentPanel.getLayout().setActiveItem(this.loGrid);
+        this.setFacetsVisible(true);
+    },
+    setFacetsVisible: function(visible) {
+        this.facets.setVisible(visible);
     },
     doQuery: function(query) {
         this.loGrid.doQuery(query);
