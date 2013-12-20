@@ -17,12 +17,7 @@
                   title: 'Fournisseur',
                   collapsible: true,
                   height: 98,
-                  overflowY: 'auto',
-                  items: [
-                      { id: 'http://www.uqam.ca/oeaf/lop_UQAM', layout: 'hbox', 
-                        items: [ { xtype: 'checkbox', boxLabel: 'UQAM', handler: this.facetedSearch, scope: this },
-                                 { xtype:'label', text: '', margin: '4 0 0 5' } ] }
-                  ]
+                  overflowY: 'auto'
                },
                { xtype: 'fieldset',
                   id: 'hiddenfacet1',
@@ -59,6 +54,30 @@
 
         Ext.apply(this, cfg);
         this.callParent(arguments); 
+
+        this.createFacet0();
+    },
+    createFacet0: function() {
+        var facet = this.getComponent(0);
+        Ext.Ajax.request( {
+            url: 'rest/queryEngine/providers',
+            method: 'GET',
+            success: function( response ) {
+                var providers = Ext.JSON.decode(response.responseText, true).providers;
+                for (i = 0; i < providers.length; i++) {
+                    var provider = providers[i];
+                    var elem = { id: provider.uri, layout: 'hbox', 
+                                 items: [ { xtype: 'checkbox', boxLabel: provider.name, 
+                                            handler: this.facetedSearch, scope: this },
+                                          { xtype:'label', text: '', margin: '4 0 0 5' } ] };
+                    facet.add(elem);
+                }
+            },
+            failure: function( response ) {
+                Ext.Msg.alert( 'error' );
+            },
+            scope: this
+        } );
     },
     getAll: function() {
         this.isUpdateProcess = true;

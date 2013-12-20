@@ -6,7 +6,7 @@
         this.facets = Ext.create('Proeaf.Facets', {
             title: 'Critères',
             region: 'west',            
-            width: 270,
+            width: 340,
             margin: '10 0 10 10'
         });
 

@@ -5,9 +5,10 @@ PREFIX mlr-1: <http://standards.iso.org/iso-iec/19788/-1/ed-1/en/>
 PREFIX mlr-9: <http://standards.iso.org/iso-iec/19788/-9/ed-1/en/>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT ?s ?title ?providerName
+SELECT ?s ?sigle ?title ?providerName
 WHERE '{'
     ?s rdf:type oeaf:rc0002 .
+    ?s oeaf:sed0900 ?sigle .
     ?s mlr-1:des0100 ?title .
     ?s oeaf:sed0200 ?provider .
     ?provider mlr-9:des0200 ?providerName .
@@ -15,6 +16,6 @@ WHERE '{'
     {0} 
 
 '}'
-
+ORDER BY ?sigle
 OFFSET {1,number,#}
 LIMIT {2,number,#}

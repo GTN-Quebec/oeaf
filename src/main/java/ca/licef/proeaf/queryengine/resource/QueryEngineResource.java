@@ -1,8 +1,11 @@
 package ca.licef.proeaf.queryengine.resource;
 
+import ca.licef.proeaf.core.Core;
+import ca.licef.proeaf.core.util.Util;
 import ca.licef.proeaf.queryengine.ResultEntry;
 import ca.licef.proeaf.queryengine.ResultSet;
 import ca.licef.proeaf.queryengine.QueryEngine;
+import licef.tsapi.model.Tuple;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +35,7 @@ public class QueryEngineResource implements Serializable {
     @GET
     @Path( "search" )
     @Produces( MediaType.APPLICATION_JSON )
-    public String search( @DefaultValue( "" ) @QueryParam( "q" ) String query, @QueryParam( "isFacetInfos" ) String isFacetInfos,
+    public Response search( @DefaultValue( "" ) @QueryParam( "q" ) String query, @QueryParam( "isFacetInfos" ) String isFacetInfos,
         @DefaultValue( "0" ) @QueryParam( "start" ) String strStart, @DefaultValue( "20" ) @QueryParam( "limit" ) String strLimit,
         @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) {
 
@@ -104,7 +107,41 @@ public class QueryEngineResource implements Serializable {
             e.printStackTrace();
         }
 
-        return( out.toString() );
+        return Response.ok(out.toString()).build();
+    }
 
+    @GET
+    @Path( "providers" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response gerProviders() throws Exception {
+
+        String query = Util.getQuery("getProviders.sparql");
+        Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
+        StringWriter out = new StringWriter();
+        try {
+            JSONWriter json = new JSONWriter( out ).object();
+
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < results.length; i++) {
+                JSONObject object = new JSONObject();
+                object.put( "uri", results[i].getValue("s").getContent());
+                object.put( "name", results[i].getValue("name").getContent() );
+                array.put(object);
+            }
+            json.key( "providers" ).value( array );
+            json.endObject();
+        }
+        catch( JSONException e ) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.close();
+        }
+        catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        return Response.ok(out.toString()).build();
     }
 }

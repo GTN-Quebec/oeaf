@@ -2,6 +2,7 @@ package ca.licef.proeaf.queryengine;
 
 import ca.licef.proeaf.core.Core;
 import licef.tsapi.TripleStore;
+import licef.tsapi.model.Triple;
 import licef.tsapi.model.Tuple;
 import org.apache.jena.atlas.json.JSON;
 import org.json.JSONArray;
@@ -51,7 +52,8 @@ public class QueryEngine {
             for (Tuple tuple : tuples) {
                 ResultEntry entry = new ResultEntry();
                 entry.setId(tuple.getValue("s").getContent());
-                entry.setTitle(tuple.getValue("title").getContent());
+                String sigle = tuple.getValue("sigle").getContent();
+                entry.setTitle("<b>" + sigle + "</b> " + tuple.getValue("title").getContent());
                 entry.setLocation(tuple.getValue("providerName").getContent());
                 rs.addEntry(entry);
             }
@@ -143,6 +145,4 @@ public class QueryEngine {
     }
     
     private static QueryEngine instance;
-
-
 }
