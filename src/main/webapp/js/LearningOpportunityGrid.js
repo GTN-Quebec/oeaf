@@ -43,7 +43,7 @@
             columns: [ 
                 { text: 'Id', width: 100,  dataIndex: 'id', hidden: true },
                 { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true},
-                { text: tr('Location'), width: 80,  dataIndex: 'location', sortable: true}
+                { text: tr('Location'), width: 400,  dataIndex: 'location', sortable: true}
             ],          
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',

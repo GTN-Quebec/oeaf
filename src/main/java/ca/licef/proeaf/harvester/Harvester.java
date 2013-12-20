@@ -132,7 +132,7 @@ public class Harvester implements Runnable {
         return( links );
     }
 
-    public void harvestFile( String url, String linkType, String graph ) throws Exception {
+    public void harvestFile( String url, String linkType, String... graph ) throws Exception {
         System.out.println( "Harvesting linkType="+ linkType + " url=" + url );
 
         HttpClient httpclient = new DefaultHttpClient();
@@ -178,6 +178,7 @@ public class Harvester implements Runnable {
         Set<String> links = extractOEAFLinks( new BufferedReader( new InputStreamReader( new ByteArrayInputStream( bos.toByteArray() ), "UTF-8" ) ) );
         for( String link : links ) {
             linkType = link.substring( 0, link.indexOf( "|" ) );
+            System.out.println("link = " + link);
             link = link.substring( link.indexOf( "|" ) + 1 );
             if( !link.startsWith( "http" ) ) {
                 if( link.startsWith( "/" ) )
@@ -199,14 +200,14 @@ public class Harvester implements Runnable {
         System.out.println( "Starting harvester: " + (new Date() ) );        
 
         try {
-            harvestFile( url, type.toUpperCase(), "http://harvestedTriples" );
+            harvestFile( url, type.toUpperCase() );
 
             System.out.println( "AFTER=" );            
             TripleStore store = Core.getInstance().getTripleStore();
-            Triple[] triples = store.getAllTriples( "http://harvestedTriples" );
-            System.out.println( "Triples" );
-            for( int i = 0; i < triples.length; i++ )
-                System.out.println( "t["+i+"]="+triples[ i ] );
+//            Triple[] triples = store.getAllTriples( "http://harvestedTriples" );
+//            System.out.println( "Triples" );
+//            for( int i = 0; i < triples.length; i++ )
+//                System.out.println( "t["+i+"]="+triples[ i ] );
         }
         catch( Exception e ) {
             System.out.println( "PROBLEM!" );

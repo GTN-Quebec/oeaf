@@ -52,7 +52,7 @@ public class QueryEngine {
                 ResultEntry entry = new ResultEntry();
                 entry.setId(tuple.getValue("s").getContent());
                 entry.setTitle(tuple.getValue("title").getContent());
-                entry.setLocation(tuple.getValue("univ").getContent());
+                entry.setLocation(tuple.getValue("providerName").getContent());
                 rs.addEntry(entry);
             }
             rs.setTotalRecords(count);
