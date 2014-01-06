@@ -6,7 +6,6 @@
     'Harvester': 'Moissonneur',
     'About': 'A propos',
 
-
     'Close': 'Fermer',
 
     'Search in progress': 'Recherche en cours',
@@ -28,7 +27,12 @@
     'Opportunities': 'Opportunités',
     'opportunity found': 'opportunité trouvée',
     'opportunities found': 'opportunités trouvées',
-    'See all opportunities':'Voir toutes les opportunités'
+    'See all opportunities':'Voir toutes les opportunités',
+
+    'Criterias': 'Critères',
+    'Provider': 'Fournisseur',
+    'Performance language': 'Langue de prestation'
+
 
 };
 

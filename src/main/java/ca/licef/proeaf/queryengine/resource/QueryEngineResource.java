@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @Path( "/queryEngine" )
 public class QueryEngineResource implements Serializable {
@@ -113,7 +115,7 @@ public class QueryEngineResource implements Serializable {
     @GET
     @Path( "providers" )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response gerProviders() throws Exception {
+    public Response getProviders() throws Exception {
 
         String query = Util.getQuery("getProviders.sparql");
         Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
@@ -129,6 +131,44 @@ public class QueryEngineResource implements Serializable {
                 array.put(object);
             }
             json.key( "providers" ).value( array );
+            json.endObject();
+        }
+        catch( JSONException e ) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.close();
+        }
+        catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        return Response.ok(out.toString()).build();
+    }
+
+    @GET
+    @Path( "performanceLanguages" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getPerformanceLanguages(@DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
+        String query = Util.getQuery("getPerformanceLanguages.sparql");
+        Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
+        StringWriter out = new StringWriter();
+
+        Locale.setDefault(new Locale(lang));
+        try {
+            ResourceBundle resBundle = ResourceBundle.getBundle("languages");
+            JSONWriter json = new JSONWriter( out ).object();
+
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < results.length; i++) {
+                JSONObject object = new JSONObject();
+                String _lang = results[i].getValue("lang").getContent();
+                object.put( "lang", _lang);
+                object.put( "name", resBundle.getString(_lang) );
+                array.put(object);
+            }
+            json.key( "performanceLanguages" ).value( array );
             json.endObject();
         }
         catch( JSONException e ) {

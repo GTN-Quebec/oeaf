@@ -1,0 +1,8 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
+
+SELECT DISTINCT ?lang
+WHERE {
+    ?s rdf:type oeaf:rc0003 .
+    ?s oeaf:sed2700 ?lang
+}

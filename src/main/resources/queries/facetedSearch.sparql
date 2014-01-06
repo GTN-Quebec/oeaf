@@ -5,7 +5,7 @@ PREFIX mlr-1: <http://standards.iso.org/iso-iec/19788/-1/ed-1/en/>
 PREFIX mlr-9: <http://standards.iso.org/iso-iec/19788/-9/ed-1/en/>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT  ?criteria (count(?s) as ?nbByCriteria)
+SELECT ?criteria (count(?s) as ?nbByCriteria)
 WHERE '{'
     ?s rdf:type oeaf:rc0002 .
     {0} . 

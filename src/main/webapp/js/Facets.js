@@ -14,27 +14,19 @@
                   id: 'facet0',
                   margin: '5 10 10 5',
                   padding: '0 10 5 10',
-                  title: 'Fournisseur',
+                  title: tr('Provider'),
                   collapsible: true,
-                  height: 98,
+                  height: 80,
                   overflowY: 'auto'
                },
                { xtype: 'fieldset',
-                  id: 'hiddenfacet1',
+                  id: 'facet1',
                   margin: '5 10 5 5',
                   padding: '0 10 5 10',
-                  title: 'Langue de la prestation',
+                  title: tr('Performance language'),
                   collapsible: true,                  
-                  overflowY: 'auto',
                   height: 80,
-                  items: [
-                      { id: 'fr', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Français', 
-                                                             handler: this.facetedSearch, scope: this }, 
-                                                           { xtype:'label', text: '', margin: '4 0 0 5' } ] },
-                      { id: 'en', layout: 'hbox', items: [ { xtype: 'checkbox', boxLabel: 'Anglais', 
-                                                             handler: this.facetedSearch, scope: this }, 
-                                                           { xtype:'label', text: '', margin: '4 0 0 5' } ] }
-                  ]
+                  overflowY: 'auto'
                },
                { xtype: 'fieldset',
                   id: 'hiddenfacet2',
@@ -56,6 +48,7 @@
         this.callParent(arguments); 
 
         this.createFacet0();
+        this.createFacet1();
     },
     createFacet0: function() {
         var facet = this.getComponent(0);
@@ -68,6 +61,28 @@
                     var provider = providers[i];
                     var elem = { id: provider.uri, layout: 'hbox', 
                                  items: [ { xtype: 'checkbox', boxLabel: provider.name, 
+                                            handler: this.facetedSearch, scope: this },
+                                          { xtype:'label', text: '', margin: '4 0 0 5' } ] };
+                    facet.add(elem);
+                }
+            },
+            failure: function( response ) {
+                Ext.Msg.alert( 'error' );
+            },
+            scope: this
+        } );
+    },
+    createFacet1: function() {
+        var facet = this.getComponent(1);
+        Ext.Ajax.request( {
+            url: 'rest/queryEngine/performanceLanguages?lang=' + this.lang,
+            method: 'GET',
+            success: function( response ) {
+                var languages = Ext.JSON.decode(response.responseText, true).performanceLanguages;
+                for (i = 0; i < languages.length; i++) {
+                    var language = languages[i];
+                    var elem = { id: language.lang, layout: 'hbox', 
+                                 items: [ { xtype: 'checkbox', boxLabel: language.name, 
                                             handler: this.facetedSearch, scope: this },
                                           { xtype:'label', text: '', margin: '4 0 0 5' } ] };
                     facet.add(elem);
@@ -147,7 +162,7 @@
                 var comp = facet.getComponent(data.id);
                 if (comp != undefined) {
                     comp.getComponent(0).setDisabled(false);
-                    comp.getComponent(1).setText("(" + data.count + ")");
+                    comp.getComponent(1).setText("<font color='blue'>[" + data.count + "]</font>", false);
                 }
             }            
             //disable and uncheck others

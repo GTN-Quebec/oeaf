@@ -3,9 +3,13 @@
     layout: 'border',
     initComponent: function( config ) {
         
+        // By default, the interface is displayed in English.
+        var lang = ( Ext.getUrlParam( 'lang' ) || 'en' );
+
         this.facets = Ext.create('Proeaf.Facets', {
-            title: 'Critères',
-            region: 'west',            
+            title: tr('Criterias'),
+            lang: lang,
+            region: 'west',                         
             width: 340,
             margin: '10 0 10 10'
         });

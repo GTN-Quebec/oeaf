@@ -1,1 +1,2 @@
-?s oeaf:language {0}
+?clo oeaf:sed0300 ?s .
+?clo oeaf:sed2700 {0}
