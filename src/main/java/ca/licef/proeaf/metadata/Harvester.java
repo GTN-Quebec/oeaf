@@ -36,68 +36,6 @@ public class Harvester implements Runnable {
         this.isRunning = false;
     }
 
-    // With the following run() method, I am able to extract the triples from the index file.
-    //
-    //public void run() {
-    //    System.out.println( "Starting harvester: " + (new Date() ) );        
-    //    TripleStore store = Core.getInstance().getTripleStore();
-
-    //    try {
-    //        CharOutputSink charOutputSink = new CharOutputSink( "UTF-8" ); 
-    //        StreamProcessor sp = new StreamProcessor( RdfaParser.connect( TurtleSerializer.connect( charOutputSink ) ) );
-    //        sp.setProperty( RdfaParser.ENABLE_VOCAB_EXPANSION, true );
-    //        sp.setProperty( RdfaParser.ENABLE_OUTPUT_GRAPH, true );
-    //        sp.setProperty( RdfaParser.ENABLE_PROCESSOR_GRAPH, true );
-    //        sp.setProperty( RdfaParser.RDFA_VERSION_PROPERTY, RDFa.VERSION_11 );
-
-    //        URL tmpUrl = new URL( url );
-    //        Reader reader = new InputStreamReader( tmpUrl.openStream());
-
-    //        charOutputSink.connect(System.out);
-    //        sp.process(reader, url);
-    //    }
-    //    catch( Exception e ) {
-    //        System.out.println( "PROBLEME!" );
-    //        e.printStackTrace();
-    //    }
-    //    System.out.println( "Ending harvester: " + (new Date() ) );        
-    //    
-    //    isRunning = false;
-    //}
-
-    // Doesn't load all the triples :-(
-    //public void run() {
-    //    System.out.println( "Starting harvester: " + (new Date() ) );        
-    //    TripleStore store = Core.getInstance().getTripleStore();
-
-    //    System.out.println( "INJECTING JENA AGAIN" );        
-    //    JenaRdfaReader.inject();
-    //    
-    //    Dataset ds = null;
-    //    try {
-    //        ds = store.getDataset();
-    //        ds.begin(ReadWrite.WRITE);
-    //    
-    //        ds.getDefaultModel().read( new URL( url ).openStream(), "", "RDFA" );
-
-    //        Triple[] triples = store.getAllTriples();
-    //        System.out.println( "Triples" );
-    //        for( int i = 0; i < triples.length; i++ )
-    //            System.out.println( "t["+i+"]="+triples[ i ] );
-    //    }
-    //    catch( Exception e ) {
-    //        System.out.println( "PROBLEM!" );
-    //        e.printStackTrace();
-    //    }
-    //    finally {
-    //        ds.end();
-    //    }
-
-    //    System.out.println( "Ending harvester: " + (new Date() ) );        
-    //    
-    //    isRunning = false;
-    //}
-
     // This method should be more robust. - FB
     public Set<String> extractOEAFLinks( BufferedReader reader ) throws Exception {
         Set<String> links = new HashSet<String>();

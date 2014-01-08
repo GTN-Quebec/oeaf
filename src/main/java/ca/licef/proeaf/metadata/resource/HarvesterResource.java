@@ -1,22 +1,11 @@
 package ca.licef.proeaf.metadata.resource;
 
-//import ca.licef.proeaf.queryengine.ResultSet;
 import com.sun.jersey.multipart.FormDataParam;
 import com.sun.jersey.spi.resource.Singleton;
-//import org.json.JSONArray;
-//import org.json.JSONException;
-//import org.json.JSONObject;
-//import org.json.JSONWriter;
-//
-//import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-//import java.io.IOException;
-//import java.io.Serializable;
-//import java.io.StringWriter;
-//import java.util.Iterator;
-//import java.util.ListIterator;
 import java.util.UUID;
 
 import ca.licef.proeaf.metadata.Harvester;
