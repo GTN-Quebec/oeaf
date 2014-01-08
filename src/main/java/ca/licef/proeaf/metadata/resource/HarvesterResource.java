@@ -1,4 +1,4 @@
-package ca.licef.proeaf.harvester.resource;
+package ca.licef.proeaf.metadata.resource;
 
 //import ca.licef.proeaf.queryengine.ResultSet;
 import com.sun.jersey.multipart.FormDataParam;
@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 //import java.util.ListIterator;
 import java.util.UUID;
 
-import ca.licef.proeaf.harvester.Harvester;
+import ca.licef.proeaf.metadata.Harvester;
 
 @Singleton
 @Path( "/harvester" )

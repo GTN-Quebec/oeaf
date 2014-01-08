@@ -1,4 +1,4 @@
-package ca.licef.proeaf.harvester;
+package ca.licef.proeaf.metadata;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
