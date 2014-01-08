@@ -38,19 +38,23 @@ public class Vocabulary {
 
     public String[] getTopConcepts(String uri) throws Exception {
         String graph = getGraphName(uri);
-        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, SKOS.hasTopConcept, graph);
-        String[] res = new String[triples.length];
-        for (int i = 0; i < triples.length; i++)
-            res[i] = triples[i].getObject();
+        String query = ca.licef.proeaf.core.util.Util.getQuery("getTopConcepts.sparql",
+                tripleStore.getUri(graph), uri);
+        Tuple[] tuples = Core.getInstance().getTripleStore().sparqlSelect(query);
+        String[] res = new String[tuples.length];
+        for (int i = 0; i < tuples.length; i++)
+            res[i] = tuples[i].getValue("s").getContent();
         return res;
     }
 
     public String[] getChildren(String uri) throws Exception {
         String graph = getGraphName(uri);
-        Triple[] triples = tripleStore.getTriplesWithSubjectPredicate(uri, SKOS.narrower, graph);
-        String[] res = new String[triples.length];
-        for (int i = 0; i < triples.length; i++)
-            res[i] = triples[i].getObject();
+        String query = ca.licef.proeaf.core.util.Util.getQuery("getChildren.sparql",
+                tripleStore.getUri(graph), uri);
+        Tuple[] tuples = Core.getInstance().getTripleStore().sparqlSelect(query);
+        String[] res = new String[tuples.length];
+        for (int i = 0; i < tuples.length; i++)
+            res[i] = tuples[i].getValue("o").getContent();
         return res;
     }
 

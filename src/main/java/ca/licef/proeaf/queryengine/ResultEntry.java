@@ -1,14 +1,16 @@
 package ca.licef.proeaf.queryengine;
 
+import java.util.Collection;
+
 public class ResultEntry {
 
     public ResultEntry() {
     }
 
-    public ResultEntry( String id, String title, String location ) {
+    public ResultEntry( String id, String title, String logo ) {
         this.id = id;
         this.title = title;
-        this.location = location;
+        this.logo = logo;
     }
 
     public String getId() {
@@ -35,18 +37,18 @@ public class ResultEntry {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     private String id;
     private String title;
     private String description;
-    private String location;
+    private String logo;
 
 }
 

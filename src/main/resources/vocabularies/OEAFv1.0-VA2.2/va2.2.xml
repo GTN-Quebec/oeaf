@@ -109,7 +109,7 @@
   <skos:Concept rdf:ID="T056">
     <dc:identifier>http://normetic.org/uri/profil_oeaf/v1.0/va2.2#T056</dc:identifier>
     <skos:inScheme rdf:resource="http://normetic.org/uri/profil_oeaf/v1.0/va2.2"/>
-    <skos:prefLabel xml:lang="fr-CA">Certificat 2e cycle</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr-CA">certificat 2e cycle</skos:prefLabel>
     <skos:prefLabel xml:lang="en-CA">graduate certificate</skos:prefLabel>
     <skos:broader rdf:resource="#T052"/>
   </skos:Concept>

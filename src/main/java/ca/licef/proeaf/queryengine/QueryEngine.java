@@ -54,7 +54,7 @@ public class QueryEngine {
                 entry.setId(tuple.getValue("s").getContent());
                 String sigle = tuple.getValue("sigle").getContent();
                 entry.setTitle("<b>" + sigle + "</b> " + tuple.getValue("title").getContent());
-                entry.setLocation(tuple.getValue("providerName").getContent());
+                entry.setLogo(tuple.getValue("providerLogo").getContent());
                 rs.addEntry(entry);
             }
             rs.setTotalRecords(count);

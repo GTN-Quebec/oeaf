@@ -6,7 +6,7 @@
 
         Ext.define('LearninOpportunityModel', {
             extend: 'Ext.data.Model',
-            fields: [ 'id', 'title', 'location' ]
+            fields: [ 'id', 'title', 'logo' ]
         });
 
         this.proxy = Ext.create('Ext.data.proxy.Ajax', {
@@ -38,12 +38,18 @@
             emptyMsg: ""
         } ),
 
+        this.renderTitle = function( value, metaData, lo ) {
+            return '<span style="width: 100px; display: inline-block;">' +
+                        '<img style="vertical-align: middle; border:1px solid; border-color:#cccccc" height="60" src="' + lo.data.logo + '"></span>' +
+                        '<span style="vertical-align: middle">' + value + '</span>';
+        },
+
         cfg = {
             store: this.loStore,
             columns: [ 
                 { text: 'Id', width: 100,  dataIndex: 'id', hidden: true },
-                { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true},
-                { text: tr('Location'), width: 400,  dataIndex: 'location', sortable: true}
+                { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true, renderer: this.renderTitle },
+                { text: 'logo', width: 400,  dataIndex: 'logo', hidden: true}
             ],          
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',

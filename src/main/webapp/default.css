@@ -5,3 +5,15 @@
 .x-grid-row td {
     line-height: 50px;
 }
+
+.x-grid-row-selected .x-grid-cell-treecolumn {
+     background-color: white;
+}
+
+.x-grid-row-selected .x-grid-cell-row-checker  {
+     background-color: white;
+}
+
+.x-tree-icon {
+    display: none;
+}

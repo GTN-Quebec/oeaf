@@ -29,7 +29,16 @@
                   overflowY: 'auto'
                },
                { xtype: 'fieldset',
-                  id: 'hiddenfacet2',
+                  id: 'hfacet2',
+                  margin: '5 10 5 5',
+                  padding: '5 10 5 5',
+                  title: tr('Educational level'),
+                  collapsible: true,                  
+                  height: 148,
+                  overflowY: 'auto'
+               },
+               { xtype: 'fieldset',
+                  id: 'hiddenfacet3',
                   margin: '5 10 5 5',
                   title: 'Date de la prestation',
                   collapsible: true,                  
@@ -49,6 +58,7 @@
 
         this.createFacet0();
         this.createFacet1();
+        this.createFacet2();
     },
     createFacet0: function() {
         var facet = this.getComponent(0);
@@ -93,6 +103,48 @@
             },
             scope: this
         } );
+    },
+    createFacet2: function() {
+
+        var conceptProxy = Ext.create('Ext.data.proxy.Ajax', {
+            url: 'rest/vocs/'+ encodeURIComponent("http://normetic.org/uri/profil_oeaf/v1.0/va2.2") +'/topConcepts?lang=' + this.lang,
+            reader: {
+                type: 'json',
+                root: 'concepts',
+                concept: 'concept',
+                label: 'label'
+            }
+        });
+
+        var store = Ext.create('Ext.data.TreeStore', {
+            model: 'VocabularyConceptModel',
+            proxy: conceptProxy,
+        });
+
+        store.on( 'beforeexpand', function(node) {
+           if (node.getData().uri != "")
+               conceptProxy.url = 'rest/vocs/'+ encodeURIComponent(node.getData().uri) +'/children?lang=' + this.lang;
+        }, this);
+
+        var tree = Ext.create('Ext.tree.Panel', {
+            margin: '-1 0 0 -5',                
+            store: store,
+            hideHeaders: true, 
+            rootVisible: false,
+            useArrows: true,  
+            columns: [
+                { xtype: 'treecolumn', dataIndex: 'label', flex: 1 }
+            ],
+            selModel: {
+                //mode: 'SIMPLE'
+            }
+        });
+
+        var elem = { id: 'notset', layout: 'fit', 
+                         items: tree };
+        
+        var facet = this.getComponent(2);
+        facet.add(elem);
     },
     getAll: function() {
         this.isUpdateProcess = true;
@@ -178,4 +230,9 @@
 
         this.isUpdateProcess = false;
     }
+});
+
+Ext.define('VocabularyConceptModel', {
+    extend: 'Ext.data.Model',
+    fields: [ 'uri', 'label' ]
 });

@@ -10,8 +10,10 @@
             title: tr('Criterias'),
             lang: lang,
             region: 'west',                         
-            width: 340,
-            margin: '10 0 10 10'
+            width: 360,
+            margin: '10 0 10 10',
+            resizable: true,
+            resizeHandles: 'e' 
         });
 
         this.loGrid = Ext.create('Proeaf.LearningOpportunityGrid', {

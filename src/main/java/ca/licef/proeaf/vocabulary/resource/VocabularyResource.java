@@ -270,6 +270,7 @@ public class VocabularyResource {
             label = id + "&nbsp;&nbsp;" + label;
         }
         _concept.put( "uri", uri );
+        _concept.put( "checked", false );
         _concept.put( "label", label );
         String[] children2 = Vocabulary.getInstance().getChildren(uri);
         if (children2.length == 0)

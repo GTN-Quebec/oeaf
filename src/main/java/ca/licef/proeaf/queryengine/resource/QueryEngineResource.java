@@ -82,7 +82,7 @@ public class QueryEngineResource implements Serializable {
                 JSONObject learningOpportunity = new JSONObject();
                 learningOpportunity.put("id", entry.getId())
                     .put("title", entry.getTitle())
-                    .put("location", entry.getLocation());
+                    .put("logo", entry.getLogo());
                 learningOpportunities.put(learningOpportunity);
             }
 

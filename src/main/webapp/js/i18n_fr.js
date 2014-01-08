@@ -31,7 +31,8 @@
 
     'Criterias': 'Critères',
     'Provider': 'Fournisseur',
-    'Performance language': 'Langue de prestation'
+    'Performance language': 'Langue de prestation',
+    'Educational level': 'Niveau d\'éducation'
 
 
 };
