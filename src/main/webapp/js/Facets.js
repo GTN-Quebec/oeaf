@@ -69,7 +69,7 @@
                 var providers = Ext.JSON.decode(response.responseText, true).providers;
                 for (i = 0; i < providers.length; i++) {
                     var provider = providers[i];
-                    var elem = { id: provider.uri, layout: 'hbox', 
+                    var elem = { id: provider.uri, layout: 'hbox', width: 500,
                                  items: [ { xtype: 'checkbox', boxLabel: provider.name, 
                                             handler: this.facetedSearch, scope: this },
                                           { xtype:'label', text: '', margin: '4 0 0 5' } ] };
@@ -91,7 +91,7 @@
                 var languages = Ext.JSON.decode(response.responseText, true).performanceLanguages;
                 for (i = 0; i < languages.length; i++) {
                     var language = languages[i];
-                    var elem = { id: language.lang, layout: 'hbox', 
+                    var elem = { id: language.lang, layout: 'hbox', width: 500, 
                                  items: [ { xtype: 'checkbox', boxLabel: language.name, 
                                             handler: this.facetedSearch, scope: this },
                                           { xtype:'label', text: '', margin: '4 0 0 5' } ] };
@@ -214,7 +214,7 @@
                 var comp = facet.getComponent(data.id);
                 if (comp != undefined) {
                     comp.getComponent(0).setDisabled(false);
-                    comp.getComponent(1).setText("<font color='blue'>[" + data.count + "]</font>", false);
+                    comp.getComponent(1).setText('<font color="blue">[' + data.count + ']</font>', false);
                 }
             }            
             //disable and uncheck others

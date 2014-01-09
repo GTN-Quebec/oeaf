@@ -39,9 +39,10 @@
         } ),
 
         this.renderTitle = function( value, metaData, lo ) {
-            return '<span style="width: 100px; display: inline-block;">' +
-                        '<img style="vertical-align: middle; border:1px solid; border-color:#cccccc" height="60" src="' + lo.data.logo + '"></span>' +
-                        '<span style="vertical-align: middle">' + value + '</span>';
+            return '<table width="100%" border="0"><tr>'+
+                          '<td>' + value + '</td>'+ 
+                          '<td align="right"><img style="border:1px solid; border-color:#cccccc; margin-right: 10px" height="60" src="' + lo.data.logo + '"></td>' +
+                          '</tr></table>';
         },
 
         cfg = {

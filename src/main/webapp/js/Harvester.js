@@ -101,6 +101,9 @@ Ext.define( 'Proeaf.Harvester', {
             url: 'rest/harvester/status',
             method: 'GET',
             success: function( response ) {
+                if (this.statusMessagePanel.body == undefined)
+                    return;
+
                 if( 'NO_HARVEST' == response.responseText ) {
                     this.statusMessagePanel.body.update( tr( 'No harvesting is in progress.' ) );
                     this.newHarvestPanel.setVisible( true );
