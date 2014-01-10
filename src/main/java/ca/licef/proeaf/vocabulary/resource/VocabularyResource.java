@@ -74,6 +74,7 @@ public class VocabularyResource {
 
             json.key( "concepts" ).value( _concepts );
             json.key( "label" ).value( Vocabulary.getInstance().getLabel(uri, lang) );
+            json.key( "notLeafConcepts" ).value( Vocabulary.getInstance().getNotLeafConceptCount(uri) );
 
             json.endObject();
         }
@@ -274,7 +275,9 @@ public class VocabularyResource {
         _concept.put( "label", label );
         String[] children2 = Vocabulary.getInstance().getChildren(uri);
         if (children2.length == 0)
-            _concept.put( "leaf", "true" );
+            _concept.put( "leaf", true );
+        else
+            _concept.put( "expanded", true );
         return _concept;
     }
 

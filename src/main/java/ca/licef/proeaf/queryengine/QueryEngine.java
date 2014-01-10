@@ -83,6 +83,8 @@ public class QueryEngine {
             if (otherClauses == null)
                 otherClauses = clauses.get("main");
             String query = CoreUtil.getQuery("facetedSearch.sparql", clauseFacet, otherClauses);
+//            System.out.println("" + query);
+//            System.out.println("----------------------");
             Tuple[] tuples = tripleStore.sparqlSelect(query);
             for (Tuple tuple : tuples) {
                 JSONObject facetCriteria = new JSONObject();

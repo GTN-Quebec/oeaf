@@ -1,0 +1,8 @@
+'{' ?s oeaf:sed1500 {0} '}'
+UNION
+'{' 
+    ?s oeaf:sed1500 ?c .
+    GRAPH <${proeaf.uriPrefix}voc_oeafv1.0_va2.2> '{' 
+       {0} skos:narrowerTransitive ?c    
+    '}' 
+'}'

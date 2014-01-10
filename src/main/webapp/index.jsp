@@ -13,6 +13,7 @@
     <!-- link rel="stylesheet" type="text/css" href="ext-4.2.1.883/resources/css/ext-all.css" / -->
     <link rel="stylesheet" href="ext-4.2.1.883/resources/css/ext-all-neptune.css"/>
     <link rel="stylesheet" href="ext-4.2.1.883/resources/css/example.css" />
+    <link rel="stylesheet" type="text/css" href="NodeDisabled/resources/css/nodeDisabled.css">
     <link rel="stylesheet" type="text/css" href="default.css">
 
     <script type="text/javascript" src="ext-4.2.1.883/ext-all.js"></script>
@@ -21,6 +22,7 @@
     <script type="text/javascript" src="ext-4.2.1.883/examples.js"></script>
     <script type="text/javascript" src="ext-4.2.1.883/GMapPanel.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+    <script type="text/javascript" src="NodeDisabled/source/tree/plugin/NodeDisabled.js"></script>
 
     <script type="text/javascript">
         var portalWebappUrl = '<%= portalUrl %>';

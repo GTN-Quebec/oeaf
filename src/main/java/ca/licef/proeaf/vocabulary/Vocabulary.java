@@ -133,4 +133,11 @@ public class Vocabulary {
         return graph;
     }
 
+    public int getNotLeafConceptCount(String uri) throws Exception {
+        String graph = getGraphName(uri);
+        String query = ca.licef.proeaf.core.util.Util.getQuery("notLeafConcepts.sparql",
+                tripleStore.getUri(graph));
+        Tuple[] tuples = Core.getInstance().getTripleStore().sparqlSelect(query);
+        return tuples.length;
+    }
 }

@@ -3,9 +3,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dc: <http://www.openarchives.org/OAI/2.0/oai_dc/>
 PREFIX mlr-1: <http://standards.iso.org/iso-iec/19788/-1/ed-1/en/>
 PREFIX mlr-9: <http://standards.iso.org/iso-iec/19788/-9/ed-1/en/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT ?criteria (count(?s) as ?nbByCriteria)
+SELECT ?criteria (count(distinct ?s) as ?nbByCriteria)
 WHERE '{'
     ?s rdf:type oeaf:rc0002 .
     {0} . 
