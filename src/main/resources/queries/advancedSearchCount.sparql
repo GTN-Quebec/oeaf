@@ -7,7 +7,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT (count(?s) as ?count)
+SELECT (count(DISTINCT ?s) as ?count)
 WHERE '{'
     ?s rdf:type oeaf:rc0002 .
 

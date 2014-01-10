@@ -163,6 +163,7 @@
                     node = node.parentNode;
                 }
             }
+            this.facetedSearch();
         }, this);
 
 
@@ -176,12 +177,14 @@
             var facet = this.getComponent(i);
             if (!facet.getId().startsWith("facet"))
                 continue;
-if (facet.facetType != "checkboxlist")
-     continue;
-            for (j = 0; j < facet.items.length; j++) {
-                var comp = facet.getComponent(j);
-                comp.getComponent(0).setValue(false);
+            if (facet.facetType == "checkboxlist") {
+                for (j = 0; j < facet.items.length; j++) {
+                    var comp = facet.getComponent(j);
+                    comp.getComponent(0).setValue(false);
+                }
             }
+            else if (facet.facetType == "tree")                
+                checkTreeNodes(facet.getComponent(0).getRootNode(), false);
         }
 
         this.isUpdateProcess = false;
@@ -203,21 +206,25 @@ if (facet.facetType != "checkboxlist")
             if (!facet.getId().startsWith("facet"))
                 continue;
 
-if (facet.facetType != "checkboxlist")
-        continue;
-
             var facetCriterias = {};
             facetCriterias.id = facet.getId();
             var values = new Array();
-            var k = 0;
-            for (j = 0; j < facet.items.length; j++) {
-                var comp = facet.getComponent(j);
-                if (comp.getComponent(0).getValue()) {
-                    values[k] = {};
-                    values[k].id = comp.getId();
-                    k++;
+            if (facet.facetType == "checkboxlist") {
+                var k = 0;
+                for (j = 0; j < facet.items.length; j++) {
+                    var comp = facet.getComponent(j);
+                    if (comp.getComponent(0).getValue()) {
+                        values[k] = {};
+                        values[k].id = comp.getId();
+                        k++;
+                    }
                 }
             }
+            else if (facet.facetType == 'tree') {
+                var root = facet.getComponent(0).getRootNode();
+                treeCriterias(root, values, 0);
+            }
+
             if (values.length > 0) {
                 facetCriterias.values = values;
                 criterias[c] = facetCriterias; 
@@ -242,7 +249,7 @@ if (facet.facetType != "checkboxlist")
                 }
             }
             //remove all tree nodes counts for init
-            if (facet.facetType == 'tree') {
+            else if (facet.facetType == 'tree') {
                 var root = facet.getComponent(0).getRootNode();
                 clearTreeCounts(root);
             }
@@ -281,7 +288,7 @@ if (facet.facetType != "checkboxlist")
                 }
             }
             //disable all tree nodes with count zero
-            if (facet.facetType == 'tree') {
+            else if (facet.facetType == 'tree') {
                 var root = facet.getComponent(0).getRootNode();
                 disableTreeNodes(root);
             }
@@ -305,6 +312,8 @@ function clearTreeCounts(node) {
 
 function disableTreeNodes(node) { 
     node.set('disabled', node.get('xxx')) 
+    if (node.get('xxx'))
+        node.set('checked', false);
 
     node.eachChild(function(n) {        
         disableTreeNodes(n);
@@ -313,8 +322,20 @@ function disableTreeNodes(node) {
 
 function checkTreeNodes(node, checked) { 
     node.eachChild(function(n) { 
-        n.set('checked', checked)        
+        if (!n.get('disabled'))
+            n.set('checked', checked);        
         checkTreeNodes(n, checked);
+    });     
+}
+
+function treeCriterias(node, values, k) { 
+    node.eachChild(function(n) { 
+        if (n.get('checked')) {
+            values[k] = {};
+            values[k].id = n.get('uri');
+            k++;
+        }  
+        treeCriterias(n, values, k);
     });     
 }
 
