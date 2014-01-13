@@ -88,21 +88,29 @@
     },
     updateResults: function() {
         this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery));
-        this.updateResultInfos();
+        var isClear = this.proxy.reader.jsonData.isClear;
+        this.updateResultInfos(isClear);
         var facetInfos = this.proxy.reader.jsonData.facetInfos;
         if (facetInfos != undefined)
-            searchManager.updateFacets(facetInfos);
+            searchManager.updateFacets(facetInfos, isClear);
     },
-    updateResultInfos: function() { 
-        var nbResults = this.loStore.getTotalCount();
-        var label = tr( 'No opportinity found' );
-        var atLeastOneResult = true;
-        if (nbResults == 1)
-            label = '1 ' + tr( 'opportunity found' );
-        else if (nbResults > 1)
-            label = nbResults + ' ' + tr( 'opportunities found' );
-        else
-            atLeastOneResult = false;
+    updateResultInfos: function(isClear) { 
+        var label = '';
+        if (isClear) {
+            label = tr('Opportunities');
+        }
+        else {
+            label = tr( 'No opportunity found' );
+            var nbResults = this.loStore.getTotalCount();
+
+            var atLeastOneResult = true;
+            if (nbResults == 1)
+                label = '1 ' + tr( 'opportunity found' );
+            else if (nbResults > 1)
+                label = nbResults + ' ' + tr( 'opportunities found' );
+            else
+                atLeastOneResult = false;
+        }
          
         this.columns[1].setText(tr(label) + '.');
     }    

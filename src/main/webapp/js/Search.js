@@ -7,7 +7,7 @@
         var lang = ( Ext.getUrlParam( 'lang' ) || 'en' );
 
         this.facets = Ext.create('Proeaf.Facets', {
-            title: tr('Criterias'),
+            title: tr('Filters'),
             lang: lang,
             region: 'west',                         
             width: 360,
@@ -56,8 +56,8 @@
     doQuery: function(query) {
         this.loGrid.doQuery(query);
     },
-    updateFacets: function(facetInfos) {
-        this.facets.updateFacets(facetInfos);
+    updateFacets: function(facetInfos, isClear) {
+        this.facets.updateFacets(facetInfos, isClear);
     }
 });
 

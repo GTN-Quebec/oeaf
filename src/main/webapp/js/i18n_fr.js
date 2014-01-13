@@ -7,6 +7,7 @@
     'About': 'A propos',
 
     'Close': 'Fermer',
+    'Clear': 'Effacer',
 
     'Search in progress': 'Recherche en cours',
 
@@ -27,9 +28,9 @@
     'Opportunities': 'Opportunités',
     'opportunity found': 'opportunité trouvée',
     'opportunities found': 'opportunités trouvées',
-    'See all opportunities':'Voir toutes les opportunités',
+    'No opportunity found':'Aucune opportunité trouvée',
 
-    'Criterias': 'Critères',
+    'Filters': 'Filtres',
     'Provider': 'Fournisseur',
     'Performance language': 'Langue de prestation',
     'Educational level': 'Niveau d\'éducation'

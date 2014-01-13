@@ -5,10 +5,17 @@
         align: 'stretch'
     },
     initComponent: function( config ) {
-        
+
+        this.clearButton = new Ext.button.Button({
+            text: tr('Clear'), 
+            handler:this.clearCriterias, 
+            scope: this, 
+            disabled: true 
+        });
+
         cfg = {
-            collapsible: true,
-            autoScroll: true,
+            autoScroll: true, 
+            tools: [ this.clearButton ],
             items: [ 
                { xtype: 'fieldset',
                   id: 'facet0',
@@ -48,13 +55,7 @@
                   title: 'Date de la prestation',
                   collapsible: true,                  
                   items: [ { layout: 'fit', margin: '5 0 10 0', items: [ { xtype: 'datefield', editable: false } ] } ]
-               },
-               { xtype: 'button',
-                  margin: '5 10 5 5',
-                  text: tr('See all opportunities'),
-                  handler: this.getAll,
-                  scope: this
-               }
+               }               
             ]
         };        
 
@@ -89,7 +90,7 @@
     },
     createFacet1: function() {
         var facet = this.getComponent(1);
-        Ext.Ajax.request( {
+        /*Ext.Ajax.request( {
             url: 'rest/queryEngine/performanceLanguages?lang=' + this.lang,
             method: 'GET',
             success: function( response ) {
@@ -107,7 +108,18 @@
                 Ext.Msg.alert( 'error' );
             },
             scope: this
-        } );
+        } );*/
+
+        var elem = { id: 'fra', layout: 'hbox', width: 500, 
+                                 items: [ { xtype: 'checkbox', boxLabel: tr('French'), 
+                                            handler: this.facetedSearch, scope: this },
+                                          { xtype:'label', text: '', margin: '4 0 0 5' } ] };
+        facet.add(elem);
+        elem = { id: 'eng', layout: 'hbox', width: 500, 
+                                 items: [ { xtype: 'checkbox', boxLabel: tr('English'), 
+                                            handler: this.facetedSearch, scope: this },
+                                          { xtype:'label', text: '', margin: '4 0 0 5' } ] };
+        facet.add(elem);
     },
     createFacet2: function() {
 
@@ -170,27 +182,6 @@
         var facet = this.getComponent(2);
         facet.add(tree);        
     },
-    getAll: function() {
-        this.isUpdateProcess = true;
-
-        for (i = 0; i < this.items.length; i++) {
-            var facet = this.getComponent(i);
-            if (!facet.getId().startsWith("facet"))
-                continue;
-            if (facet.facetType == "checkboxlist") {
-                for (j = 0; j < facet.items.length; j++) {
-                    var comp = facet.getComponent(j);
-                    comp.getComponent(0).setValue(false);
-                }
-            }
-            else if (facet.facetType == "tree")                
-                checkTreeNodes(facet.getComponent(0).getRootNode(), false);
-        }
-
-        this.isUpdateProcess = false;
-
-        this.facetedSearch();
-    },
     facetedSearch: function() {
         if (this.isUpdateProcess)
             return;
@@ -233,9 +224,8 @@
         }
         return criterias;  
     },
-    updateFacets: function(facetInfos) {
+    updateFacets: function(facetInfos, isClear) {
         this.isUpdateProcess = true;
-
         for (i = 0; i < facetInfos.length; i++) {
             var infos = facetInfos[i];
             var values = infos.values;
@@ -295,7 +285,32 @@
         }
 
         this.isUpdateProcess = false;
-    }    
+        
+        this.clearButton.setDisabled(isClear);
+    },
+    clearCriterias: function() {
+        this.isUpdateProcess = true;
+
+        for (i = 0; i < this.items.length; i++) {
+            var facet = this.getComponent(i);
+            if (!facet.getId().startsWith("facet"))
+                continue;
+            if (facet.facetType == "checkboxlist") {
+                for (j = 0; j < facet.items.length; j++) {
+                    var comp = facet.getComponent(j);
+                    comp.getComponent(0).setValue(false);
+                }
+            }
+            else if (facet.facetType == "tree")                
+                checkTreeNodes(facet.getComponent(0).getRootNode(), false);
+        }
+
+        this.isUpdateProcess = false;
+
+        this.facetedSearch();
+
+        this.clearButton.setDisabled(true);
+    }
 });
 
 function clearTreeCounts(node) { 

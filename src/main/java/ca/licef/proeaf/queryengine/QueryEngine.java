@@ -25,10 +25,15 @@ public class QueryEngine {
         JSONArray queryArray = new JSONArray(query);
         Hashtable<String, String> clauses = buildClauses(queryArray, isFacetInfosRequested);
         ResultSet rs = advancedSearch(clauses.get("main"), lang, start, limit);
+        if (rs.getSize() == 0) //1st click on no result facet, so clear facet criterias
+            clauses = buildClauses(new JSONArray(), isFacetInfosRequested);
         if (isFacetInfosRequested) {
             JSONArray facetInfos = facetedSearch(clauses);
             rs.setAdditionalData("facetInfos", facetInfos);
         }
+        if (queryArray.length() == 0)
+            rs.setAdditionalData("isClear", true);
+
         return( rs );
     }
 
@@ -42,10 +47,13 @@ public class QueryEngine {
      * @throws Exception
      */
     private ResultSet advancedSearch(String clauses, String lang, int start, int limit) throws Exception {
+        ResultSet rs = new ResultSet();
+        if ("".equals(clauses)) //no result expected when no criteria
+            return rs;
+
         String query = CoreUtil.getQuery("advancedSearchCount.sparql", clauses);
         Tuple[] tuples = tripleStore.sparqlSelect(query);
         int count = Integer.parseInt(tuples[0].getValue("count").getContent());
-        ResultSet rs = new ResultSet();
         if (count > 0) {
             query = CoreUtil.getQuery("advancedSearch.sparql", clauses, start, limit);
             tuples = tripleStore.sparqlSelect(query);
