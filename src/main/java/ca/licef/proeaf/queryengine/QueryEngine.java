@@ -94,9 +94,12 @@ public class QueryEngine {
             Tuple[] tuples = tripleStore.sparqlSelect(query);
             for (Tuple tuple : tuples) {
                 JSONObject facetCriteria = new JSONObject();
-                facetCriteria.put("id", tuple.getValue("criteria").getContent());
-                facetCriteria.put("count", tuple.getValue("nbByCriteria").getContent());
-                values.put(facetCriteria);
+                int nbByCriteria = Integer.parseInt(tuple.getValue("nbByCriteria").getContent());
+                if (nbByCriteria > 0) {
+                    facetCriteria.put("id", tuple.getValue("criteria").getContent());
+                    facetCriteria.put("count", nbByCriteria);
+                    values.put(facetCriteria);
+                }
             }
             facet.put("values", values);
             facetInfos.put(facet);

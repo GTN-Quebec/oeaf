@@ -13,3 +13,11 @@
 .x-tree-icon {
     display: none;
 }
+
+.schedule .x-panel-header-default {
+    background-color: #ADD2ED;
+}
+
+.schedule .x-panel-header-text-container-default {
+    color: #15569B;
+}

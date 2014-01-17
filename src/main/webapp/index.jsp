@@ -35,7 +35,8 @@
     <title>Prototype OÉAF</title>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/Facets.js"></script>
-    <script type="text/javascript" src="js/LearningOpportunityGrid.js"></script>
+    <script type="text/javascript" src="js/GenericLearningOpportunityGrid.js"></script>
+    <script type="text/javascript" src="js/ConcreteLearningOpportunityGrid.js"></script>
     <script type="text/javascript" src="js/LearningOpportunity.js"></script>
     <script type="text/javascript" src="js/Search.js"></script>
     <script type="text/javascript" src="js/Harvester.js"></script>

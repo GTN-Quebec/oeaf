@@ -33,8 +33,13 @@
     'Filters': 'Filtres',
     'Provider': 'Fournisseur',
     'Performance language': 'Langue de prestation',
-    'Educational level': 'Niveau d\'éducation'
-
-
+    'Educational level': 'Niveau d\'éducation',
+ 
+    'Offer\'s detail':'Détail de l\'offre',
+    'Schedule':'Horaire',
+    'From':'Du',
+    'To':'Au',
+    'Delivery':'Diffusion',
+    'Geographical location':'Localisation géographique'
 };
 

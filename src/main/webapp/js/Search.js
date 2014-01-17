@@ -4,11 +4,11 @@
     initComponent: function( config ) {
         
         // By default, the interface is displayed in English.
-        var lang = ( Ext.getUrlParam( 'lang' ) || 'en' );
+        this.lang = ( Ext.getUrlParam( 'lang' ) || 'en' );
 
         this.facets = Ext.create('Proeaf.Facets', {
             title: tr('Filters'),
-            lang: lang,
+            lang: this.lang,
             region: 'west',                         
             width: 360,
             margin: '10 0 10 10',
@@ -16,14 +16,17 @@
             resizeHandles: 'e' 
         });
 
-        this.loGrid = Ext.create('Proeaf.LearningOpportunityGrid', {
+        this.loGrid = Ext.create('Proeaf.GenericLearningOpportunityGrid', {
             border: false
         });
         
         this.loGrid.on( 'itemdblclick', this.openLoDetails, this );
 
-        this.loDetail = Ext.create('Proeaf.LearningOpportunity', {
-            border: false
+        this.loDetail = Ext.create('Proeaf.LearningOpportunity', { 
+            title: tr('Offer\'s detail'),
+            lang: this.lang,
+            buttons: [ { text: tr('Close'), handler: this.closeLoDetails, scope: this } ],
+            overflowY: 'auto'
         });
 
         this.contentPanel = Ext.create('Ext.panel.Panel', {
@@ -42,11 +45,13 @@
         Ext.apply(this, cfg);
         this.callParent(arguments); 
     },
-    openLoDetails: function() {
+    openLoDetails: function(grid, record) {
+        this.loDetail.init(record.getData().id);
         this.contentPanel.getLayout().setActiveItem(this.loDetail);
         this.setFacetsVisible(false);  
     },
     closeLoDetails: function() {
+        this.loDetail.clear();
         this.contentPanel.getLayout().setActiveItem(this.loGrid);
         this.setFacetsVisible(true);
     },

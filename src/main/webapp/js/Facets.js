@@ -14,7 +14,7 @@
         });
 
         cfg = {
-            autoScroll: true, 
+            autoScroll: true,
             tools: [ this.clearButton ],
             items: [ 
                { xtype: 'fieldset',

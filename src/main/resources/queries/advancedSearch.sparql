@@ -17,6 +17,5 @@ WHERE '{'
     {0} 
 
 '}'
-ORDER BY ?sigle
 OFFSET {1,number,#}
 LIMIT {2,number,#}

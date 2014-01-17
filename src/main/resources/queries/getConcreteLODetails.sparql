@@ -1,0 +1,13 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
+PREFIX mlr-9: <http://standards.iso.org/iso-iec/19788/-9/ed-1/en/>
+
+SELECT ?long ?lat ?descr
+WHERE '{'
+    OPTIONAL '{'
+        <{0}> oeaf:sed2000 ?loc .
+        ?loc mlr-9:des1400 ?long .
+        ?loc mlr-9:des1500 ?lat .
+        ?loc mlr-9:des1700 ?descr 
+    '}'
+'}'

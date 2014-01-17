@@ -5,6 +5,8 @@ import ca.licef.proeaf.core.util.Util;
 import ca.licef.proeaf.queryengine.ResultEntry;
 import ca.licef.proeaf.queryengine.ResultSet;
 import ca.licef.proeaf.queryengine.QueryEngine;
+import ca.licef.proeaf.vocabulary.Vocabulary;
+import licef.tsapi.model.NodeValue;
 import licef.tsapi.model.Tuple;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +96,97 @@ public class QueryEngineResource implements Serializable {
                 String key = it.next();
                 Object value = rs.getAdditionalData( key );
                 json.key( key ).value( value );
+            }
+
+            json.endObject();
+        }
+        catch( JSONException e ) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.close();
+        }
+        catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        return Response.ok(out.toString()).build();
+    }
+
+    @GET
+    @Path( "concreteLOs" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getConcreteLearningOpportunities(@QueryParam( "glo" ) String glo,
+                                                     @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
+
+        String query = Util.getQuery("getConcreteLOs.sparql", glo);
+        Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
+        StringWriter out = new StringWriter();
+        try {
+            JSONWriter json = new JSONWriter( out );
+
+            JSONArray learningOpportunities = new JSONArray();
+
+            for (int i = 0; i < results.length; i++) {
+                JSONObject clo = new JSONObject();
+                clo.put("uri", results[i].getValue("s").getContent());
+                clo.put( "start", results[i].getValue("start").getContent() );
+                NodeValue end = results[i].getValue("end");
+                if (end != null)
+                    clo.put("end", end.getContent());
+                NodeValue delivery = results[i].getValue("delivery");
+                if (delivery != null) {
+                    String deliveryMode = Vocabulary.getInstance().getLabel(delivery.getContent(), lang);
+                    clo.put("deliveryMode", deliveryMode);
+                }
+                learningOpportunities.put(clo);
+            }
+
+            json.object().key("learningOpportunities").value( learningOpportunities );
+
+            json.endObject();
+        }
+        catch( JSONException e ) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.close();
+        }
+        catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        return Response.ok(out.toString()).build();
+    }
+
+    @GET
+    @Path( "concreteLODetails" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getConcreteLearningOpportunityDetails(@QueryParam( "uri" ) String clo,
+                                                          @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
+
+        String query = Util.getQuery("getConcreteLODetails.sparql", clo);
+        Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
+        StringWriter out = new StringWriter();
+        try {
+            JSONWriter json = new JSONWriter( out );
+
+            json.object().key("uri").value(clo);
+
+            for (int i = 0; i < results.length; i++) {
+                NodeValue longitude = results[i].getValue("long");
+                NodeValue latitude = results[i].getValue("lat");
+                if (longitude != null && latitude != null) {
+                    JSONObject location = new JSONObject();
+                    location.put("long", longitude.getContent()).
+                            put("lat", latitude.getContent());
+                    NodeValue descr = results[i].getValue("descr");
+                    if (descr != null)
+                        location.put("description", descr.getContent());
+                    json.key("location").value(location);
+                }
             }
 
             json.endObject();

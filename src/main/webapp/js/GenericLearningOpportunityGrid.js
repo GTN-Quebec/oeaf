@@ -1,10 +1,10 @@
-﻿Ext.define( 'Proeaf.LearningOpportunityGrid', {
+﻿Ext.define( 'Proeaf.GenericLearningOpportunityGrid', {
     extend: 'Ext.grid.Panel',
     initComponent: function (config) { 
 
         this.queryUrl = 'rest/queryEngine/search?';
 
-        Ext.define('LearninOpportunityModel', {
+        Ext.define('GenericLearninOpportunityModel', {
             extend: 'Ext.data.Model',
             fields: [ 'id', 'title', 'logo' ]
         });
@@ -17,16 +17,16 @@
             }
         });
 
-        this.loStore = Ext.create('Ext.data.JsonStore', {
-            model: 'LearninOpportunityModel',
+        this.gloStore = Ext.create('Ext.data.JsonStore', {
+            model: 'GenericLearninOpportunityModel',
             pageSize: 20,
             proxy: this.proxy
         });
 
-        this.loStore.on( 'load', this.updateResults, this );
+        this.gloStore.on( 'load', this.updateResults, this );
 
         this.pageBar = Ext.create('Ext.toolbar.Paging', {
-            store: this.loStore,
+            store: this.gloStore,
             displayInfo: true,
             firstText: tr('First Page'),
             prevText: tr('Previous Page'),
@@ -46,7 +46,7 @@
         },
 
         cfg = {
-            store: this.loStore,
+            store: this.gloStore,
             columns: [ 
                 { text: 'Id', width: 100,  dataIndex: 'id', hidden: true },
                 { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true, renderer: this.renderTitle },
@@ -62,29 +62,10 @@
         Ext.apply(this, cfg);
         this.callParent(arguments);   
     },
-    getCurrentPage: function() {
-        return this.loStore.currentPage; 
-    },    
-    getSelected: function() {
-        if( this.getSelectionModel().getSelection().length > 0 )
-            return this.getSelectionModel().getSelection()[0];
-        else
-            return null;
-    },
-    getSelectedId: function() {
-        var currSelectedLo = null;
-        selected = this.getSelected();
-        if (selected)
-            currSelectedLo = selected.getData().id;
-        return currSelectedLo;
-    },
-    clear: function() {
-        this.loStore.loadRawData([]);
-    },
     doQuery: function(query) { 
         this.currentQuery = query;
         this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(query)) + '&isFacetInfos=true';
-        this.loStore.loadPage(1);
+        this.gloStore.loadPage(1);
     },
     updateResults: function() {
         this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery));
@@ -101,7 +82,7 @@
         }
         else {
             label = tr( 'No opportunity found' );
-            var nbResults = this.loStore.getTotalCount();
+            var nbResults = this.gloStore.getTotalCount();
 
             var atLeastOneResult = true;
             if (nbResults == 1)
@@ -113,7 +94,10 @@
         }
          
         this.columns[1].setText(tr(label) + '.');
-    }    
+    },    
+    clear: function() {
+        this.gloStore.loadRawData([]);
+    }
 } );
 
 
