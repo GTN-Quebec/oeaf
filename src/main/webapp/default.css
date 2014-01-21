@@ -21,3 +21,15 @@
 .schedule .x-panel-header-text-container-default {
     color: #15569B;
 }
+
+.detailField {
+     border: none;
+     font-family: helvetica,tahoma,verdana,sans-serif; 
+     font-size: 14px;
+}
+
+.detailLabel {
+    color: #15569B;    
+    font-weight: bold;    
+}
+

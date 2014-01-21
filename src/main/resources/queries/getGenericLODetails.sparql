@@ -1,0 +1,34 @@
+PREFIX mlr-1: <http://standards.iso.org/iso-iec/19788/-1/ed-1/en/>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
+
+SELECT ?sigle ?title ?providerLogo ?descr ?subject ?prealable ?oppType ?educLevel ?credit
+WHERE '{'
+    OPTIONAL '{'
+        <{0}> oeaf:sed0900 ?sigle .
+    '}'
+    OPTIONAL '{'
+        <{0}> mlr-1:des0100 ?title .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed0200/vcard:hasLogo ?providerLogo .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1100 ?descr .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1200 ?subject .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1300 ?prealable .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1400 ?oppType .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1500 ?educLevel .
+    '}'
+    OPTIONAL '{'
+        <{0}> oeaf:sed1600 ?credit
+    '}'
+'}'

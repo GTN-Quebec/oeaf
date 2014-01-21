@@ -36,10 +36,16 @@
     'Educational level': 'Niveau d\'éducation',
  
     'Offer\'s detail':'Détail de l\'offre',
+    'Level':'Niveau',
+    'Credit':'Crédit',
+    'Subject':'Sujet',
+    'Prerequisite':'Prérequis',
+    'Last minute infos': 'Infos de dernière minute',
     'Schedule':'Horaire',
     'From':'Du',
     'To':'Au',
     'Delivery':'Diffusion',
+    'Language':'Langue',
     'Geographical location':'Localisation géographique'
 };
 

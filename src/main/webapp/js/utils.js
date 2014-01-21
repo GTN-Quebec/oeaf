@@ -88,5 +88,11 @@ Array.prototype.indexOf = function(obj, start) {
      return -1;
 }
 
-
-
+function getlanguage( lang ) {
+    if (lang == "fra")
+        return "French";
+    else if (lang == "eng")
+        return "English";
+ 
+    return null;   
+}

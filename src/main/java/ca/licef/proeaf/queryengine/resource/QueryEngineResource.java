@@ -115,6 +115,60 @@ public class QueryEngineResource implements Serializable {
     }
 
     @GET
+    @Path( "genericLODetails" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getGenericLearningOpportunityDetails(@QueryParam( "uri" ) String glo,
+                                                         @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
+
+        String query = Util.getQuery("getGenericLODetails.sparql", glo);
+        Tuple result = Core.getInstance().getTripleStore().sparqlSelect(query)[0];
+
+        StringWriter out = new StringWriter();
+        try {
+            JSONWriter json = new JSONWriter( out );
+
+            json.object().key("uri").value(glo);
+
+            if (result.getValue("sigle") != null)
+                json.key("sigle").value(result.getValue("sigle").getContent());
+            if (result.getValue("title") != null)
+                json.key("title").value(result.getValue("title").getContent());
+            if (result.getValue("providerLogo") != null)
+                json.key("providerLogo").value(result.getValue("providerLogo").getContent());
+            if (result.getValue("descr") != null)
+                json.key("descr").value(result.getValue("descr").getContent());
+            if (result.getValue("subject") != null)
+                json.key("subject").value(result.getValue("subject").getContent());
+            if (result.getValue("prealable") != null)
+                json.key("prealable").value(result.getValue("prealable").getContent());
+            if (result.getValue("credit") != null)
+                json.key("credit").value(result.getValue("credit").getContent());
+            if (result.getValue("oppType") != null) {
+                String oppTypeUri = result.getValue("oppType").getContent();
+                json.key("oppType").value(Vocabulary.getInstance().getLabel(oppTypeUri, lang));
+            }
+            if (result.getValue("educLevel") != null) {
+                String educLevelUri = result.getValue("educLevel").getContent();
+                json.key("educLevel").value(Vocabulary.getInstance().getLabel(educLevelUri, lang));
+            }
+
+            json.endObject();
+        }
+        catch( JSONException e ) {
+            e.printStackTrace();
+        }
+
+        try {
+            out.close();
+        }
+        catch( IOException e ) {
+            e.printStackTrace();
+        }
+
+        return Response.ok(out.toString()).build();
+    }
+
+    @GET
     @Path( "concreteLOs" )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getConcreteLearningOpportunities(@QueryParam( "glo" ) String glo,
@@ -140,6 +194,11 @@ public class QueryEngineResource implements Serializable {
                     String deliveryMode = Vocabulary.getInstance().getLabel(delivery.getContent(), lang);
                     clo.put("deliveryMode", deliveryMode);
                 }
+                NodeValue perfLanguage = results[i].getValue("lang");
+                System.out.println("perfLanguage = " + perfLanguage);
+                if (perfLanguage != null)
+                    clo.put("perfLanguage", perfLanguage.getContent());
+
                 learningOpportunities.put(clo);
             }
 
@@ -168,25 +227,31 @@ public class QueryEngineResource implements Serializable {
                                                           @DefaultValue( "en" ) @QueryParam( "lang" ) String lang) throws Exception {
 
         String query = Util.getQuery("getConcreteLODetails.sparql", clo);
-        Tuple[] results = Core.getInstance().getTripleStore().sparqlSelect(query);
+        Tuple result = Core.getInstance().getTripleStore().sparqlSelect(query)[0];
         StringWriter out = new StringWriter();
         try {
             JSONWriter json = new JSONWriter( out );
 
             json.object().key("uri").value(clo);
 
-            for (int i = 0; i < results.length; i++) {
-                NodeValue longitude = results[i].getValue("long");
-                NodeValue latitude = results[i].getValue("lat");
-                if (longitude != null && latitude != null) {
-                    JSONObject location = new JSONObject();
-                    location.put("long", longitude.getContent()).
-                            put("lat", latitude.getContent());
-                    NodeValue descr = results[i].getValue("descr");
-                    if (descr != null)
-                        location.put("description", descr.getContent());
-                    json.key("location").value(location);
-                }
+            NodeValue pubDate = result.getValue("pubDate");
+            if (pubDate != null)
+                json.key("pubDate").value(pubDate.getContent());
+
+            NodeValue lastMinInfos = result.getValue("lastMinInfos");
+            if (lastMinInfos != null)
+                json.key("lastMinInfos").value(lastMinInfos.getContent());
+
+            NodeValue longitude = result.getValue("long");
+            NodeValue latitude = result.getValue("lat");
+            if (longitude != null && latitude != null) {
+                JSONObject location = new JSONObject();
+                location.put("long", longitude.getContent()).
+                        put("lat", latitude.getContent());
+                NodeValue descr = result.getValue("descr");
+                if (descr != null)
+                    location.put("description", descr.getContent());
+                json.key("location").value(location);
             }
 
             json.endObject();
