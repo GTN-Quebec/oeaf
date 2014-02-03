@@ -195,7 +195,6 @@ public class QueryEngineResource implements Serializable {
                     clo.put("deliveryMode", deliveryMode);
                 }
                 NodeValue perfLanguage = results[i].getValue("lang");
-                System.out.println("perfLanguage = " + perfLanguage);
                 if (perfLanguage != null)
                     clo.put("perfLanguage", perfLanguage.getContent());
 

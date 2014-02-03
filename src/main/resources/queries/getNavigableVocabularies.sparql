@@ -3,7 +3,7 @@ PREFIX comete: <http://comete.licef.ca/reference#>
 
 SELECT ?vocUri
 WHERE {
-    ?s rdf:type <omete:VocContext .
+    ?s rdf:type comete:VocContext .
     ?s comete:vocNavigable 'true' .
     ?s comete:vocUri ?vocUri .
 }

@@ -6,7 +6,7 @@
         this.logo = Ext.create('Ext.Img', {
             height: 100,
             border: true,
-            margin: '0 5 0 0',
+            margin: '0 5 0 10',
             style: {
                 borderColor: '#B5B8C8',
                 borderStyle: 'solid',
@@ -26,7 +26,7 @@
       
         this.loTitle = Ext.create('Ext.form.field.Text', {
             name: 'title',
-            width: 400,
+            width: 600,
             readOnly: true,
             fieldStyle: { 
                 border: 'none', 
@@ -38,9 +38,8 @@
             name: 'oppType',
             readOnly: true,
             margin: '0 0 0 20',
-            width: 300,
             fieldLabel: 'Type',
-            labelWidth: 30,
+            labelWidth: 48,
             labelClsExtra: 'detailLabel',
             fieldCls: 'detailField'
         });
@@ -49,9 +48,8 @@
             name: 'educLevel',
             readOnly: true,
             margin: '0 0 0 20',
-            width: 300,
             fieldLabel: tr('Level'),
-            labelWidth: 40,
+            labelWidth: 48,
             labelClsExtra: 'detailLabel',
             fieldCls: 'detailField'
         });
@@ -61,7 +59,7 @@
             readOnly: true,
             margin: '0 0 0 20',
             fieldLabel: tr('Credit') + 's',
-            labelWidth: 40,
+            labelWidth: 48,
             labelClsExtra: 'detailLabel',
             fieldCls: 'detailField'
         });
@@ -69,10 +67,10 @@
         this.subject = Ext.create('Ext.form.field.Text', {
             name: 'subject',
             readOnly: true,
+            width: '100%',
             margin: '0 0 0 20',
-            width: 300,
             fieldLabel: tr('Subject'),
-            labelWidth: 30,
+            labelWidth: 48,
             labelClsExtra: 'detailLabel',
             fieldCls: 'detailField'
         });
@@ -86,14 +84,7 @@
             width: '100%',
             margin: '0 20 0 20'
         });                
-
-        this.lastMinuteInfos = Ext.create('Ext.panel.Panel', {
-            layout: 'fit',
-            width: 300,
-            height: 100,
-            margin: '0 20 0 0'
-        });
-
+        
         this.loGrid = Ext.create('Proeaf.ConcreteLearningOpportunityGrid', {            
             lang: this.lang,
             title: tr('Schedule'),
@@ -126,20 +117,17 @@
             items: [ 
                { xtype: 'tbspacer', height: 10 },
                { layout: 'hbox', 
+                 width: '100%',
                  items: [ this.logo,  
+                          { layout: 'vbox', height: 105,
+                            items: [ { xtype: 'tbfill' }, this.sigle, this.loTitle ] },
+                          { xtype: 'tbfill' },
                           { layout: 'vbox', height: 105, 
-                            items: [ { xtype: 'tbfill' }, this.sigle, this.loTitle ] }
+                            items: [ { xtype: 'tbfill' }, this.type, this.level, this.credit ] }
                         ]
                },
                { xtype: 'tbspacer', height: 10 },
-               { layout: 'hbox',
-                 width: '100%', 
-                 items: [ { layout: 'vbox', 
-                            items: [ this.type, this.level, this.credit, this.subject ] },
-                          { xtype: 'tbfill' },
-                          this.lastMinuteInfos, { xtype: 'tbfill' }
-                        ]
-               },
+               this.subject,
                { xtype: 'tbspacer', height: 10 },
                this.descr,
                { xtype: 'tbspacer', height: 20 },
@@ -185,7 +173,10 @@
         } );        
     },
     fetchCloDetails: function(grid, record) {   
-        this.lastMinuteInfos.removeAll();     
+        if (this.lastMinuteInfos != undefined) {
+            this.lastMinuteInfos.setVisible(false);
+            this.lastMinuteInfos = null;
+        }
         this.location.removeAll();
 
         Ext.Ajax.request( {
@@ -193,13 +184,16 @@
             method: 'GET',
             success: function( response ) {
                 var details = Ext.JSON.decode(response.responseText, true);
-                if (details.lastMinInfos != undefined) 
-                    this.lastMinuteInfos.add( { 
+                if (details.lastMinInfos != undefined) {
+                    this.lastMinuteInfos = Ext.create('Ext.window.Window', {
                         title: tr('Last minute infos'),
-                        border: true,  
+                        width: 300,
+                        height: 200,
                         autoScroll: true,                                
                         html: '<div style="margin: 10px">' + details.lastMinInfos + '</div>'
-                    } );
+                    });
+                    this.lastMinuteInfos.setVisible(true);
+                }
                 this.setMap(details.location);
             },
             failure: function( response ) {
@@ -236,7 +230,10 @@
         this.getForm().reset();   
         this.descr.removeAll();
         this.prerequisite.removeAll();
-        this.lastMinuteInfos.removeAll();
+        if (this.lastMinuteInfos != undefined) {
+            this.lastMinuteInfos.setVisible(false);
+            this.lastMinuteInfos = null;
+        }
         this.loGrid.clear();
         this.location.removeAll();
     }     
