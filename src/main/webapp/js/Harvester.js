@@ -10,7 +10,8 @@ Ext.define( 'Proeaf.Harvester', {
             data: [  
                 { 'id': 'rdf', 'name': 'RDF/XML' }, 
                 { 'id': 'html', 'name': 'HTML5 + RDFa' }, 
-                { 'id': 'xhtml', 'name': 'XHTML + RDFa' }
+                { 'id': 'xhtml', 'name': 'XHTML + RDFa' },
+                { 'id': 'turtle', 'name': 'Turtle' }
             ]
         } );
 

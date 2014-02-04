@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -106,9 +107,20 @@ public class Harvester implements Runnable {
             os.close();
         }
 
+        if( "TURTLE".equals( linkType ) && url.endsWith( ".html" ) ) {
+            String content = new String( bos.toByteArray(), "UTF-8" );
+            handleTurtleParentFile( url, content, graph );
+            return;
+        }
+
         BufferedInputStream bis = new BufferedInputStream( new ByteArrayInputStream( bos.toByteArray() ) );
         TripleStore store = Core.getInstance().getTripleStore();
-        store.loadRDFa( TripleStore.RdfaApi.JAVA_RDFA, "XHTML".equals( linkType ) ? TripleStore.RdfaFormat.RDFA_XHTML : TripleStore.RdfaFormat.RDFA_HTML, bis, "http://invalid/", graph );
+        if( "TURTLE".equals( linkType ) )
+            store.loadTurtle( bis, "http://invalid/", graph );
+        else if( "XHTML".equals( linkType ) ) 
+            store.loadRDFa( TripleStore.RdfaApi.JAVA_RDFA, TripleStore.RdfaFormat.RDFA_XHTML, bis, "http://invalid/", graph );
+        else
+            store.loadRDFa( TripleStore.RdfaApi.JAVA_RDFA, TripleStore.RdfaFormat.RDFA_HTML, bis, "http://invalid/", graph );
 
         Triple[] triplesToRemove = store.getTriplesWithSubject( "http://invalid/", graph );
         store.removeTriples( Arrays.asList( triplesToRemove ) );
@@ -134,13 +146,34 @@ public class Harvester implements Runnable {
         }
     }
 
+    private void handleTurtleParentFile( String url, String content, String... graph ) throws Exception {
+        BufferedReader reader = new BufferedReader( new StringReader( content ) );
+        try {
+            String line;
+            while( ( line = reader.readLine() ) != null ) {
+                int indexOfHref = line.indexOf( "href=\"" );
+                if( indexOfHref != -1 ) {
+                    int indexOfStartQuote = indexOfHref + "href=\"".length();
+                    int indexOfEndQuote = line.indexOf( "\"", indexOfStartQuote );
+                    if( indexOfEndQuote != -1 ) {
+                        String filename = line.substring( indexOfStartQuote, indexOfEndQuote );
+                        String fileUrl = url.substring( 0, url.lastIndexOf( "/" ) + 1 ) + filename;
+                        harvestFile( fileUrl, "TURTLE", graph ); 
+                    }
+                }
+            }
+        }
+        finally {
+            reader.close();
+        }
+    }
+
     public void run() {
         System.out.println( "Starting harvester: " + (new Date() ) );        
 
         try {
             harvestFile( url, type.toUpperCase() );
 
-            System.out.println( "AFTER=" );            
             TripleStore store = Core.getInstance().getTripleStore();
 //            Triple[] triples = store.getAllTriples( "http://harvestedTriples" );
 //            System.out.println( "Triples" );

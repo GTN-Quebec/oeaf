@@ -20,7 +20,6 @@ public class HarvesterResource /*implements Serializable*/ {
     @Path( "status" )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getStatus() throws Exception {
-        System.out.println( "getStatus" );
         String msg = "";
         if( harvester == null )
             msg += "NO_HARVEST";
