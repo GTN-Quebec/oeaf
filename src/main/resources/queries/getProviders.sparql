@@ -4,6 +4,12 @@ PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
 SELECT ?s ?name
 WHERE {
-    ?s rdf:type oeaf:rc0001 .
     ?s mlr-9:des0200 ?name .
+    {
+        ?s rdf:type mlr-9:rc0001 
+    }
+    UNION
+    {
+        ?s rdf:type mlr-9:rc0002 
+    }
 }
