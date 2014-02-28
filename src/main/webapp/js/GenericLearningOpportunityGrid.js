@@ -6,7 +6,7 @@
 
         Ext.define('GenericLearninOpportunityModel', {
             extend: 'Ext.data.Model',
-            fields: [ 'id', 'title', 'logo' ]
+            fields: [ 'id', 'title', 'oppType', 'logo' ]
         });
 
         this.proxy = Ext.create('Ext.data.proxy.Ajax', {
@@ -39,18 +39,22 @@
         } ),
 
         this.renderTitle = function( value, metaData, lo ) {
-            return '<table width="100%" border="0"><tr>'+
+            return '<table width="100%" border="0">'+
+                      '<tr>'+
                           '<td>' + value + '</td>'+ 
-                          '<td align="right"><img style="border:1px solid; border-color:#cccccc; margin-right: 10px" height="60" src="' + lo.data.logo + '"></td>' +
-                          '</tr></table>';
+                          '<td rowspan="2" align="right"><img style="border:1px solid; border-color:#cccccc; margin-right: 10px" height="60" src="' + lo.data.logo + '"></td>' +
+                      '</tr>' +
+                      '<tr>'+
+                          '<td><font style="color:#15569B;"><i>' + lo.data.oppType + '</i></font></td>'+ 
+                      '</tr>' +
+                   '</table>';
         },
 
         cfg = {
             store: this.gloStore,
             columns: [ 
                 { text: 'Id', width: 100,  dataIndex: 'id', hidden: true },
-                { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true, renderer: this.renderTitle },
-                { text: 'logo', width: 400,  dataIndex: 'logo', hidden: true}
+                { text: tr('Opportunities'), flex: 1, dataIndex: 'title', sortable: true, renderer: this.renderTitle }
             ],          
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',
@@ -64,11 +68,11 @@
     },
     doQuery: function(query) { 
         this.currentQuery = query;
-        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(query)) + '&isFacetInfos=true';
+        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(query)) + '&isFacetInfos=true&lang=' + this.lang;
         this.gloStore.loadPage(1);
     },
     updateResults: function() {
-        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery));
+        this.proxy.url = this.queryUrl + '&q=' + encodeURIComponent(JSON.stringify(this.currentQuery)) + '&lang=' + this.lang;
         var isClear = this.proxy.reader.jsonData.isClear;
         this.updateResultInfos(isClear);
         var facetInfos = this.proxy.reader.jsonData.facetInfos;
@@ -93,7 +97,7 @@
                 atLeastOneResult = false;
         }
          
-        this.columns[1].setText(tr(label) + '.');
+        this.columns[1].setText(tr(label));
     },    
     clear: function() {
         this.gloStore.loadRawData([]);

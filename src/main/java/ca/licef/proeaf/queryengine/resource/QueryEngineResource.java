@@ -83,8 +83,9 @@ public class QueryEngineResource implements Serializable {
 
                 JSONObject learningOpportunity = new JSONObject();
                 learningOpportunity.put("id", entry.getId())
-                    .put("title", entry.getTitle())
-                    .put("logo", entry.getLogo());
+                        .put("title", entry.getTitle())
+                        .put("oppType", entry.getOppType())
+                        .put("logo", entry.getLogo());
                 learningOpportunities.put(learningOpportunity);
             }
 
@@ -145,7 +146,8 @@ public class QueryEngineResource implements Serializable {
                 json.key("credit").value(result.getValue("credit").getContent());
             if (result.getValue("oppType") != null) {
                 String oppTypeUri = result.getValue("oppType").getContent();
-                json.key("oppType").value(Vocabulary.getInstance().getLabel(oppTypeUri, lang));
+                if (!"".equals(oppTypeUri))
+                    json.key("oppType").value(Vocabulary.getInstance().getLabel(oppTypeUri, lang));
             }
             if (result.getValue("educLevel") != null) {
                 String educLevelUri = result.getValue("educLevel").getContent();

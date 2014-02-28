@@ -165,6 +165,7 @@
                 if (details.prealable != undefined)
                     this.prerequisite.add( { html: '<B><font color="#15569B">' + tr('Prerequisite') + '</font></b>: ' + details.prealable } );
                 this.getForm().setValues(details);
+                this.sigle.setVisible( !details.sigle.startsWith('_') );
             },
             failure: function( response ) {
                 Ext.Msg.alert( 'error' );

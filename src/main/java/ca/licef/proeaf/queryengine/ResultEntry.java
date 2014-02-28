@@ -37,6 +37,14 @@ public class ResultEntry {
         this.description = description;
     }
 
+    public String getOppType() {
+        return oppType;
+    }
+
+    public void setOppType(String oppType) {
+        this.oppType = oppType;
+    }
+
     public String getLogo() {
         return logo;
     }
@@ -48,6 +56,7 @@ public class ResultEntry {
     private String id;
     private String title;
     private String description;
+    private String oppType;
     private String logo;
 
 }

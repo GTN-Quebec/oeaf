@@ -1,6 +1,7 @@
 package ca.licef.proeaf.queryengine;
 
 import ca.licef.proeaf.core.Core;
+import ca.licef.proeaf.vocabulary.Vocabulary;
 import licef.tsapi.TripleStore;
 import licef.tsapi.model.Triple;
 import licef.tsapi.model.Tuple;
@@ -61,7 +62,13 @@ public class QueryEngine {
                 ResultEntry entry = new ResultEntry();
                 entry.setId(tuple.getValue("s").getContent());
                 String sigle = tuple.getValue("sigle").getContent();
-                entry.setTitle("<b>" + sigle + "</b> " + tuple.getValue("title").getContent());
+                String title =  tuple.getValue("title").getContent();
+                if (!sigle.startsWith("_"))
+                    title = "<b>" + sigle + "</b> " + title;
+                entry.setTitle(title);
+                String oppType = tuple.getValue("oppType").getContent();
+                if (!"".equals(oppType))
+                    entry.setOppType(Vocabulary.getInstance().getLabel(oppType, lang));
                 entry.setLogo(tuple.getValue("providerLogo").getContent());
                 rs.addEntry(entry);
             }

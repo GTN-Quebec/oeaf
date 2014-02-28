@@ -7,12 +7,17 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT DISTINCT ?s ?sigle ?title ?providerLogo
+SELECT DISTINCT ?s ?sigle ?title ?oppType ?providerLogo
 WHERE '{'
     ?s rdf:type oeaf:rc0002 .
     ?s oeaf:sed0900 ?sigle .
     ?s mlr-1:des0100 ?title .
-    ?s oeaf:sed0200/vcard:hasLogo ?providerLogo .
+    OPTIONAL '{'
+        ?s oeaf:sed0200/vcard:hasLogo ?providerLogo .
+    '}'
+    OPTIONAL '{'
+        ?s oeaf:sed1400 ?oppType .
+    '}'
 
     {0} 
 

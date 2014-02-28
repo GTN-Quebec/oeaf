@@ -17,7 +17,8 @@
         });
 
         this.loGrid = Ext.create('Proeaf.GenericLearningOpportunityGrid', {
-            border: false
+            border: false,
+            lang: this.lang
         });
         
         this.loGrid.on( 'itemdblclick', this.openLoDetails, this );

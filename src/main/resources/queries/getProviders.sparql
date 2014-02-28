@@ -2,14 +2,8 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX mlr-9: <http://standards.iso.org/iso-iec/19788/-9/ed-1/en/>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT ?s ?name
+SELECT DISTINCT ?s ?name
 WHERE {
     ?s mlr-9:des0200 ?name .
-    {
-        ?s rdf:type mlr-9:rc0001 
-    }
-    UNION
-    {
-        ?s rdf:type mlr-9:rc0002 
-    }
+    ?glo oeaf:sed0200 ?s .
 }
