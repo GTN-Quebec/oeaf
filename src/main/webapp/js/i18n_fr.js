@@ -34,6 +34,11 @@
     'Provider': 'Fournisseur',
     'Performance language': 'Langue de prestation',
     'Educational level': 'Niveau d\'éducation',
+    'Performance date':'Date de la prestation',
+    'From': 'À partir du',
+    'To': 'Jusqu\'au',
+    'Between': 'Entre le',
+    'and': 'et le',
  
     'Offer\'s detail':'Détail de l\'offre',
     'Level':'Niveau',

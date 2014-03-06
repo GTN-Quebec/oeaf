@@ -51,10 +51,10 @@
                },
                { xtype: 'fieldset',
                   id: 'hiddenfacet3',
+                  facetType: 'radiomulti',
                   margin: '5 10 5 5',
-                  title: 'Date de la prestation',
-                  collapsible: true,                  
-                  items: [ { layout: 'fit', margin: '5 0 10 0', items: [ { xtype: 'datefield', editable: false } ] } ]
+                  title: tr('Performance date'),
+                  collapsible: true
                }               
             ]
         };        
@@ -65,6 +65,7 @@
         this.createFacet0();
         this.createFacet1();
         this.createFacet2();
+        this.createFacet3();
     },
     createFacet0: function() {
         var facet = this.getComponent(0);
@@ -122,7 +123,6 @@
         facet.add(elem);
     },
     createFacet2: function() {
-
         var conceptProxy = Ext.create('Ext.data.proxy.Ajax', {
             url: 'rest/vocs/'+ encodeURIComponent("http://normetic.org/uri/profil_oeaf/v1.0/va2.2") +'/topConcepts?lang=' + this.lang,
             reader: {
@@ -181,6 +181,61 @@
 
         var facet = this.getComponent(2);
         facet.add(tree);        
+    },
+    createFacet3: function() {
+        var facet = this.getComponent(3);
+
+        var elem = { layout: 'hbox', 
+                     items: [ { xtype: 'radio', id:'fromCb', name: 'dateSearchType', checked: true, boxLabel: tr('From'), 
+                                margin: '0 10 0 0', handler: this.fromSearch, scope: this },
+                              { xtype: 'radio', id:'toCb', name: 'dateSearchType', boxLabel: tr('To'), 
+                                margin: '0 10 0 0', handler: this.toSearch, scope: this }, 
+                              { xtype: 'radio', id:'betweenCb', name: 'dateSearchType', boxLabel: tr('Between'), 
+                                margin: '0 10 0 0', handler: this.betweenSearch, scope: this } ] };               
+        facet.add(elem);
+        elem = { xtype: 'datefield', id: 'firstDate', margin: '8 0 8 0', width: 250, editable: false };
+        facet.add(elem);
+        elem = { xtype: 'label', id: 'andLabel', margin: '0 0 0 5', text: tr('and'), hidden: true };
+        facet.add(elem);
+        elem = { xtype: 'datefield', id: 'secondDate', margin: '8 0 8 0', width: 250, hidden: true, editable: false };
+        facet.add(elem);
+
+        Ext.getCmp('firstDate').on( 'select', this.datePicked, this );
+        Ext.getCmp('secondDate').on( 'select', this.datePicked, this );
+    },
+    fromSearch: function(cb, checked) {
+        if (checked) {
+            Ext.getCmp('andLabel').setVisible(false);
+            Ext.getCmp('secondDate').setVisible(false);
+
+            if (Ext.getCmp('firstDate').getValue() != null)
+                this.facetedSearch();
+        }
+    },
+    toSearch: function(cb, checked) {
+        if (checked) {
+            Ext.getCmp('andLabel').setVisible(false);
+            Ext.getCmp('secondDate').setVisible(false);
+
+            if (Ext.getCmp('firstDate').getValue() != null)
+                this.facetedSearch();
+        }
+    },
+    betweenSearch: function(cb, checked) {
+        if (checked) {
+            Ext.getCmp('andLabel').setVisible(true);
+            Ext.getCmp('secondDate').setVisible(true);
+
+            if (Ext.getCmp('firstDate').getValue() != null &&
+                Ext.getCmp('secondDate').getValue() != null)
+                this.facetedSearch();
+        }
+    },
+    datePicked: function(dateField, value) {
+        if (dateField == Ext.getCmp('secondDate') && 
+               Ext.getCmp('firstDate').getValue() == null)
+            return;
+        this.facetedSearch();
     },
     facetedSearch: function() {
         if (this.isUpdateProcess)

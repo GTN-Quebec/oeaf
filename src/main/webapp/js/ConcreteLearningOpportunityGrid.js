@@ -37,7 +37,7 @@
                 { text: tr('Date'), flex: 1, sortable: true, xtype: 'datecolumn', dataIndex: 'start', renderer:this.start },
                 { text: tr('Duration'), width: 60, sortable: true, xtype: 'datecolumn', dataIndex: 'duration', renderer:this.duration  },
                 { text: tr('Diffusion'), width: 110, sortable: true, dataIndex: 'deliveryMode' },
-                { text: tr('Language'), width: 80, sortable: true, dataIndex: 'perfLanguage', renderer: this.renderPerfLang }
+                { text: tr('Language'),  width: 80, sortable: true, dataIndex: 'perfLanguage', renderer: this.renderPerfLang }
             ],          
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',

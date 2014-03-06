@@ -111,7 +111,7 @@
             border: true,
             margin: '6 0 0 0',
             border: true
-        });
+        });                
 
         this.location = Ext.create('Ext.form.FieldSet', {
             title: tr('Geographical location'),
@@ -206,7 +206,7 @@
                         width: 300,
                         height: 200,
                         autoScroll: true,                                
-                        html: '<div style="margin: 10px">' + details.lastMinInfos + '</div>'
+                        html: '<div>' + details.lastMinInfos + '</div>'
                     });
                     this.lastMinuteInfos.setVisible(true);
                 }
