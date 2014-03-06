@@ -1,17 +1,17 @@
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX oeaf: <http://normetic.org/uri/profil_oeaf/v1.0/ns#>
 
-SELECT ?s ?start ?end ?delivery ?lang
+SELECT ?s ?start ?duration ?delivery ?lang
 WHERE '{'
     ?s rdf:type oeaf:rc0003 .
     ?s oeaf:sed0300 <{0}> .
-    ?s oeaf:sed2100 ?start
+    ?s oeaf:sed2400 ?start
     OPTIONAL '{'
-        ?s oeaf:sed2200 ?end
+        ?s oeaf:sed2300 ?duration
     '}'
     OPTIONAL '{'
         ?s oeaf:sed2800 ?delivery
-    '}'     
+    '}'
     OPTIONAL '{'
         ?cloGen oeaf:sed0400 ?s .
         ?cloGen oeaf:sed2700 ?lang

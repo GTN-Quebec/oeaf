@@ -188,11 +188,11 @@ public class QueryEngineResource implements Serializable {
                 JSONObject clo = new JSONObject();
                 clo.put("uri", results[i].getValue("s").getContent());
                 clo.put( "start", results[i].getValue("start").getContent() );
-                NodeValue end = results[i].getValue("end");
-                if (end != null)
-                    clo.put("end", end.getContent());
+                NodeValue duration = results[i].getValue("duration");
+                if (duration != null)
+                    clo.put("duration", duration.getContent());
                 NodeValue delivery = results[i].getValue("delivery");
-                if (delivery != null) {
+                if (delivery != null && !"".equals(delivery.getContent())) {
                     String deliveryMode = Vocabulary.getInstance().getLabel(delivery.getContent(), lang);
                     clo.put("deliveryMode", deliveryMode);
                 }
@@ -235,12 +235,8 @@ public class QueryEngineResource implements Serializable {
 
             json.object().key("uri").value(clo);
 
-            NodeValue pubDate = result.getValue("pubDate");
-            if (pubDate != null)
-                json.key("pubDate").value(pubDate.getContent());
-
             NodeValue lastMinInfos = result.getValue("lastMinInfos");
-            if (lastMinInfos != null)
+            if (lastMinInfos != null && !"".equals(lastMinInfos.getContent()))
                 json.key("lastMinInfos").value(lastMinInfos.getContent());
 
             NodeValue longitude = result.getValue("long");

@@ -47,7 +47,7 @@
         this.callParent(arguments); 
     },
     openLoDetails: function(grid, record) {
-        this.loDetail.init(record.getData().id);
+        this.loDetail.init(record.getData().id, record.getData().oppType);
         this.contentPanel.getLayout().setActiveItem(this.loDetail);
         this.setFacetsVisible(false);  
     },

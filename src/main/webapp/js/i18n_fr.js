@@ -42,8 +42,8 @@
     'Prerequisite':'Prérequis',
     'Last minute infos': 'Infos de dernière minute',
     'Schedule':'Horaire',
-    'From':'Du',
-    'To':'Au',
+    'Date':'Date',
+    'Duration':'Durée',
     'Delivery':'Diffusion',
     'Language':'Langue',
     'Geographical location':'Localisation géographique'

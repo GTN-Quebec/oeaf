@@ -81,13 +81,6 @@ if (!Array.prototype.indexOf) {
      }
 }
 
-Array.prototype.indexOf = function(obj, start) {
-     for (var i = (start || 0), j = this.length; i < j; i++) {
-         if (this[i] === obj) { return i; }
-     }
-     return -1;
-}
-
 function getlanguage( lang ) {
     if (lang == "fra")
         return "French";
@@ -95,4 +88,46 @@ function getlanguage( lang ) {
         return "English";
  
     return null;   
+}
+
+
+/**
+  * format ISO date
+  */
+function formatISODate( value, lang ) {
+    var date = new Date(value.replace('Z','-05:00')); //patch for the moment -AM
+    if (lang == 'fr')
+        return Ext.Date.format(date, 'j F Y à H:i');
+    else 
+        return Ext.Date.format(date, 'F j, Y, g:i a');
+};
+
+
+/**
+  * format ISO duration in h:m
+  * ex: P185M -> 3h05
+  */
+function formatISODuration( duration ) {
+    var seconds = 0;
+    duration = duration.substring(1); //ignore P
+    var i = duration.indexOf('H')
+    if (i != -1) {
+        var hour = parseInt(duration.substring(0, i));
+        seconds = hour * 3600;
+        duration = duration.substring(i + 1); 
+    }
+    i = duration.indexOf('M')
+    if (i != -1) {
+        var minute = parseInt(duration.substring(0, i));
+        seconds = minute * 60;
+    }
+    var res = '';
+    var h = seconds / 3600;
+    seconds = seconds % 3600;
+    var m = seconds / 60;
+    if (m == 0)
+        m = '';
+    else if (m < 10)
+        m = '0' + m;
+    return h + 'h' + m;    
 }

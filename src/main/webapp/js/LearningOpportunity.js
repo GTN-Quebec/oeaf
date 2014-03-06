@@ -100,7 +100,18 @@
             height: 294
         });
 
+        this.loGrid.cloStore.on( 'load', this.cloDetailsFetched, this );
+
         this.loGrid.on( 'itemclick', this.fetchCloDetails, this );
+
+        this.singlePrestationDate = Ext.create('Ext.panel.Panel', {
+            title: tr('Schedule'),
+            width: 500,        
+            height: 80,
+            border: true,
+            margin: '6 0 0 0',
+            border: true
+        });
 
         this.location = Ext.create('Ext.form.FieldSet', {
             title: tr('Geographical location'),
@@ -135,7 +146,7 @@
                { xtype: 'tbspacer', height: 20 },
                { layout: 'hbox', 
                  items: [ { xtype: 'tbspacer', width: 20 }, 
-                          this.loGrid,
+                          { border: false, layout: 'fit', items: [ this.loGrid, this.singlePrestationDate ] },
                           { xtype: 'tbspacer', width: 20 }, 
                           { layout: 'vbox', 
                             items: [ this.location ] }
@@ -147,10 +158,14 @@
         Ext.apply(this, cfg);
         this.callParent(arguments);          
     },
-    init: function(glo) {        
+    init: function(glo, oppType) {        
         this.glo = glo;
         this.fetchGloDetails();
         this.loGrid.init(glo);
+        //patch for user-friendly display when single prestation date (like conf) -AM     
+        this.loGrid.setVisible(!oppType.startsWith('conf'));
+        this.singlePrestationDate.setVisible(oppType.startsWith('conf'));
+        //
     },
     fetchGloDetails: function() {        
         Ext.Ajax.request( {
@@ -202,6 +217,10 @@
             },
             scope: this
         } );
+    },
+    cloDetailsFetched: function(store, records) { 
+         if (this.singlePrestationDate.isVisible())
+             this.singlePrestationDate.update('<div style="padding: 10px">'+formatISODate(records[0].data.start, this.lang)+'</div>');
     },
     setMap: function(location) {
         if (location == undefined) 

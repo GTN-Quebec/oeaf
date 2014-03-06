@@ -4,7 +4,7 @@
         
         Ext.define('ConcreteLearninOpportunityModel', {
             extend: 'Ext.data.Model',
-            fields: [ 'uri', 'start', 'end', 'deliveryMode', 'perfLanguage' ]
+            fields: [ 'uri', 'start', 'duration', 'deliveryMode', 'perfLanguage' ]
         });
 
         this.proxy = Ext.create('Ext.data.proxy.Ajax', {
@@ -18,6 +18,14 @@
             proxy: this.proxy
         });
 
+        this.start = function( value ) {
+            return formatISODate(value, this.lang);
+        };
+
+        this.duration = function( value ) {
+            return formatISODuration(value);
+        };
+
         this.renderPerfLang = function( value ) {
             return tr(getlanguage( value ));
         };
@@ -26,10 +34,10 @@
             store: this.cloStore,
             columns: [ 
                 { text: 'uri', dataIndex: 'uri', hidden: true },
-                { text: tr('From'), width: 110, sortable: true, xtype: 'datecolumn', dataIndex: 'start' },
-                { text: tr('To'), width: 110, sortable: true, xtype: 'datecolumn', dataIndex: 'end' },
+                { text: tr('Date'), flex: 1, sortable: true, xtype: 'datecolumn', dataIndex: 'start', renderer:this.start },
+                { text: tr('Duration'), width: 60, sortable: true, xtype: 'datecolumn', dataIndex: 'duration', renderer:this.duration  },
                 { text: tr('Diffusion'), width: 110, sortable: true, dataIndex: 'deliveryMode' },
-                { text: tr('Language'), flex: 1, sortable: true, dataIndex: 'perfLanguage', renderer: this.renderPerfLang }
+                { text: tr('Language'), width: 80, sortable: true, dataIndex: 'perfLanguage', renderer: this.renderPerfLang }
             ],          
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',
