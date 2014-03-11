@@ -46,6 +46,15 @@ public class Core {
         }
     }
 
+    public String getProperty(String key) {
+        try {
+            ResourceBundle resBundle = ResourceBundle.getBundle("core");
+            return resBundle.getString(key);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /*
      * Repository info
      */

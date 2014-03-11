@@ -95,7 +95,7 @@ function getlanguage( lang ) {
   * format ISO date
   */
 function formatISODate( value, lang ) {
-    var date = new Date(value.replace('Z','-05:00')); //patch for the moment -AM
+    var date = new Date(value);
     if (lang == 'fr')
         return Ext.Date.format(date, 'j F Y à H:i');
     else 

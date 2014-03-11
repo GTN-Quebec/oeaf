@@ -1,0 +1,3 @@
+?clo oeaf:sed0300 ?s .
+?clo oeaf:sed2400 ?start .
+FILTER ( xsd:dateTime(?start) > xsd:dateTime("{0}T00:00:00Z") && xsd:dateTime(?start) < xsd:dateTime("{1}T00:00:00Z") )

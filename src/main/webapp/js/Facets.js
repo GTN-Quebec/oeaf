@@ -50,8 +50,8 @@
                   resizeHandles: 's' 
                },
                { xtype: 'fieldset',
-                  id: 'hiddenfacet3',
-                  facetType: 'radiomulti',
+                  id: 'facet3',
+                  facetType: 'date',
                   margin: '5 10 5 5',
                   title: tr('Performance date'),
                   collapsible: true
@@ -191,22 +191,34 @@
                               { xtype: 'radio', id:'toCb', name: 'dateSearchType', boxLabel: tr('To'), 
                                 margin: '0 10 0 0', handler: this.toSearch, scope: this }, 
                               { xtype: 'radio', id:'betweenCb', name: 'dateSearchType', boxLabel: tr('Between'), 
-                                margin: '0 10 0 0', handler: this.betweenSearch, scope: this } ] };               
+                                margin: '0 10 0 0', handler: this.betweenSearch, scope: this },
+                              { xtype: 'tbfill'},
+                              { xtype:'label', text: '' } 
+                            ] };               
         facet.add(elem);
-        elem = { xtype: 'datefield', id: 'firstDate', margin: '8 0 8 0', width: 250, editable: false };
+        elem = { layout: 'hbox', margin: '8 0 8 0',
+                 items: [ { xtype: 'datefield', id: 'firstDate', width: 250, editable: false },
+                          { xtype: 'toolbar', margin: '-6 0 0 0', 
+                            items: { text: tr('Clear'), handler: function() { this.clearDate(Ext.getCmp('firstDate')); }, scope: this } } ] };
         facet.add(elem);
         elem = { xtype: 'label', id: 'andLabel', margin: '0 0 0 5', text: tr('and'), hidden: true };
         facet.add(elem);
-        elem = { xtype: 'datefield', id: 'secondDate', margin: '8 0 8 0', width: 250, hidden: true, editable: false };
+        elem = { layout: 'hbox', id: 'secondDateWrapper', margin: '8 0 8 0', hidden: true,
+                 items: [ { xtype: 'datefield', id: 'secondDate', width: 250, editable: false },
+                          { xtype: 'toolbar', margin: '-6 0 0 0', 
+                            items: { text: tr('Clear'), handler: function() { this.clearDate(Ext.getCmp('secondDate')); }, scope: this } } ] };
         facet.add(elem);
 
         Ext.getCmp('firstDate').on( 'select', this.datePicked, this );
         Ext.getCmp('secondDate').on( 'select', this.datePicked, this );
+
+        this.checkedDate = 'from';
     },
     fromSearch: function(cb, checked) {
         if (checked) {
+            this.checkedDate = 'from';
             Ext.getCmp('andLabel').setVisible(false);
-            Ext.getCmp('secondDate').setVisible(false);
+            Ext.getCmp('secondDateWrapper').setVisible(false);
 
             if (Ext.getCmp('firstDate').getValue() != null)
                 this.facetedSearch();
@@ -214,8 +226,9 @@
     },
     toSearch: function(cb, checked) {
         if (checked) {
+            this.checkedDate = 'to';
             Ext.getCmp('andLabel').setVisible(false);
-            Ext.getCmp('secondDate').setVisible(false);
+            Ext.getCmp('secondDateWrapper').setVisible(false);
 
             if (Ext.getCmp('firstDate').getValue() != null)
                 this.facetedSearch();
@@ -223,8 +236,9 @@
     },
     betweenSearch: function(cb, checked) {
         if (checked) {
+            this.checkedDate = 'between';
             Ext.getCmp('andLabel').setVisible(true);
-            Ext.getCmp('secondDate').setVisible(true);
+            Ext.getCmp('secondDateWrapper').setVisible(true);
 
             if (Ext.getCmp('firstDate').getValue() != null &&
                 Ext.getCmp('secondDate').getValue() != null)
@@ -232,9 +246,14 @@
         }
     },
     datePicked: function(dateField, value) {
-        if (dateField == Ext.getCmp('secondDate') && 
-               Ext.getCmp('firstDate').getValue() == null)
+        if (Ext.getCmp('betweenCb').getValue() &&
+               (Ext.getCmp('firstDate').getValue() == null ||
+                Ext.getCmp('secondDate').getValue() == null))
             return;
+        this.facetedSearch();
+    },
+    clearDate: function(datefield) {
+        datefield.setValue(null);
         this.facetedSearch();
     },
     facetedSearch: function() {
@@ -270,6 +289,28 @@
                 var root = facet.getComponent(0).getRootNode();
                 treeCriterias(root, values, 0);
             }
+            else if (facet.facetType == 'date') {
+
+                if ( this.checkedDate == 'from' && Ext.getCmp('firstDate').getValue() != null) {
+                    values[0] = {};
+                    values[0].from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
+                }
+                else if (this.checkedDate == 'to' && Ext.getCmp('firstDate').getValue() != null) {
+                    values[0] = {};
+                    var to = new Date(Ext.getCmp('firstDate').getValue());
+                    to.setDate(to.getDate() + 1);
+                    values[0].to = Ext.Date.format( to, 'Y-m-d');
+                }
+                else if (this.checkedDate == 'between' &&
+                             Ext.getCmp('firstDate').getValue() != null  &&
+                                 Ext.getCmp('secondDate').getValue() != null) {
+                    values[0] = {};
+                    values[0].from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
+                    var to = new Date(Ext.getCmp('secondDate').getValue());
+                    to.setDate(to.getDate() + 1);
+                    values[0].to = Ext.Date.format(to, 'Y-m-d');
+                }                                
+            }
 
             if (values.length > 0) {
                 facetCriterias.values = values;
@@ -298,6 +339,10 @@
                 var root = facet.getComponent(0).getRootNode();
                 clearTreeCounts(root);
             }
+            else if (facet.facetType == 'date') {
+                facet.getComponent(0).getComponent(4).setText("");
+            }
+
             //manage checkbox which have facet values
             for (j = 0; j < values.length; j++) {
                 var data = values[j];
@@ -306,6 +351,8 @@
                     var root = facet.getComponent(0).getRootNode();
                     comp = root.findChild('uri', data.id, true);
                 }
+                else if (facet.facetType == 'date')
+                    comp = facet;
                 else
                     comp = facet.getComponent(data.id);
 
@@ -317,6 +364,14 @@
                     else if (facet.facetType == 'tree') {                        
                         comp.set('label', comp.get('label') + '<font style="margin-left:5px" color="blue">[' + data.count + ']</font>');
                         comp.set('xxx', false);
+                    }
+                    else if (facet.facetType == 'date') {   
+                        if ( (this.checkedDate == 'from' && Ext.getCmp('firstDate').getValue() != null) ||                
+                             (this.checkedDate == 'to' && Ext.getCmp('firstDate').getValue() != null) ||
+                             (this.checkedDate == 'between' &&
+                              Ext.getCmp('firstDate').getValue() != null  &&
+                              Ext.getCmp('secondDate').getValue() != null ) )                      
+                        comp.getComponent(0).getComponent(4).setText('<font color="blue">[' + data.count + ']</font>', false);
                     }
                 }
             }            
@@ -356,8 +411,13 @@
                     comp.getComponent(0).setValue(false);
                 }
             }
-            else if (facet.facetType == "tree")                
-                checkTreeNodes(facet.getComponent(0).getRootNode(), false);
+            else if (facet.facetType == "tree")
+                checkTreeNodes(facet.getComponent(0).getRootNode(), false);           
+            else if (facet.facetType == "date") {
+                facet.getComponent(0).getComponent(4).setText("");
+                facet.getComponent(1).setValue(null);
+                facet.getComponent(3).setValue(null);
+            }
         }
 
         this.isUpdateProcess = false;
