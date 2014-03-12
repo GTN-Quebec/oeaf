@@ -24,9 +24,10 @@ public class QueryEngine {
 
     public ResultSet search(String query, boolean isFacetInfosRequested, String lang, String outputFormat, int start, int limit) throws Exception {
         JSONArray queryArray = new JSONArray(query);
+
         Hashtable<String, String> clauses = buildClauses(queryArray, isFacetInfosRequested);
         ResultSet rs = advancedSearch(clauses.get("main"), lang, start, limit);
-        if (rs.getSize() == 0) //1st click on no result facet, so clear facet criterias
+        if (rs.getSize() == 0 && !isDateCriteria(queryArray)) //1st click on no result facet(other than date), so clear facet criterias
             clauses = buildClauses(new JSONArray(), isFacetInfosRequested);
         if (isFacetInfosRequested) {
             JSONArray facetInfos = facetedSearch(clauses, rs.getTotalRecords());
@@ -36,6 +37,19 @@ public class QueryEngine {
             rs.setAdditionalData("isClear", true);
 
         return( rs );
+    }
+
+    private boolean isDateCriteria(JSONArray queryArray) throws Exception {
+        for (int i = 0; i < queryArray.length(); i++) {
+            JSONObject facet = queryArray.getJSONObject(i);
+            JSONArray values = facet.getJSONArray("values");
+            for (int j = 0; j < values.length(); j++) {
+                JSONObject facetCriteria = values.getJSONObject(j);
+                if (!facetCriteria.isNull("from") ||  !facetCriteria.isNull("to"))
+                    return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -189,7 +203,6 @@ public class QueryEngine {
             clauses.put("main", mainClauses + orClauses);
         }
 
-        System.out.println("clauses = " + clauses);
         return clauses;
     }
     

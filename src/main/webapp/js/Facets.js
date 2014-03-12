@@ -197,14 +197,14 @@
                             ] };               
         facet.add(elem);
         elem = { layout: 'hbox', margin: '8 0 8 0',
-                 items: [ { xtype: 'datefield', id: 'firstDate', width: 250, editable: false },
+                 items: [ { xtype: 'datefield', id: 'firstDate', width: 250, editable: false, format: 'd/m/Y' },
                           { xtype: 'toolbar', margin: '-6 0 0 0', 
                             items: { text: tr('Clear'), handler: function() { this.clearDate(Ext.getCmp('firstDate')); }, scope: this } } ] };
         facet.add(elem);
         elem = { xtype: 'label', id: 'andLabel', margin: '0 0 0 5', text: tr('and'), hidden: true };
         facet.add(elem);
         elem = { layout: 'hbox', id: 'secondDateWrapper', margin: '8 0 8 0', hidden: true,
-                 items: [ { xtype: 'datefield', id: 'secondDate', width: 250, editable: false },
+                 items: [ { xtype: 'datefield', id: 'secondDate', width: 250, editable: false, format: 'd/m/Y' },
                           { xtype: 'toolbar', margin: '-6 0 0 0', 
                             items: { text: tr('Clear'), handler: function() { this.clearDate(Ext.getCmp('secondDate')); }, scope: this } } ] };
         facet.add(elem);
@@ -415,8 +415,8 @@
                 checkTreeNodes(facet.getComponent(0).getRootNode(), false);           
             else if (facet.facetType == "date") {
                 facet.getComponent(0).getComponent(4).setText("");
-                facet.getComponent(1).setValue(null);
-                facet.getComponent(3).setValue(null);
+                facet.getComponent(1).getComponent(0).setValue(null);
+                facet.getComponent(3).getComponent(0).setValue(null);
             }
         }
 

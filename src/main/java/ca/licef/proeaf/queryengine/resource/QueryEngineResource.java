@@ -241,7 +241,8 @@ public class QueryEngineResource implements Serializable {
 
             NodeValue longitude = result.getValue("long");
             NodeValue latitude = result.getValue("lat");
-            if (longitude != null && latitude != null) {
+            if ( longitude != null && !"".equals(longitude.getContent()) &&
+                    latitude != null && !"".equals(latitude.getContent()) ) {
                 JSONObject location = new JSONObject();
                 location.put("long", longitude.getContent()).
                         put("lat", latitude.getContent());

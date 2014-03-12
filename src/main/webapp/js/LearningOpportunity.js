@@ -100,7 +100,7 @@
             height: 294
         });
 
-        this.loGrid.cloStore.on( 'load', this.cloDetailsFetched, this );
+        this.loGrid.cloStore.on( 'load', this.cloGridFetched, this );
 
         this.loGrid.on( 'itemclick', this.fetchCloDetails, this );
 
@@ -218,9 +218,11 @@
             scope: this
         } );
     },
-    cloDetailsFetched: function(store, records) { 
-         if (this.singlePrestationDate.isVisible())
+    cloGridFetched: function(store, records) { 
+         if (this.singlePrestationDate.isVisible()) {
              this.singlePrestationDate.update('<div style="padding: 10px">'+formatISODate(records[0].data.start, this.lang)+'</div>');
+             this.fetchCloDetails(null, records[0]); 
+         }
     },
     setMap: function(location) {
         if (location == undefined) 
