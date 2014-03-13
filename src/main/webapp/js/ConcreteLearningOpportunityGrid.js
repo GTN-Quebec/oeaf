@@ -30,6 +30,15 @@
             return tr(getlanguage( value ));
         };
        
+        var ctxtMenu = Ext.create('Ext.menu.Menu', {
+           items:[ {
+               text: tr('Last minute infos'),
+               icon: 'images/clock.png',
+               handler: this.manageLastMinuteInfos,
+               scope: this
+           } ]
+        });
+
         cfg = {
             store: this.cloStore,
             columns: [ 
@@ -42,6 +51,17 @@
             viewConfig: {
                 loadingText: tr('Search in progress') + '...',
                 stripeRows: false
+            },
+            listeners: {
+                el: {
+                    contextmenu: {                         
+                        fn: function(e) { 
+                            e.stopEvent(); // stops the default browser event.
+                            ctxtMenu.showAt(e.getXY());
+                            return false;
+                        }
+                    }
+                }
             }            
         };
         Ext.apply(this, cfg);
@@ -53,7 +73,11 @@
     },
     clear: function() {        
         this.cloStore.loadRawData([]);
-    }  
+    },
+    manageLastMinuteInfos: function() {        
+        var selectedRecord = this.getSelectionModel().getSelection()[0];
+        this.parent.manageLastMinuteInfos(selectedRecord.data.uri);
+    }
 } );
 
 

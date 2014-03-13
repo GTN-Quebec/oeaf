@@ -51,6 +51,7 @@
     'Duration':'Durée',
     'Delivery':'Diffusion',
     'Language':'Langue',
-    'Geographical location':'Localisation géographique'
+    'Geographical location':'Localisation géographique',
+    'Last minute infos':'Infos de dernière minute'
 };
 

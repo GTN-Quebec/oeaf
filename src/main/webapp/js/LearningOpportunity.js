@@ -87,6 +87,7 @@
         
         this.loGrid = Ext.create('Proeaf.ConcreteLearningOpportunityGrid', {            
             lang: this.lang,
+            parent: this,
             title: tr('Schedule'),
             cls: 'schedule',
             border: false,
@@ -206,7 +207,7 @@
                         width: 300,
                         height: 200,
                         autoScroll: true,                                
-                        html: '<div>' + details.lastMinInfos + '</div>'
+                        html: '<div style="padding: 10px">' + details.lastMinInfos + '</div>'
                     });
                     this.lastMinuteInfos.setVisible(true);
                 }
@@ -258,6 +259,42 @@
         }
         this.loGrid.clear();
         this.location.removeAll();
+    },
+    manageLastMinuteInfos: function(uri) {   
+        this.currentUri = uri;
+        Ext.Ajax.request( {
+            url: 'rest/learningOpportunities/' + encodeURIComponent(this.currentUri) + '/lastMinuteInfos',
+            method: 'GET',
+            success: function( response ) {
+                Ext.MessageBox.show({
+                    title: tr('Last minute infos'),
+                    value: response.responseText,
+                    width: 400,
+                    buttons: Ext.MessageBox.OKCANCEL,
+                    multiline: true,
+                    fn: this.manageLastMinuteInfosEff,
+                    scope: this        
+                });     
+            },
+            failure: function( response ) {
+                Ext.Msg.alert( 'error' );
+            },
+            scope: this
+        } );
+    },
+    manageLastMinuteInfosEff: function(button, text) {
+        if (button != 'ok')
+             return;
+
+        Ext.Ajax.request( {
+            url: 'rest/learningOpportunities/' + encodeURIComponent(this.currentUri) + '/lastMinuteInfos',
+            method: (text != '')?'PUT':'DELETE',
+            params: (text != '')?{ content: text }:{},
+            failure: function( response ) {
+                Ext.Msg.alert( 'error' );
+            },
+            scope: this
+        } );
     }     
 } );
 
