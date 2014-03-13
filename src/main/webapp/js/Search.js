@@ -64,6 +64,9 @@
     },
     updateFacets: function(facetInfos, isClear) {
         this.facets.updateFacets(facetInfos, isClear);
+    },
+    getDateCriterias: function() {
+        return this.facets.getDateCriterias();
     }
 });
 

@@ -1,7 +1,7 @@
 ﻿Ext.define( 'Proeaf.ConcreteLearningOpportunityGrid', {
     extend: 'Ext.grid.Panel',
     initComponent: function (config) { 
-        
+
         Ext.define('ConcreteLearninOpportunityModel', {
             extend: 'Ext.data.Model',
             fields: [ 'uri', 'start', 'duration', 'deliveryMode', 'perfLanguage' ]
@@ -19,7 +19,34 @@
         });
 
         this.start = function( value ) {
-            return formatISODate(value, this.lang);
+            if (this.dateCriterias == -1)   {             
+                var criterias = searchManager.getDateCriterias();
+                this.dateCriterias = (criterias == null)?'none':criterias;                
+            }
+            if (this.dateCriterias == "none")
+                return formatISODate(value, this.lang);
+            else {
+                var date = new Date(value);
+                var from = null;
+                if (this.dateCriterias.from != undefined)
+                    from = new Date(this.dateCriterias.from + "T00:00:00");
+                var to = null;
+                if (this.dateCriterias.to != undefined)
+                    to = new Date(this.dateCriterias.to + "T00:00:00");
+                var dateFit = false;
+                if (from != null && to != null)
+                    dateFit = (date > from && date < to);
+                else if (from != null)
+                    dateFit = (date > from);
+                else if (to != null)
+                    dateFit = (date < to);
+ 
+                var resp = formatISODate(value, this.lang);
+                if (dateFit)
+                    resp = '<b>' + resp + '</b>';
+
+                return resp;
+            }
         };
 
         this.duration = function( value ) {
@@ -68,10 +95,11 @@
         this.callParent(arguments);   
     },
     init: function(glo) {
+        this.dateCriterias = -1;
         this.proxy.url = 'rest/queryEngine/concreteLOs?glo=' + glo + '&lang=' + this.lang;
         this.cloStore.load();
     },
-    clear: function() {        
+    clear: function() {          
         this.cloStore.loadRawData([]);
     },
     manageLastMinuteInfos: function() {        

@@ -290,26 +290,9 @@
                 treeCriterias(root, values, 0);
             }
             else if (facet.facetType == 'date') {
-
-                if ( this.checkedDate == 'from' && Ext.getCmp('firstDate').getValue() != null) {
-                    values[0] = {};
-                    values[0].from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
-                }
-                else if (this.checkedDate == 'to' && Ext.getCmp('firstDate').getValue() != null) {
-                    values[0] = {};
-                    var to = new Date(Ext.getCmp('firstDate').getValue());
-                    to.setDate(to.getDate() + 1);
-                    values[0].to = Ext.Date.format( to, 'Y-m-d');
-                }
-                else if (this.checkedDate == 'between' &&
-                             Ext.getCmp('firstDate').getValue() != null  &&
-                                 Ext.getCmp('secondDate').getValue() != null) {
-                    values[0] = {};
-                    values[0].from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
-                    var to = new Date(Ext.getCmp('secondDate').getValue());
-                    to.setDate(to.getDate() + 1);
-                    values[0].to = Ext.Date.format(to, 'Y-m-d');
-                }                                
+                var dateCr = this.getDateCriterias();
+                if (dateCr != null)
+                    values[0] = dateCr;
             }
 
             if (values.length > 0) {
@@ -319,6 +302,29 @@
             }            
         }
         return criterias;  
+    },
+    getDateCriterias: function() {
+        res = null;
+        if ( this.checkedDate == 'from' && Ext.getCmp('firstDate').getValue() != null) {
+            res = {};
+            res.from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
+        }
+        else if (this.checkedDate == 'to' && Ext.getCmp('firstDate').getValue() != null) {
+            res = {};
+            var to = new Date(Ext.getCmp('firstDate').getValue());
+            to.setDate(to.getDate() + 1);
+            res.to = Ext.Date.format( to, 'Y-m-d');
+        }
+        else if (this.checkedDate == 'between' &&
+                     Ext.getCmp('firstDate').getValue() != null  &&
+                         Ext.getCmp('secondDate').getValue() != null) {
+            res = {};
+            res.from = Ext.Date.format(new Date(Ext.getCmp('firstDate').getValue()), 'Y-m-d');
+            var to = new Date(Ext.getCmp('secondDate').getValue());
+            to.setDate(to.getDate() + 1);
+            res.to = Ext.Date.format(to, 'Y-m-d');
+        }    
+        return res;                            
     },
     updateFacets: function(facetInfos, isClear) {
         this.isUpdateProcess = true;
