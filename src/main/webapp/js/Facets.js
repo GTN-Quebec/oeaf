@@ -135,7 +135,7 @@
 
         var store = Ext.create('Ext.data.TreeStore', {
             model: 'VocabularyConceptModel',
-            proxy: conceptProxy,
+            proxy: conceptProxy
         });
 
         store.on( 'beforeexpand', function(node) {
